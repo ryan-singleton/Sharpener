@@ -6,7 +6,7 @@ At the moment, it is a collection of quality-of-life features for C#. It is high
 
 Currently offers:
 
--   Collection "As" alternatives. So, for example, if you call `ToList()` on a list, it will construct another list! `AsList()` will only provided the new list if it was not one already.
+-   Collection "As" alternatives. So, for example, if you call `ToList()` on a list, it will construct another list! `AsList()` will only provide the new list if it was not one already.
 -   Especially nice if you use Rider/Resharper and it constantly nags you about multiple enumeration (which is nice of it). Now you can address the warning with less chance of using as much memory.
 -   Enumerable `ForAll()`, which is like `ForEach()` for lists. It uses `Span<T>`, so the memory implications should be lesser.
 -   Syntactically sugarful serialization and deserialization, as well as having the ability to customize the serialization that you get from this logic.
