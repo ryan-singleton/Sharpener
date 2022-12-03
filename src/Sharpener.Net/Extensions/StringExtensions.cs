@@ -59,16 +59,16 @@ public static class StringExtensions
     /// </summary>
     /// <returns></returns>
     public static (StringComparison Comparison, string Source) Invariant(this (bool Ignore, string Source) pair) => pair.Ignore
-        ? (StringComparison.CurrentCultureIgnoreCase, pair.Source)
-        : (StringComparison.CurrentCulture, pair.Source);
+        ? (StringComparison.InvariantCultureIgnoreCase, pair.Source)
+        : (StringComparison.InvariantCulture, pair.Source);
 
     /// <summary>
     /// Prepares the string comparison with ordinal culture treatment.
     /// </summary>
     /// <returns></returns>
     public static (StringComparison Comparison, string Source) Ordinal(this (bool Ignore, string Source) pair) => pair.Ignore
-        ? (StringComparison.CurrentCultureIgnoreCase, pair.Source)
-        : (StringComparison.CurrentCulture, pair.Source);
+        ? (StringComparison.OrdinalIgnoreCase, pair.Source)
+        : (StringComparison.Ordinal, pair.Source);
 
     /// <summary>
     /// Performs an equality check based on the comparison rules received.
@@ -126,6 +126,4 @@ public static class StringExtensions
     private static StringComparison _default = _defaultWithCase;
 
     private static StringComparison GetDefaultComparison(bool ignore) => ignore ? _defaultNoCase : _defaultWithCase;
-
-
 }
