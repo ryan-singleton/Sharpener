@@ -46,7 +46,7 @@ public static class SerializationExtensions
     }
 
     /// <summary>
-    /// Deserializes using JSON deserialization according to to <see cref="SharpenerJsonSettings.GetDefaultSerializer"/>.
+    /// Deserializes using JSON deserialization according to the supplied type.
     /// </summary>
     /// <typeparam name="TResult">The type to deserialize to.</typeparam>
     /// <typeparam name="TDeserializer">The type of deserializer to use.</typeparam>
@@ -61,7 +61,7 @@ public static class SerializationExtensions
     }
 
     /// <summary>
-    /// Deserializes using JSON deserialization according to to <see cref="SharpenerJsonSettings.GetDefaultSerializer"/>.
+    /// Deserializes using JSON deserialization according to <see cref="SharpenerJsonSettings.GetDefaultSerializer"/>.
     /// </summary>
     /// <typeparam name="TResult">The type to deserialize to.</typeparam>
     public static TResult FromJson<TResult>(this string json) where TResult : class
