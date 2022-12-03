@@ -1,9 +1,0 @@
-ForAll() IEnumerable foreach that maybe uses span?
-
-AsList() that uses span
-
-Serialize() and Deserialize<T>() made easy with named configured funcs and defaults
-
-Similar() and Dissimilar() string Equality comparers made easy with named configured funcs (so case insensitive can be made default and terse)
-
-Autowatch A using based Stopwatch that starts and stops itself
