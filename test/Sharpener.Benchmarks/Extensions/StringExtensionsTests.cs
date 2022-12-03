@@ -1,6 +1,4 @@
-using AutoBogus;
 using BenchmarkDotNet.Attributes;
-using Sharpener.Benchmarks.Models;
 using Sharpener.Extensions;
 
 namespace Sharpener.Benchmarks.Extensions;
@@ -9,18 +7,12 @@ public class StringExtensionsTests
 {
     [Params(100, 100_000, 1_000_000)]
     public int Count;
-    private readonly AutoFaker<Item> _autoFaker = default!;
-    private readonly List<Item> _itemsList = default!;
-    private readonly Item[] _itemsArray = default!;
-
     private const string Source = "value";
-
     private const string Compare = "Value";
 
     [GlobalSetup]
     public void Setup()
     {
-
     }
 
     [Benchmark]

@@ -5,5 +5,9 @@ namespace Sharpener.Benchmarks;
 
 public class Program
 {
-    public static void Main() => BenchmarkRunner.Run<CollectionExtensionsTests>();
+    public static void Main()
+    {
+        BenchmarkRunner.Run<CollectionExtensionsTests>();
+        BenchmarkRunner.Run<StringExtensionsTests>();
+    }
 }
