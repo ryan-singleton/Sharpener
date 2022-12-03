@@ -41,10 +41,10 @@ To serialize something, you can now just write this.
 var asItemJson = item.ToJson();
 ```
 
-Want it "pretty" (a common term for indented)?
+Want it indented? ("pretty" or "prettified" to the js people)
 
 ```cs
-var asItemJson = item.ToJson("pretty");
+var asItemJson = item.ToJson("indented");
 ```
 
 Got your own logic that you want to call?

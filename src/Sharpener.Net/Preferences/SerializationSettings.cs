@@ -31,7 +31,7 @@ public static class SerializationSettings
     {
         _toJsonDelegates = new DelegateStore<Func<object, string>>(model => JsonSerializer.Serialize(model));
         _toJsonDelegates.SetNamed("standard", model => JsonSerializer.Serialize(model));
-        _toJsonDelegates.SetNamed("pretty", model => JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true }));
+        _toJsonDelegates.SetNamed("indented", model => JsonSerializer.Serialize(model, new JsonSerializerOptions { WriteIndented = true }));
 
         _fromJsonDelegates = new DelegateStore<Func<string, Type, object?>>((json, type) => JsonSerializer.Deserialize(json, type));
         _fromJsonDelegates.SetNamed("standard", (json, type) => JsonSerializer.Deserialize(json, type));
