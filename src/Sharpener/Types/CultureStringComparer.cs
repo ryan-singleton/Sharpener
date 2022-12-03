@@ -3,30 +3,30 @@ using Sharpener.Types.Interfaces;
 namespace Sharpener.Types;
 
 /// <inheritdoc />
-public class CultureStringComparer : IStringComparer
+internal sealed class CultureStringComparer : IStringComparer
 {
     /// <inheritdoc />
-    public string Source { get; }
+    internal string Source { get; }
 
     /// <summary>
     /// The culture.
     /// </summary>
     /// <value></value>
-    public StringComparison Comparison { get; private set; }
+    internal StringComparison Comparison { get; private set; }
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="source"></param>
     /// <param name="comparison"></param>
-    public CultureStringComparer(string source, StringComparison comparison)
+    internal CultureStringComparer(string source, StringComparison comparison)
     {
         Source = source;
         Comparison = comparison;
     }
 
     /// <inheritdoc />
-    public IStringComparer NoCase()
+    internal IStringComparer NoCase()
     {
         var newComparison = Comparison switch
         {
@@ -41,7 +41,7 @@ public class CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    public IStringComparer Case()
+    internal IStringComparer Case()
     {
         var newComparison = Comparison switch
         {
@@ -56,7 +56,7 @@ public class CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    public IStringComparer Current()
+    internal IStringComparer Current()
     {
         var newComparison = Comparison switch
         {
@@ -73,7 +73,7 @@ public class CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    public IStringComparer Invariant()
+    internal IStringComparer Invariant()
     {
         var newComparison = Comparison switch
         {
@@ -90,7 +90,7 @@ public class CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    public IStringComparer Ordinal()
+    internal IStringComparer Ordinal()
     {
         var newComparison = Comparison switch
         {
@@ -107,14 +107,14 @@ public class CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    public bool Equals(string compare) => Source.Equals(compare, Comparison);
+    internal bool Equals(string compare) => Source.Equals(compare, Comparison);
 
     /// <inheritdoc />
-    public bool Contains(string compare) => Source.Contains(compare, Comparison);
+    internal bool Contains(string compare) => Source.Contains(compare, Comparison);
 
     /// <inheritdoc />
-    public bool EndsWith(string compare) => Source.EndsWith(compare, Comparison);
+    internal bool EndsWith(string compare) => Source.EndsWith(compare, Comparison);
 
     /// <inheritdoc />
-    public bool StartsWith(string compare) => Source.StartsWith(compare, Comparison);
+    internal bool StartsWith(string compare) => Source.StartsWith(compare, Comparison);
 }

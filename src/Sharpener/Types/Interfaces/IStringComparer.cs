@@ -3,7 +3,7 @@ namespace Sharpener.Types.Interfaces;
 /// <summary>
 /// A pairing of a string and o
 /// </summary>
-public interface IStringComparer
+internal sealed interface IStringComparer
 {
     /// <summary>
     /// The original string for which comparisons are to take place.
