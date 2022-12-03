@@ -1,5 +1,5 @@
-using Sharpener.Types;
-using Sharpener.Types.Interfaces;
+using Sharpener.Types.Strings;
+using Sharpener.Types.Strings.Interfaces;
 
 namespace Sharpener.Extensions;
 

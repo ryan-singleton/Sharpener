@@ -1,8 +1,9 @@
 using System.Text.Json;
 using FluentAssertions;
 using Sharpener.Extensions;
-using Sharpener.Preferences;
+using Sharpener.Tests.Mocks;
 using Sharpener.Tests.Models;
+using Sharpener.Types.Serialization;
 using Xunit;
 
 public class SerializationExtensionsTests
@@ -12,9 +13,9 @@ public class SerializationExtensionsTests
     {
         var item = new Item("guy", "person");
         var asJson = item.ToJson();
-        var compareJson = JsonSerializer.Serialize(item);
+        var compareJson = JsonSerializer.Serialize(item, new JsonSerializerOptions { WriteIndented = true });
 
-        asJson.Should().Be(compareJson);
+        _ = asJson.Should().Be(compareJson);
     }
 
     [Fact]
@@ -24,51 +25,45 @@ public class SerializationExtensionsTests
         var asJson = item.ToJson();
         var asItem = asJson.FromJson<Item>();
 
-        asItem.Should().NotBeNull();
-        asItem!.Name.Should().Be(item.Name);
+        _ = asItem.Should().NotBeNull();
+        _ = asItem!.Name.Should().Be(item.Name);
     }
 
     [Fact]
     public void ToJson_SetDefault_Success()
     {
         var item = new Item("guy", "person");
-        SerializationSettings.SetDefaultToJson(_ => "stuff");
+        SharpenerJsonSettings.SetDefaultSerializer<MockTo>();
 
-        item.ToJson().Should().Be("stuff");
+        _ = item.ToJson().Should().Be("stuff");
 
-        SerializationSettings.Reset();
+        SharpenerJsonSettings.SetDefaults();
     }
 
     [Fact]
-    public void ToJson_SetNamed_Success()
+    public void ToJson_UseType_Success()
     {
         var item = new Item("guy", "person");
-        SerializationSettings.SetNamedToJson("test", _ => "stuff");
 
-        item.ToJson("test").Should().Be("stuff");
-
-        SerializationSettings.Reset();
+        _ = item.ToJson<MockTo>().Should().Be("stuff");
     }
 
     [Fact]
     public void FromJson_SetDefault_Success()
     {
         var item = new Item("guy", "person");
-        SerializationSettings.SetDefaultFromJson((_, _) => new Item("other", "person"));
+        SharpenerJsonSettings.SetDefaultDeserializer<MockFrom>();
 
-        item.ToJson().FromJson<Item>()!.Name.Should().Be("other");
+        _ = item.ToJson().FromJson<Item>()!.Name.Should().Be("other");
 
-        SerializationSettings.Reset();
+        SharpenerJsonSettings.SetDefaults();
     }
 
     [Fact]
-    public void FromJson_SetNamed_Success()
+    public void FromJson_UseType_Success()
     {
         var item = new Item("guy", "person");
-        SerializationSettings.SetNamedFromJson("test", (_, _) => new Item("other", "person"));
 
-        item.ToJson().FromJson<Item>("test")!.Name.Should().Be("other");
-
-        SerializationSettings.Reset();
+        _ = item.ToJson().FromJson<Item, MockFrom>()!.Name.Should().Be("other");
     }
 }

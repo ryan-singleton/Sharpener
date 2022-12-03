@@ -1,4 +1,5 @@
-using Sharpener.Preferences;
+using Sharpener.Types.Serialization;
+using Sharpener.Types.Serialization.Interfaces;
 
 namespace Sharpener.Extensions;
 
@@ -7,41 +8,70 @@ namespace Sharpener.Extensions;
 /// </summary>
 public static class SerializationExtensions
 {
+    private static IJsonSerializer? s_jsonSerializer;
+
+    private static IJsonDeserializer? s_jsonDeserializer;
+
+
     /// <summary>
-    /// Creates JSON serialization according to registered functions in the application. If null, uses System.Text.Json defaults.
+    /// Creates JSON serialization according to the supplied type.
     /// </summary>
     /// <param name="source">The reference to serialize.</param>
-    /// <param name="functionName">The optional name of the registered function. Uses defaults if null.</param>
+    /// <typeparam name="TSerializer">The type of serializer to use.</typeparam>
     /// <returns></returns>
-    public static string ToJson(this object source, string? functionName = null)
+    public static string ToJson<TSerializer>(this object source) where TSerializer : IJsonSerializer, new()
     {
-        if (string.IsNullOrEmpty(functionName))
+        if (s_jsonSerializer is not TSerializer)
         {
-            return SerializationSettings.DefaultToJson(source);
+            s_jsonSerializer = new TSerializer();
         }
 
-        var function = SerializationSettings.GetNamedToJson(functionName);
-
-        return function is null
-            ? throw new ArgumentException("There is no to json function by the name {0}", functionName)
-            : function(source);
+        return s_jsonSerializer.Serialize(source);
     }
 
     /// <summary>
-    /// Deserializes using JSON deserialization according to registered functions in the application. If null, uses System.Text.Json defaults.
-    /// </summary>
-    /// <typeparam name="T">The type to deserialize to.</typeparam>
-    public static T? FromJson<T>(this string json, string? functionName = null) where T : class
+    /// Creates JSON serialization according to <see cref="SharpenerJsonSettings.GetDefaultSerializer"/>.
+    /// /// </summary>
+    /// <param name="source">The reference to serialize.</param>
+    /// <returns></returns>
+    public static string ToJson(this object source)
     {
-        if (string.IsNullOrEmpty(functionName))
+        var type = SharpenerJsonSettings.GetDefaultSerializer();
+        if (s_jsonSerializer?.GetType() != type)
         {
-            return SerializationSettings.DefaultFromJson(json, typeof(T)) as T;
+            s_jsonSerializer = Activator.CreateInstance(type) as IJsonSerializer ?? throw new NullReferenceException("The default json serializer was null");
         }
 
-        var function = SerializationSettings.GetNamedFromJson(functionName);
+        return s_jsonSerializer!.Serialize(source);
+    }
 
-        return function is null
-            ? throw new ArgumentException("There is no from json function by the name {0}", functionName)
-            : function(json, typeof(T)) as T;
+    /// <summary>
+    /// Deserializes using JSON deserialization according to to <see cref="SharpenerJsonSettings.GetDefaultSerializer"/>.
+    /// </summary>
+    /// <typeparam name="TResult">The type to deserialize to.</typeparam>
+    /// <typeparam name="TDeserializer">The type of deserializer to use.</typeparam>
+    public static TResult FromJson<TResult, TDeserializer>(this string json) where TResult : class where TDeserializer : IJsonDeserializer, new()
+    {
+        if (s_jsonDeserializer is not TDeserializer)
+        {
+            s_jsonDeserializer = new TDeserializer();
+        }
+
+        return (TResult)s_jsonDeserializer.Deserialize(json, typeof(TResult));
+    }
+
+    /// <summary>
+    /// Deserializes using JSON deserialization according to to <see cref="SharpenerJsonSettings.GetDefaultSerializer"/>.
+    /// </summary>
+    /// <typeparam name="TResult">The type to deserialize to.</typeparam>
+    public static TResult FromJson<TResult>(this string json) where TResult : class
+    {
+        var type = SharpenerJsonSettings.GetDefaultDeserializer();
+        if (s_jsonDeserializer?.GetType() != type)
+        {
+            s_jsonDeserializer = Activator.CreateInstance(type) as IJsonDeserializer ?? throw new NullReferenceException("The default json deserializer was null");
+        }
+
+        return (TResult)s_jsonDeserializer.Deserialize(json, typeof(TResult));
     }
 }

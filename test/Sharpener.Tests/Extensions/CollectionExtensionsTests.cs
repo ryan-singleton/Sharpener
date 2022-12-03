@@ -20,6 +20,6 @@ public class CollectionExtensionsTests
         const string newName = "AffectedItem";
         _items.ForAll(x => x.Name = newName);
 
-        _items.Should().AllSatisfy(x => x.Equals(newName));
+        _ = _items.Should().AllSatisfy(x => x.Equals(newName));
     }
 }

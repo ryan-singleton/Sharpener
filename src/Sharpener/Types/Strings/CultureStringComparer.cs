@@ -1,9 +1,9 @@
-using Sharpener.Types.Interfaces;
+using Sharpener.Types.Strings.Interfaces;
 
-namespace Sharpener.Types;
+namespace Sharpener.Types.Strings;
 
 /// <inheritdoc />
-internal sealed class CultureStringComparer : IStringComparer
+internal struct CultureStringComparer : IStringComparer
 {
     /// <inheritdoc />
     public string Source { get; }
