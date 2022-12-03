@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8E145172-9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpener.Tests", "test\Sharpener.Tests\Sharpener.Tests.csproj", "{EF946690-556E-4FB0-897A-EE5B9D3830DA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpener.Benchmarks", "test\Sharpener.Benchmarks\Sharpener.Benchmarks.csproj", "{40186E82-690E-485B-B20F-40624A0CDA3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,9 +30,14 @@ Global
 		{EF946690-556E-4FB0-897A-EE5B9D3830DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF946690-556E-4FB0-897A-EE5B9D3830DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF946690-556E-4FB0-897A-EE5B9D3830DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40186E82-690E-485B-B20F-40624A0CDA3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40186E82-690E-485B-B20F-40624A0CDA3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40186E82-690E-485B-B20F-40624A0CDA3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40186E82-690E-485B-B20F-40624A0CDA3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F59178E7-D54F-44CA-A59A-85C2AC669FE5} = {5CE15304-7DE3-4364-8824-9B4FB6AC1B33}
 		{EF946690-556E-4FB0-897A-EE5B9D3830DA} = {8E145172-9460-4629-A2CC-D4268B660326}
+		{40186E82-690E-485B-B20F-40624A0CDA3B} = {8E145172-9460-4629-A2CC-D4268B660326}
 	EndGlobalSection
 EndGlobal

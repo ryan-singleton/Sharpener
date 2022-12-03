@@ -4,6 +4,8 @@
 *.suo
 *.user
 _ReSharper.*
+# *BenchmarkDotNet.Artifacts*
+*benchmark-logs*
 bin
 obj
 packages
