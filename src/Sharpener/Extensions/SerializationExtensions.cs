@@ -22,12 +22,9 @@ public static class SerializationExtensions
 
         var function = SerializationSettings.GetNamedToJson(functionName);
 
-        if (function is null)
-        {
-            throw new ArgumentException("There is no to json function by the name {0}", functionName);
-        }
-
-        return function(source);
+        return function is null
+            ? throw new ArgumentException("There is no to json function by the name {0}", functionName)
+            : function(source);
     }
 
     /// <summary>
@@ -43,11 +40,8 @@ public static class SerializationExtensions
 
         var function = SerializationSettings.GetNamedFromJson(functionName);
 
-        if (function is null)
-        {
-            throw new ArgumentException("There is no from json function by the name {0}", functionName);
-        }
-
-        return function(json, typeof(T)) as T;
+        return function is null
+            ? throw new ArgumentException("There is no from json function by the name {0}", functionName)
+            : function(json, typeof(T)) as T;
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Sharpener.Types.Interfaces;
 
 namespace Sharpener.Types;

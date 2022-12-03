@@ -1,5 +1,5 @@
-using Sharpener.Delegates;
 using System.Text.Json;
+using Sharpener.Delegates;
 
 namespace Sharpener.Preferences;
 
@@ -19,10 +19,7 @@ public static class SerializationSettings
     /// <summary>
     /// Constructor.
     /// </summary>
-    static SerializationSettings()
-    {
-        Reset();
-    }
+    static SerializationSettings() => Reset();
 
     /// <summary>
     /// Resets all of the delegates to their default state. All custom delegates will be cleared and only ordinal, invariant, and current culture with varying case sensitivity will be present again.

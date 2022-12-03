@@ -1,5 +1,3 @@
-using System.Globalization;
-using Sharpener.Preferences;
 using Sharpener.Types;
 using Sharpener.Types.Interfaces;
 

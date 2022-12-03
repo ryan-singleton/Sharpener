@@ -1,20 +1,18 @@
-using Sharpener.Tests.Models;
-using Sharpener.Extensions;
 using FluentAssertions;
+using Sharpener.Extensions;
+using Sharpener.Tests.Models;
+using Xunit;
 
 namespace Sharpener.Tests.Extensions;
 
 public class CollectionExtensionsTests
 {
-    IEnumerable<Item> _items;
-    public CollectionExtensionsTests()
-    {
-        _items = new[]
+    private readonly IEnumerable<Item> _items;
+    public CollectionExtensionsTests() => _items = new[]
         {
             new Item("Item", "FirstItem"),
             new Item("Item", "SecondItem")
         };
-    }
 
     [Fact]
     public void ForAll_Success()

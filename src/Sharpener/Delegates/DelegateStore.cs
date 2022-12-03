@@ -7,7 +7,7 @@ namespace Sharpener.Delegates;
 public class DelegateStore<TDelegate> where TDelegate : Delegate
 {
     private const string _defaultName = "default";
-    private IDictionary<string, TDelegate> _namedDelegates;
+    private readonly IDictionary<string, TDelegate> _namedDelegates;
 
     /// <summary>
     /// Constructor.
@@ -37,15 +37,7 @@ public class DelegateStore<TDelegate> where TDelegate : Delegate
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public TDelegate? GetNamed(string name)
-    {
-        if (_namedDelegates.ContainsKey(name))
-        {
-            return _namedDelegates[name];
-        }
-
-        return null;
-    }
+    public TDelegate? GetNamed(string name) => _namedDelegates.ContainsKey(name) ? _namedDelegates[name] : null;
 
     /// <summary>
     /// Gets the default function of the store. Will not be null as setting it to null is not allowed.

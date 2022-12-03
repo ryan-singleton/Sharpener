@@ -27,15 +27,7 @@ public static class CollectionExtensions
     /// <param name="enumerable"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static T[] AsArray<T>(this IEnumerable<T> enumerable)
-    {
-        if (enumerable.GetType() == typeof(T[]))
-        {
-            return (T[])enumerable;
-        }
-
-        return enumerable.ToArray();
-    }
+    public static T[] AsArray<T>(this IEnumerable<T> enumerable) => enumerable.GetType() == typeof(T[]) ? (T[])enumerable : enumerable.ToArray();
 
     /// <summary>
     /// Creates a list from the enumerable only if it is not already a list. Otherwise, simply returns it casted as a list.
@@ -43,13 +35,5 @@ public static class CollectionExtensions
     /// <param name="enumerable"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static IList<T> AsList<T>(this IEnumerable<T> enumerable)
-    {
-        if (enumerable.GetType() == typeof(IList<T>))
-        {
-            return (IList<T>)enumerable;
-        }
-
-        return enumerable.ToList();
-    }
+    public static IList<T> AsList<T>(this IEnumerable<T> enumerable) => enumerable.GetType() == typeof(IList<T>) ? (IList<T>)enumerable : enumerable.ToList();
 }

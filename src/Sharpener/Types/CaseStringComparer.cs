@@ -46,8 +46,8 @@ public class CaseStringComparer : IStringComparer
 
     /// <inheritdoc />
     public IStringComparer Ordinal() => Ignore
-    ? new CultureStringComparer(Source, StringComparison.OrdinalIgnoreCase)
-    : new CultureStringComparer(Source, StringComparison.Ordinal);
+        ? new CultureStringComparer(Source, StringComparison.OrdinalIgnoreCase)
+        : new CultureStringComparer(Source, StringComparison.Ordinal);
 
     /// <inheritdoc />
     public IStringComparer Invariant() => Ignore
@@ -56,21 +56,21 @@ public class CaseStringComparer : IStringComparer
 
     /// <inheritdoc />
     public bool Equals(string compare) => Ignore
-    ? Source.Equals(compare, StringComparison.OrdinalIgnoreCase)
-    : Source.Equals(compare, StringComparison.Ordinal);
+        ? Source.Equals(compare, StringComparison.OrdinalIgnoreCase)
+        : Source.Equals(compare, StringComparison.Ordinal);
 
     /// <inheritdoc />
     public bool Contains(string compare) => Ignore
-    ? Source.Contains(compare, StringComparison.OrdinalIgnoreCase)
-    : Source.Contains(compare, StringComparison.Ordinal);
+        ? Source.Contains(compare, StringComparison.OrdinalIgnoreCase)
+        : Source.Contains(compare, StringComparison.Ordinal);
 
     /// <inheritdoc />
     public bool StartsWith(string compare) => Ignore
-    ? Source.StartsWith(compare, StringComparison.OrdinalIgnoreCase)
-    : Source.StartsWith(compare, StringComparison.Ordinal);
+        ? Source.StartsWith(compare, StringComparison.OrdinalIgnoreCase)
+        : Source.StartsWith(compare, StringComparison.Ordinal);
 
     /// <inheritdoc />
     public bool EndsWith(string compare) => Ignore
-    ? Source.EndsWith(compare, StringComparison.OrdinalIgnoreCase)
-    : Source.EndsWith(compare, StringComparison.Ordinal);
+        ? Source.EndsWith(compare, StringComparison.OrdinalIgnoreCase)
+        : Source.EndsWith(compare, StringComparison.Ordinal);
 }
