@@ -3,6 +3,7 @@ using Sharpener.Extensions;
 
 namespace Sharpener.Benchmarks.Extensions;
 
+[MemoryDiagnoser(false)]
 public class StringExtensionsTests
 {
     [Params(100, 100_000, 1_000_000)]

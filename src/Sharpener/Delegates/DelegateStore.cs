@@ -6,7 +6,7 @@ namespace Sharpener.Delegates;
 /// <typeparam name="TDelegate"></typeparam>
 internal sealed class DelegateStore<TDelegate> where TDelegate : Delegate
 {
-    private const string _defaultName = "default";
+    private const string DefaultName = "default";
     private readonly IDictionary<string, TDelegate> _namedDelegates;
 
     /// <summary>
@@ -29,7 +29,7 @@ internal sealed class DelegateStore<TDelegate> where TDelegate : Delegate
         {
             throw new ArgumentNullException("Default logic cannot be null");
         }
-        SetNamed(_defaultName, logic);
+        SetNamed(DefaultName, logic);
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ internal sealed class DelegateStore<TDelegate> where TDelegate : Delegate
     /// Gets the default function of the store. Will not be null as setting it to null is not allowed.
     /// </summary>
     /// <returns></returns>
-    internal TDelegate Default => GetNamed(_defaultName)!;
+    internal TDelegate Default => GetNamed(DefaultName)!;
 
     /// <summary>
     /// Sets or creates a named delegate.
