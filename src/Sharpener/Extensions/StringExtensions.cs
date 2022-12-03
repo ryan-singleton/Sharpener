@@ -1,9 +1,9 @@
 using System.Globalization;
-using Sharpener.Net.Preferences;
-using Sharpener.Net.Types;
-using Sharpener.Net.Types.Interfaces;
+using Sharpener.Preferences;
+using Sharpener.Types;
+using Sharpener.Types.Interfaces;
 
-namespace Sharpener.Net.Extensions;
+namespace Sharpener.Extensions;
 
 /// <summary>
 /// Extensions for strings.

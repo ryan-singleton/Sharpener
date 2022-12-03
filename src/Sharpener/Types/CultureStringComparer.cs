@@ -1,7 +1,7 @@
 using System;
-using Sharpener.Net.Types.Interfaces;
+using Sharpener.Types.Interfaces;
 
-namespace Sharpener.Net.Types;
+namespace Sharpener.Types;
 
 /// <inheritdoc />
 public class CultureStringComparer : IStringComparer

@@ -5,11 +5,11 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5CE15304-7DE3-4364-8824-9B4FB6AC1B33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpener.Net", "src\Sharpener.Net\Sharpener.Net.csproj", "{F59178E7-D54F-44CA-A59A-85C2AC669FE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpener", "src\Sharpener\Sharpener.csproj", "{F59178E7-D54F-44CA-A59A-85C2AC669FE5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{8E145172-9460-4629-A2CC-D4268B660326}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpener.Net.Tests", "test\Sharpener.Net.Tests\Sharpener.Net.Tests.csproj", "{EF946690-556E-4FB0-897A-EE5B9D3830DA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpener.Tests", "test\Sharpener.Tests\Sharpener.Tests.csproj", "{EF946690-556E-4FB0-897A-EE5B9D3830DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

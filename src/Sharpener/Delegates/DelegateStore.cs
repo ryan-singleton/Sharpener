@@ -1,4 +1,4 @@
-namespace Sharpener.Net.Delegates;
+namespace Sharpener.Delegates;
 
 /// <summary>
 /// A storage place for named delegates that are kept for specific contexts.

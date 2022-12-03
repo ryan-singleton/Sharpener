@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Sharpener.Net\Sharpener.Net.csproj" />
+    <ProjectReference Include="..\..\src\Sharpener\Sharpener.csproj" />
   </ItemGroup>
 
 </Project>

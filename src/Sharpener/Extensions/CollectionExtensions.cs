@@ -1,4 +1,4 @@
-namespace Sharpener.Net.Extensions;
+namespace Sharpener.Extensions;
 
 /// <summary>
 /// Extensions for collections of all types.

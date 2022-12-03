@@ -1,6 +1,6 @@
-using Sharpener.Net.Preferences;
+using Sharpener.Preferences;
 
-namespace Sharpener.Net.Extensions;
+namespace Sharpener.Extensions;
 
 /// <summary>
 /// Extensions for serialization.

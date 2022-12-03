@@ -1,9 +1,9 @@
-using Sharpener.Net.Tests.Models;
-using Sharpener.Net.Extensions;
+using Sharpener.Tests.Models;
+using Sharpener.Extensions;
 using FluentAssertions;
-using Sharpener.Net.Preferences;
+using Sharpener.Preferences;
 
-namespace Sharpener.Net.Tests.Extensions;
+namespace Sharpener.Tests.Extensions;
 
 public class StringExtensionsTests
 {

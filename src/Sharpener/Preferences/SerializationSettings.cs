@@ -1,7 +1,7 @@
-using Sharpener.Net.Delegates;
+using Sharpener.Delegates;
 using System.Text.Json;
 
-namespace Sharpener.Net.Preferences;
+namespace Sharpener.Preferences;
 
 /// <summary>
 /// Settings for serialization that can be customized on a per-application basis.
