@@ -37,7 +37,7 @@ public class SerializationExtensionsTests
 
         _ = item.ToJson().Should().Be("stuff");
 
-        SharpenerJsonSettings.SetDefaults();
+        SharpenerJsonSettings.ResetDefaults();
     }
 
     [Fact]
@@ -56,7 +56,7 @@ public class SerializationExtensionsTests
 
         _ = item.ToJson().FromJson<Item>()!.Name.Should().Be("other");
 
-        SharpenerJsonSettings.SetDefaults();
+        SharpenerJsonSettings.ResetDefaults();
     }
 
     [Fact]

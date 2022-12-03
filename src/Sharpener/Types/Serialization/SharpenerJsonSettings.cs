@@ -11,7 +11,7 @@ public static class SharpenerJsonSettings
     /// Constructor.
     /// </summary>
     /// <returns></returns>
-    static SharpenerJsonSettings() => SetDefaults();
+    static SharpenerJsonSettings() => ResetDefaults();
     private static Type _defaultSerializer = default!;
     private static Type _defaultDeserializer = default!;
 
@@ -42,7 +42,7 @@ public static class SharpenerJsonSettings
     /// <summary>
     /// Sets the JSON logic defaults back to System.Text.Json.
     /// </summary>
-    public static void SetDefaults()
+    public static void ResetDefaults()
     {
         SetDefaultSerializer<SystemTo>();
         SetDefaultDeserializer<SystemFrom>();
