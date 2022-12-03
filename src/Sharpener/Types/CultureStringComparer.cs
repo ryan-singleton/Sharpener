@@ -6,7 +6,7 @@ namespace Sharpener.Types;
 internal sealed class CultureStringComparer : IStringComparer
 {
     /// <inheritdoc />
-    internal string Source { get; }
+    public string Source { get; }
 
     /// <summary>
     /// The culture.
@@ -26,7 +26,7 @@ internal sealed class CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    internal IStringComparer NoCase()
+    public IStringComparer NoCase()
     {
         var newComparison = Comparison switch
         {
@@ -41,7 +41,7 @@ internal sealed class CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    internal IStringComparer Case()
+    public IStringComparer Case()
     {
         var newComparison = Comparison switch
         {
@@ -56,7 +56,7 @@ internal sealed class CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    internal IStringComparer Current()
+    public IStringComparer Current()
     {
         var newComparison = Comparison switch
         {
@@ -73,7 +73,7 @@ internal sealed class CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    internal IStringComparer Invariant()
+    public IStringComparer Invariant()
     {
         var newComparison = Comparison switch
         {
@@ -90,7 +90,7 @@ internal sealed class CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    internal IStringComparer Ordinal()
+    public IStringComparer Ordinal()
     {
         var newComparison = Comparison switch
         {
@@ -107,14 +107,14 @@ internal sealed class CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    internal bool Equals(string compare) => Source.Equals(compare, Comparison);
+    public bool Equals(string compare) => Source.Equals(compare, Comparison);
 
     /// <inheritdoc />
-    internal bool Contains(string compare) => Source.Contains(compare, Comparison);
+    public bool Contains(string compare) => Source.Contains(compare, Comparison);
 
     /// <inheritdoc />
-    internal bool EndsWith(string compare) => Source.EndsWith(compare, Comparison);
+    public bool EndsWith(string compare) => Source.EndsWith(compare, Comparison);
 
     /// <inheritdoc />
-    internal bool StartsWith(string compare) => Source.StartsWith(compare, Comparison);
+    public bool StartsWith(string compare) => Source.StartsWith(compare, Comparison);
 }

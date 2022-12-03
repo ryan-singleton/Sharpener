@@ -5,7 +5,7 @@ namespace Sharpener.Extensions;
 /// <summary>
 /// Extensions for serialization.
 /// </summary>
-public sealed static class SerializationExtensions
+public static class SerializationExtensions
 {
     /// <summary>
     /// Creates JSON serialization according to registered functions in the application. If null, uses System.Text.Json defaults.
