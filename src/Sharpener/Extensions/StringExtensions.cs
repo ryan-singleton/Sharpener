@@ -6,7 +6,7 @@ namespace Sharpener.Extensions;
 /// <summary>
 /// Extensions for strings.
 /// </summary>
-public sealed static class StringExtensions
+public static class StringExtensions
 {
     /// <inheritdoc cref="IStringComparer.NoCase"/>
     public static IStringComparer NoCase(this string source) => new CaseStringComparer(source, true);

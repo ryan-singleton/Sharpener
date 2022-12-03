@@ -6,7 +6,7 @@ namespace Sharpener.Types;
 internal sealed class CaseStringComparer : IStringComparer
 {
     /// <inheritdoc />
-    internal string Source { get; }
+    public string Source { get; }
 
     /// <summary>
     /// Whether to ignore case or not.
@@ -26,51 +26,51 @@ internal sealed class CaseStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    internal IStringComparer NoCase()
+    public IStringComparer NoCase()
     {
         Ignore = true;
         return this;
     }
 
     /// <inheritdoc />
-    internal IStringComparer Case()
+    public IStringComparer Case()
     {
         Ignore = false;
         return this;
     }
 
     /// <inheritdoc />
-    internal IStringComparer Current() => Ignore
+    public IStringComparer Current() => Ignore
         ? new CultureStringComparer(Source, StringComparison.CurrentCultureIgnoreCase)
         : new CultureStringComparer(Source, StringComparison.CurrentCulture);
 
     /// <inheritdoc />
-    internal IStringComparer Ordinal() => Ignore
+    public IStringComparer Ordinal() => Ignore
         ? new CultureStringComparer(Source, StringComparison.OrdinalIgnoreCase)
         : new CultureStringComparer(Source, StringComparison.Ordinal);
 
     /// <inheritdoc />
-    internal IStringComparer Invariant() => Ignore
+    public IStringComparer Invariant() => Ignore
         ? new CultureStringComparer(Source, StringComparison.InvariantCultureIgnoreCase)
         : new CultureStringComparer(Source, StringComparison.InvariantCulture);
 
     /// <inheritdoc />
-    internal bool Equals(string compare) => Ignore
+    public bool Equals(string compare) => Ignore
         ? Source.Equals(compare, StringComparison.OrdinalIgnoreCase)
         : Source.Equals(compare, StringComparison.Ordinal);
 
     /// <inheritdoc />
-    internal bool Contains(string compare) => Ignore
+    public bool Contains(string compare) => Ignore
         ? Source.Contains(compare, StringComparison.OrdinalIgnoreCase)
         : Source.Contains(compare, StringComparison.Ordinal);
 
     /// <inheritdoc />
-    internal bool StartsWith(string compare) => Ignore
+    public bool StartsWith(string compare) => Ignore
         ? Source.StartsWith(compare, StringComparison.OrdinalIgnoreCase)
         : Source.StartsWith(compare, StringComparison.Ordinal);
 
     /// <inheritdoc />
-    internal bool EndsWith(string compare) => Ignore
+    public bool EndsWith(string compare) => Ignore
         ? Source.EndsWith(compare, StringComparison.OrdinalIgnoreCase)
         : Source.EndsWith(compare, StringComparison.Ordinal);
 }
