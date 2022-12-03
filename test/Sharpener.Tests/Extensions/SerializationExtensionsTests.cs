@@ -1,8 +1,9 @@
+using System.Text.Json;
 using FluentAssertions;
 using Sharpener.Extensions;
 using Sharpener.Preferences;
-using System.Text.Json;
 using Sharpener.Tests.Models;
+using Xunit;
 
 public class SerializationExtensionsTests
 {

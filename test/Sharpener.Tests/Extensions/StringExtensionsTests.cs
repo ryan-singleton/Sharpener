@@ -1,7 +1,6 @@
-using Sharpener.Tests.Models;
-using Sharpener.Extensions;
 using FluentAssertions;
-using Sharpener.Preferences;
+using Sharpener.Extensions;
+using Xunit;
 
 namespace Sharpener.Tests.Extensions;
 
