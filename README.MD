@@ -6,11 +6,11 @@ At the moment, it is a collection of quality-of-life features for C#. It is high
 
 Currently offers:
 
-- Collection "As" alternatives. So, for example, if you call `ToList()` on a list, it will construct another list! `AsList()` will only provided the new list if it was not one already.
-- Especially nice if you use Rider/Resharper and it constantly nags you about multiple enumeration (which is nice of it). Now you can address the warning with less chance of using as much memory.
-- Enumerable `ForAll()`, which is like `ForEach()` for lists. It uses `Span<T>`, so the memory implications should be lesser.
-- Syntactically sugarful serialization and deserialization, as well as having the ability to customize the serialization that you get from this logic.
-- Syntactically sugarful case and culture string comparison operations. In case you are tired of littering your code with `StringComparison.OrdinalIgnoreCase` all the time.
+-   Collection "As" alternatives. So, for example, if you call `ToList()` on a list, it will construct another list! `AsList()` will only provided the new list if it was not one already.
+-   Especially nice if you use Rider/Resharper and it constantly nags you about multiple enumeration (which is nice of it). Now you can address the warning with less chance of using as much memory.
+-   Enumerable `ForAll()`, which is like `ForEach()` for lists. It uses `Span<T>`, so the memory implications should be lesser.
+-   Syntactically sugarful serialization and deserialization, as well as having the ability to customize the serialization that you get from this logic.
+-   Syntactically sugarful case and culture string comparison operations. In case you are tired of littering your code with `StringComparison.OrdinalIgnoreCase` all the time.
 
 ## Collections
 
@@ -88,7 +88,7 @@ I don't fault the .NET team for this. It was tough to think of something that wa
 First, let's have a look at a full chain.
 
 ```cs
-var isEqual = "value".NoCase().Invariant().Is("Value");
+var isEqual = "value".NoCase().Invariant().Equals("Value");
 var sameLogic = "value".Equals("Value", StringComparison.InvariantCultureIgnoreCase);
 ```
 
@@ -97,26 +97,26 @@ Both lines have the same result. The first allocates a few variables as paramete
 However, that's as long as this Sharpener syntax gets. There are defaults to use. Are you ok with `StringComparison.OrdinalIgnoreCase`? Cool, let's do this.
 
 ```cs
-var isEqual = "value".NoCase().Is("Value");
+var isEqual = "value".NoCase().Equals("Value");
 var sameLogic = "value".Equals("Value", StringComparison.OrdinalIgnoreCase);
 ```
 
 I like the effect that this has on my code. Plus, I can also do `Contains` work in a mostly similar manner.
 
 ```cs
-var doesContain = "some-value".NoCase().Has("Value");
+var doesContain = "some-value".NoCase().Contains("Value");
 var sameLogic = "some-value".Contains("Value", StringComparison.OrdinalIgnoreCase);
 ```
 
 While there is also a `Case()` builder option, it's not really needed, since case sensitivity and ordinal culture are the defaults.
 
 ```cs
-var isEqual = "value".Case().Is("value");
-var sameLogic = "value".Is("value");
+var isEqual = "value".Case().Equals("value");
+var sameLogic = "value".Equals("value");
 var alsoSameLogic = "value".Equals("value", StringComparison.Ordinal);
 ```
 
-And in case you missed it in the first example, you have `Invariant()`, `Current()`, and `Ordinal` builder functions too. Just note that you won't need to use `Ordinal` in almost all cases.
+And in case you missed it in the first example, you have `Invariant()`, `Current()`, and `Ordinal()` builder functions too. Just note that you won't need to use `Ordinal()` in almost all cases.
 
 ### Links to other Docs
 

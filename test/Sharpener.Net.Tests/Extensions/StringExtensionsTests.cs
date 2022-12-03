@@ -11,24 +11,24 @@ public class StringExtensionsTests
     [Fact]
     public void Equals_Success()
     {
-        "value".Is("Value").Should().BeFalse();
-        "value".NoCase().Is("Value").Should().BeTrue();
-        "value".Case().Is("Value").Should().BeFalse();
-        "value".NoCase().Ordinal().Is("Value").Should().BeTrue();
-        "value".Case().Ordinal().Is("Value").Should().BeFalse();
-        "value".NoCase().Current().Is("Value").Should().BeTrue();
-        "value".Case().Current().Is("Value").Should().BeFalse();
-        "value".NoCase().Invariant().Is("Value").Should().BeTrue();
-        "value".Case().Invariant().Is("Value").Should().BeFalse();
+        "value".Equals("Value").Should().BeFalse();
+        "value".NoCase().Equals("Value").Should().BeTrue();
+        "value".Case().Equals("Value").Should().BeFalse();
+        "value".NoCase().Ordinal().Equals("Value").Should().BeTrue();
+        "value".Case().Ordinal().Equals("Value").Should().BeFalse();
+        "value".NoCase().Current().Equals("Value").Should().BeTrue();
+        "value".Case().Current().Equals("Value").Should().BeFalse();
+        "value".NoCase().Invariant().Equals("Value").Should().BeTrue();
+        "value".Case().Invariant().Equals("Value").Should().BeFalse();
 
-        "some-value".Has("Value").Should().BeFalse();
-        "some-value".NoCase().Has("Value").Should().BeTrue();
-        "some-value".Case().Has("Value").Should().BeFalse();
-        "some-value".NoCase().Ordinal().Has("Value").Should().BeTrue();
-        "some-value".Case().Ordinal().Has("Value").Should().BeFalse();
-        "some-value".NoCase().Current().Has("Value").Should().BeTrue();
-        "some-value".Case().Current().Has("Value").Should().BeFalse();
-        "some-value".NoCase().Invariant().Has("Value").Should().BeTrue();
-        "some-value".Case().Invariant().Has("Value").Should().BeFalse();
+        "some-value".Contains("Value").Should().BeFalse();
+        "some-value".NoCase().Contains("Value").Should().BeTrue();
+        "some-value".Case().Contains("Value").Should().BeFalse();
+        "some-value".NoCase().Ordinal().Contains("Value").Should().BeTrue();
+        "some-value".Case().Ordinal().Contains("Value").Should().BeFalse();
+        "some-value".NoCase().Current().Contains("Value").Should().BeTrue();
+        "some-value".Case().Current().Contains("Value").Should().BeFalse();
+        "some-value".NoCase().Invariant().Contains("Value").Should().BeTrue();
+        "some-value".Case().Invariant().Contains("Value").Should().BeFalse();
     }
 }
