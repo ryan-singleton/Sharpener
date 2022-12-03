@@ -3,7 +3,7 @@ namespace Sharpener.Extensions;
 /// <summary>
 /// Extensions for collections of all types.
 /// </summary>
-public static class CollectionExtensions
+public sealed static class CollectionExtensions
 {
     /// <summary>
     /// Perform an action on each member of an enumerable. Uses <see cref="Span{T}"/> for performance.

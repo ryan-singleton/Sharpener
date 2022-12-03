@@ -4,7 +4,7 @@ namespace Sharpener.Delegates;
 /// A storage place for named delegates that are kept for specific contexts.
 /// </summary>
 /// <typeparam name="TDelegate"></typeparam>
-public class DelegateStore<TDelegate> where TDelegate : Delegate
+internal sealed class DelegateStore<TDelegate> where TDelegate : Delegate
 {
     private const string _defaultName = "default";
     private readonly IDictionary<string, TDelegate> _namedDelegates;
@@ -13,7 +13,7 @@ public class DelegateStore<TDelegate> where TDelegate : Delegate
     /// Constructor.
     /// </summary>
     /// <param name="defaultLogic">The default logic of this store.</param>
-    public DelegateStore(TDelegate defaultLogic)
+    internal DelegateStore(TDelegate defaultLogic)
     {
         _namedDelegates = new Dictionary<string, TDelegate>();
         SetDefault(defaultLogic);
@@ -23,7 +23,7 @@ public class DelegateStore<TDelegate> where TDelegate : Delegate
     /// Sets the default logic of the store. If the logic parameter is null, this will throw a null argument exception, as that cannot be null.
     /// </summary>
     /// <param name="logic"></param>
-    public void SetDefault(TDelegate logic)
+    internal void SetDefault(TDelegate logic)
     {
         if (logic is null)
         {
@@ -37,20 +37,20 @@ public class DelegateStore<TDelegate> where TDelegate : Delegate
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public TDelegate? GetNamed(string name) => _namedDelegates.ContainsKey(name) ? _namedDelegates[name] : null;
+    internal TDelegate? GetNamed(string name) => _namedDelegates.ContainsKey(name) ? _namedDelegates[name] : null;
 
     /// <summary>
     /// Gets the default function of the store. Will not be null as setting it to null is not allowed.
     /// </summary>
     /// <returns></returns>
-    public TDelegate Default => GetNamed(_defaultName)!;
+    internal TDelegate Default => GetNamed(_defaultName)!;
 
     /// <summary>
     /// Sets or creates a named delegate.
     /// </summary>
     /// <param name="name">The name of the delegate.</param>
     /// <param name="logic">The logic of the delegate.</param>
-    public void SetNamed(string name, TDelegate logic)
+    internal void SetNamed(string name, TDelegate logic)
     {
         if (_namedDelegates.ContainsKey(name))
         {
