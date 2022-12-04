@@ -67,7 +67,7 @@ join candidate in candidates on student.Name equals candidate.RegisteredName
 select student;
 ```
 
-The performance of the above code is going to magnitudes of order improved upon the other multiple iteration techniques. Keep that in mind for general knowledge. It's vastly underused.
+The performance of the above code is going to be magnitudes of order improved upon the other multiple iteration techniques. Keep that in mind for general knowledge. It's vastly underused.
 
 But not everyone likes the query syntax. If you want this, but in Linq syntax, .Net also offers this.
 
