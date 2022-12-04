@@ -32,3 +32,5 @@ These are the most recent benchmarks to help in optimizing this library. Note th
 | Current_NoCase            | 1000000 | 79.810 ns | 1.2678 ns | 1.1859 ns |      32 B |
 
 ### Collection Extensions
+
+Uh.. they're running. Gimme a few.
