@@ -1,37 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Codespaces
-Marketplace
-Explore
-
-@r-singleton
-dotnet
-/
-runtime
-Public
-Code
-Issues
-5k+
-Pull requests
-223
-Discussions
-Actions
-Projects
-42
-Security
-7
-Insights
-runtime/.editorconfig
-@marek-safar
-marek-safar Enable IDE0060 (Remove unused parameter) analyzer (#72667)
-Latest commit 8918adf 25 days ago
- History
- 14 contributors
-@stephentoub@marek-safar@jkoritzinsky@buyaa-n@Youssef1313@teo-tsirpanis@NewellClark@MichalStrehovsky@hoyosjs@jkotas@gfoidl@eerhardt
-189 lines (162 sloc)  7.54 KB
-
 # editorconfig.org
 
 # top-most EditorConfig file
@@ -115,6 +81,8 @@ dotnet_naming_style.camel_case_underscore_style.capitalization = camel_case
 # Code style defaults
 csharp_using_directive_placement = outside_namespace:suggestion
 dotnet_sort_system_directives_first = true
+# this cleans unused usings
+dotnet_diagnostic.IDE0005.severity = error
 csharp_prefer_braces = true:silent
 csharp_preserve_single_line_blocks = true:none
 csharp_preserve_single_line_statements = false:none
@@ -186,7 +154,7 @@ csharp_space_between_parentheses = false
 csharp_space_between_square_brackets = false
 
 # License header
-# file_header_template = Licensed with the GNU General Public License.
+# file_header_template = Licensed with the MIT License by Ryan Singleton.
 
 # C++ Files
 [*.{cpp,h,in}]
@@ -221,17 +189,3 @@ indent_size = 2
 end_of_line = lf
 [*.{cmd,bat}]
 end_of_line = crlf
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
