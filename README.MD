@@ -14,7 +14,7 @@ Currently offers:
 
 ## Collections
 
-AsList and AsArray
+### AsList and AsArray
 
 Say you are in a method and one of the parameters was an `IEnumerable<string>`.
 
@@ -31,6 +31,74 @@ var peopleList = people.AsList()
 ```
 
 This does exactly that.
+
+### LeftJoin
+
+Say that you have two lists and you need to quickly find relationships between the two. For this situation, I've seen a lot of code that looks something like this.
+
+```cs
+var studentCandidates = new List<Person>();
+foreach(var student in students)
+{
+    foreach(var candidate in candidates)
+    {
+        if(student.Name.Equals(candidate.RegisteredName))
+        {
+            studentCandidates.Add(student);
+        }
+    }
+}
+```
+
+Just to find which students are also candidates. Now you could be more succinct..
+
+```cs
+var studentCandidates = students.Where(student => candidates.Any(candidate => student.RegisteredName.Equals(candidate.Name)));
+```
+
+But consider that you are iterating through the students list for every entry in the candidates list. That's brutal. Now, not to overlook the value of the `Intersect` and `Union` extensions, there are also join clauses for situations where it's not assumed that equality will be determined by the default equality comparer.
+
+.NET allows you to write code like this, for example
+
+```cs
+var studentCandidates = from student in students
+join candidate in candidates on student.Name equals candidate.RegisteredName
+select student;
+```
+
+The performance of the above code is going to magnitudes of order improved upon the other multiple iteration techniques. Keep that in mind for general knowledge. It's vastly underused.
+
+But not everyone likes the query syntax. If you want this, but in Linq syntax, .Net also offers this.
+
+```cs
+var studentCandidates = students.Join(candidates,
+student => student.Name,
+candidate => candidate.RegisteredName,
+(student, candidate) => student);
+```
+
+But there's one issue. What if you want a `left join`. A join where, when no equality is found, you still get the value from the first (students) list so that you know that it did not have a match. There are times where you'll need this.
+The query syntax offers `into` and `DefaultIfEmpty` for it.
+
+```cs
+var leftJoin = from student in students
+join candidate in candidates on student.Name equals candidate.RegisteredName into joins
+from joined in joins.DefaultIfEmpty()
+select new {Student = student, Candidate = joined};
+
+var studentCandidates = leftJoin.Where(pair => pair.Candidate is not null);
+```
+
+But to have this in Linq syntax, `Join` doesn't really offer much there. Now, you can use `GroupJoin` to achieve this with Linq, but it's a much more complex lambda structure than one really needs for a simple left join. So now you can simply repeat the previous `Join` sample, but replace it with `LeftJoin` and you'll receive results where the second (candidates) had no match.
+
+```cs
+var leftJoin = students.LeftJoin(candidates,
+student => student.Name,
+candidate => candidate.RegisteredName,
+(student, candidate) => student);
+
+var studentCandidates = leftJoin.Where(pair => pair.Candidate is not null);
+```
 
 ## Serialization
 

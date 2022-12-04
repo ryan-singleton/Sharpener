@@ -22,4 +22,35 @@ public class CollectionExtensionsTests
 
         _ = _items.Should().AllSatisfy(x => x.Equals(newName));
     }
+
+    [Fact]
+    public void LeftJoin_Success()
+    {
+        var leftItems = new List<Item>{
+            new Item("Bob", "Friend"),
+            new Item("Jane", "Friend"),
+            new Item("Seth", "Friend"),
+            new Item("Gary", "Family"),
+            new Item("Shane", "Coworker")
+        };
+
+        var rightItems = new List<Item>{
+            new Item("Bob", "Friend"),
+            new Item("Henry", "Friend"),
+            new Item("Will", "Friend"),
+            new Item("Gary", "Family"),
+            new Item("Shane", "Coworker"),
+            new Item("Sally", "Coworker")
+        };
+
+        var results = leftItems.LeftJoin(rightItems,
+        left => left.Name,
+        right => right.Name,
+        (left, right) => new { Left = left, Right = right })?.AsList();
+
+        // results.Should().HaveCount()
+        results!.Any(x => x.Left.Name.Equals("Bob")).Should().BeTrue();
+        results!.Any(x => x.Left.Name.Equals("Jane")).Should().BeTrue();
+        results!.Any(x => x.Right is null).Should().BeTrue();
+    }
 }
