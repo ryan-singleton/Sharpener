@@ -1,3 +1,4 @@
+using Sharpener.Types.Serialization;
 using Sharpener.Types.Strings.Interfaces;
 
 namespace Sharpener.Types.Strings;
@@ -23,6 +24,12 @@ internal struct CaseStringComparer : IStringComparer
     {
         Source = source;
         Ignore = ignore;
+    }
+
+    /// <inheritdoc />
+    public bool Equals(IStringComparer comparer)
+    {
+        return comparer.Equals(Source);
     }
 
     /// <inheritdoc />
@@ -56,21 +63,21 @@ internal struct CaseStringComparer : IStringComparer
 
     /// <inheritdoc />
     public bool Equals(string compare) => Ignore
-        ? Source.Equals(compare, StringComparison.OrdinalIgnoreCase)
-        : Source.Equals(compare, StringComparison.Ordinal);
+        ? Source.Equals(compare, SharpenerStringsSettings.DefaultCultureCaseInsensitive)
+        : Source.Equals(compare, SharpenerStringsSettings.DefaultCultureCaseSensitive);
 
     /// <inheritdoc />
     public bool Contains(string compare) => Ignore
-        ? Source.Contains(compare, StringComparison.OrdinalIgnoreCase)
-        : Source.Contains(compare, StringComparison.Ordinal);
+        ? Source.Contains(compare, SharpenerStringsSettings.DefaultCultureCaseInsensitive)
+        : Source.Contains(compare, SharpenerStringsSettings.DefaultCultureCaseSensitive);
 
     /// <inheritdoc />
     public bool StartsWith(string compare) => Ignore
-        ? Source.StartsWith(compare, StringComparison.OrdinalIgnoreCase)
-        : Source.StartsWith(compare, StringComparison.Ordinal);
+        ? Source.StartsWith(compare, SharpenerStringsSettings.DefaultCultureCaseInsensitive)
+        : Source.StartsWith(compare, SharpenerStringsSettings.DefaultCultureCaseSensitive);
 
     /// <inheritdoc />
     public bool EndsWith(string compare) => Ignore
-        ? Source.EndsWith(compare, StringComparison.OrdinalIgnoreCase)
-        : Source.EndsWith(compare, StringComparison.Ordinal);
+        ? Source.EndsWith(compare, SharpenerStringsSettings.DefaultCultureCaseInsensitive)
+        : Source.EndsWith(compare, SharpenerStringsSettings.DefaultCultureCaseSensitive);
 }
