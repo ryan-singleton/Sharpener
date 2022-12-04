@@ -31,6 +31,12 @@ These are the most recent benchmarks to help in optimizing this library.
 | NoCase_Current            | 1000000 | 99.367 ns | 1.6440 ns | 1.4573 ns |      32 B |
 | Current_NoCase            | 1000000 | 94.614 ns | 1.5016 ns | 1.4748 ns |      32 B |
 
+Conclusions
+
+-   The instantiated structs don't matter much. It's 32 B no matter the amount in the list. Otherwise, no memory notes.
+-   Two to ten nanosecond increases, no matter the size of the collection, on evaluation.
+-   So the string comparisons do not (yet) offer performance boosts, but the performance and memory impacts are insignificant.
+
 ### Collection Extensions
 
 | Method               | Count   |               Mean |           Error |          StdDev |             Median | Allocated |
@@ -71,3 +77,10 @@ These are the most recent benchmarks to help in optimizing this library.
 | AsArray              | 1000000 |  7,024,308.8802 ns | 119,899.5192 ns | 112,154.0847 ns |  7,018,780.0781 ns | 8000078 B |
 | ToArray_WhenWasArray | 1000000 |  7,304,243.0469 ns | 143,388.8682 ns | 254,873.5674 ns |  7,303,213.2812 ns | 8000075 B |
 | AsArray_WhenWasArray | 1000000 |          0.4446 ns |       0.0256 ns |       0.0240 ns |          0.4532 ns |         - |
+
+Conclusions
+
+-   `ForAll` on a list is more comparable to manual `foreach` and `for` than it is to `ForEach` on that same list.
+    -   So you may want to use `ForAll` even on lists.
+-   `AsArray` and `AsList` are extremely valuable when the collection was already an array or list respectively.
+    -   Both in performance speed and memory allocation.
