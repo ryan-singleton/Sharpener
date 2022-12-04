@@ -9,5 +9,5 @@ namespace Sharpener.Types.Serialization;
 public class SystemFrom : IJsonDeserializer
 {
     /// <inheritdoc/>
-    public Func<string, Type, object> Deserialize => (json, type) => JsonSerializer.Deserialize(json, type);
+    public Func<string, Type, object?> Deserialize => (json, type) => JsonSerializer.Deserialize(json, type);
 }

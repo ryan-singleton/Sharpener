@@ -9,5 +9,5 @@ public interface IJsonDeserializer
     /// The deserialization logic.
     /// </summary>
     /// <value></value>
-    Func<string, Type, object> Deserialize { get; }
+    Func<string, Type, object?> Deserialize { get; }
 }

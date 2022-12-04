@@ -50,21 +50,21 @@ public static class SerializationExtensions
     /// </summary>
     /// <typeparam name="TResult">The type to deserialize to.</typeparam>
     /// <typeparam name="TDeserializer">The type of deserializer to use.</typeparam>
-    public static TResult FromJson<TResult, TDeserializer>(this string json) where TResult : class where TDeserializer : IJsonDeserializer, new()
+    public static TResult? FromJson<TResult, TDeserializer>(this string json) where TResult : class where TDeserializer : IJsonDeserializer, new()
     {
         if (s_jsonDeserializer is not TDeserializer)
         {
             s_jsonDeserializer = new TDeserializer();
         }
 
-        return (TResult)s_jsonDeserializer.Deserialize(json, typeof(TResult));
+        return s_jsonDeserializer.Deserialize(json, typeof(TResult)) as TResult;
     }
 
     /// <summary>
     /// Deserializes using JSON deserialization according to <see cref="SharpenerJsonSettings.GetDefaultSerializer"/>.
     /// </summary>
     /// <typeparam name="TResult">The type to deserialize to.</typeparam>
-    public static TResult FromJson<TResult>(this string json) where TResult : class
+    public static TResult? FromJson<TResult>(this string json) where TResult : class
     {
         var type = SharpenerJsonSettings.GetDefaultDeserializer();
         if (s_jsonDeserializer?.GetType() != type)
@@ -72,6 +72,6 @@ public static class SerializationExtensions
             s_jsonDeserializer = Activator.CreateInstance(type) as IJsonDeserializer ?? throw new NullReferenceException("The default json deserializer was null");
         }
 
-        return (TResult)s_jsonDeserializer.Deserialize(json, typeof(TResult));
+        return s_jsonDeserializer.Deserialize(json, typeof(TResult)) as TResult;
     }
 }
