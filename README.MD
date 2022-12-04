@@ -15,6 +15,7 @@ Currently offers:
 ## Collections
 
 AsList and AsArray
+
 Say you are in a method and one of the parameters was an `IEnumerable<string>`.
 
 So it could be anything that inherits from `IEnumerable`, couldn't it? But to avoid multiple enumeration warnings, you want to ensure that you have a list for this context.
