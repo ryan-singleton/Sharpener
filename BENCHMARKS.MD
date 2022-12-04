@@ -33,7 +33,7 @@ These are the most recent benchmarks to help in optimizing this library.
 
 Conclusions
 
--   The instantiated structs don't matter much. It's 32 B no matter the amount in the list. Otherwise, no memory notes.
+-   The instantiated structs only occur with culture builders and don't matter much. It's 32 B no matter the amount in the list.
 -   Two to ten nanosecond increases, no matter the size of the collection, on evaluation.
 -   It would be good if they can eventually offer performance and memory boosts, but for now, they have insignificantly small impacts.
 
