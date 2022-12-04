@@ -1,4 +1,4 @@
-namespace Sharpener.Types.Interfaces;
+namespace Sharpener.Types.Strings.Interfaces;
 
 /// <summary>
 /// A pairing of a string and o

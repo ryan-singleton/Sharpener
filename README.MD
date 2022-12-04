@@ -41,32 +41,33 @@ To serialize something, you can now just write this.
 var asItemJson = item.ToJson();
 ```
 
-Want it indented? ("pretty" or "prettified" to the js people)
+Want it to stop writing indented? Create a serializer.
 
 ```cs
-var asItemJson = item.ToJson("indented");
+/// <summary>
+/// A serializer for System.Text.Json that does not indent.
+/// </summary>
+public class SystemToRaw : IJsonSerializer
+{
+    private static JsonSerializerOptions s_options = new JsonSerializerOptions { WriteIndented = false };
+    /// <inheritdoc/>
+    public Func<object, string> Serialize => model => JsonSerializer.Serialize(model, s_options);
+}
 ```
 
-Got your own logic that you want to call?
+And now you can either explicitly use it, or register it as the default.
+
+Register as default:
 
 ```cs
-SerializationSettings.SetNamedToJson("myJson", model => yourLogic());
-
-var asItemJson = item.ToJson("myJson");
-```
-
-Don't like the default?
-
-```cs
-SerializationSettings.SetDefaultToJson(model => yourLogic());
-
+SharpenerJsonSettings.SetDefaultSerializer<SystemToRaw>();
 var asItemJson = item.ToJson();
 ```
 
-I also wrote this, which helps with tests and clearing changes to set all logic back to default. You can use it too, I'm not your mom.
+Explicit call, which is better for scenarios where you'd prefer not to change the default and you're accomodating an outlier scenario.
 
 ```cs
-SerializationSettings.Reset();
+var asItemJson = item.ToJson<SystemToRaw>();
 ```
 
 ### FromJson
@@ -77,7 +78,7 @@ Let's deserialize something. I've got some text that can deserilialize to an `It
 var item = asItemJson.FromJson<Item>();
 ```
 
-And similar to the `ToJson` options above, you can add named logic of your own for FromJson as well.
+And similar to the `ToJson` options above, you can add a custom deserializer of your own for FromJson as well.
 
 ## Strings
 
