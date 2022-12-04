@@ -1,3 +1,6 @@
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
 namespace Sharpener.Extensions;
 
 /// <summary>
@@ -13,11 +16,13 @@ public static class CollectionExtensions
     /// <typeparam name="T"></typeparam>
     public static void ForAll<T>(this IEnumerable<T> enumerable, Action<T> action)
     {
-        Span<T> asSpan = enumerable.AsArray();
+        var asSpan = CollectionsMarshal.AsSpan(enumerable.AsList());
+        ref var searchSpace = ref MemoryMarshal.GetReference(asSpan);
 
         for (var i = 0; i < asSpan.Length; i++)
         {
-            action(asSpan[i]);
+            var item = Unsafe.Add(ref searchSpace, i);
+            action(item);
         }
     }
 
@@ -35,5 +40,5 @@ public static class CollectionExtensions
     /// <param name="enumerable"></param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static IList<T> AsList<T>(this IEnumerable<T> enumerable) => enumerable.GetType() == typeof(IList<T>) ? (IList<T>)enumerable : enumerable.ToList();
+    public static List<T> AsList<T>(this IEnumerable<T> enumerable) => enumerable.GetType() == typeof(List<T>) ? (List<T>)enumerable : enumerable.ToList();
 }

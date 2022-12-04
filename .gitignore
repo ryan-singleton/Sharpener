@@ -1,11 +1,15 @@
+# IDE caches
 *.vs
 *.vscode
 *.idea
 *.suo
 *.user
 _ReSharper.*
-# *BenchmarkDotNet.Artifacts*
-*benchmark-logs*
+
+# build folders
 bin
 obj
 packages
+
+# benchmarks
+BenchmarkDotNet.Artifacts
