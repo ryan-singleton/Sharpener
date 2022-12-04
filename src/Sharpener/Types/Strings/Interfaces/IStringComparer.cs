@@ -42,6 +42,13 @@ public interface IStringComparer
     IStringComparer Case();
 
     /// <summary>
+    /// Tests equality against another comparer.
+    /// </summary>
+    /// <param name="comparer">The other comparer.</param>
+    /// <returns></returns>
+    bool Equals(IStringComparer comparer);
+
+    /// <summary>
     /// Performs an equality check with the comparison parameters provided.
     /// </summary>
     /// <param name="compare"></param>
