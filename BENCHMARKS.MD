@@ -81,7 +81,7 @@ Conclusions
 Conclusions
 
 -   `ForAll` on a small list is comparable to `ForEach`.
--   `ForAll` on a large list is comparable to manual `foreach` and `for` at scale than it is to `ForEach`.
-    -   So you may want to use `ForAll` even on lists due to similar start metrics and better scaling.
+-   `ForAll` on a large list scales to compare to the faster `foreach` and `for`.
+    -   So you may want to use `ForAll` over `ForEach` on lists due to a similar floor and much higher ceiling.
 -   `AsArray` and `AsList` are extremely valuable when the collection was already an array or list respectively.
     -   Both in performance speed and memory allocation.
