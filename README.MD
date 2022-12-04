@@ -96,7 +96,7 @@ But to have this in Linq syntax, `Join` doesn't really offer much there. Now, yo
 var leftJoin = students.LeftJoin(candidates,
 student => student.Name,
 candidate => candidate.RegisteredName,
-(student, candidate) => student);
+(student, candidate) => new {Student = student, Candidate = candidate});
 
 var studentCandidates = leftJoin.Where(pair => pair.Candidate is not null);
 ```
