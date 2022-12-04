@@ -8,6 +8,20 @@ namespace Sharpener.Extensions;
 /// </summary>
 public static class CollectionExtensions
 {
+    public static (IEnumerable<TInner> Inner, IEnumerable<TOuter> Outer) Join<TInner, TOuter>(this IEnumerable<TInner> inner, IEnumerable<TOuter> outer) => (inner, outer);
+
+    public static (TInner Inner, TOuter? Outer)? On<TInner, TOuter>(this (IEnumerable<TInner> Inner, IEnumerable<TOuter> Outer) join, Func<TInner, TOuter, bool> predicate)
+    {
+        Span<TInner> innerAsSpan = join.Inner.AsList();
+        Span<TOuter> outerAsSpan = join.Outer.AsList();
+
+
+        var query = from inner in innerAsSpan
+                    join outer in outerAsSpan on predicate(inner, outer) equals true
+
+                    return null;
+    }
+
     /// <summary>
     /// Perform an action on each member of an enumerable. Uses <see cref="Span{T}"/> for performance.
     /// </summary>
