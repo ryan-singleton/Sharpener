@@ -118,7 +118,24 @@ var sameLogic = "value".Equals("value");
 var alsoSameLogic = "value".Equals("value", StringComparison.Ordinal);
 ```
 
-And in case you missed it in the first example, you have `Invariant()`, `Current()`, and `Ordinal()` builder functions too. Just note that you won't need to use `Ordinal()` in almost all cases.
+Want to change the default culture from ordinal?
+
+```cs
+SharpenerStringsSettings.SetDefaultCulture(StringComparison.CurrentCulture);
+```
+
+This will result in current culture being the default comparison and it will select the case insensitive variant as well.
+
+If you don't want the same culture per case sensitive scenario, you can even use
+
+```cs
+SharpenerStringsSettings.TrySetDefaultCultureCaseSensitive(StringComparison.CurrentCulture);
+SharpenerStringsSettings.TrySetDefaultCultureCaseInsensitive(StringComparison.InvariantCultureIgnoreCase);
+```
+
+Just note that these methods will return false if you try to set a case sensitive culture to the case insensitive method and vice versa.
+
+And in case you missed it in the first example, you have `Invariant()`, `Current()`, and `Ordinal()` builder functions too.
 
 ### Links to other Docs
 
