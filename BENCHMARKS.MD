@@ -35,7 +35,7 @@ Conclusions
 
 -   The instantiated structs don't matter much. It's 32 B no matter the amount in the list. Otherwise, no memory notes.
 -   Two to ten nanosecond increases, no matter the size of the collection, on evaluation.
--   So the string comparisons do not (yet) offer performance boosts, but the performance and memory impacts are insignificant.
+-   It would be good if they can eventually offer performance and memory boosts, but for now, they have insignificantly small impacts.
 
 ### Collection Extensions
 
