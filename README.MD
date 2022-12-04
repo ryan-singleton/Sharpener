@@ -53,7 +53,8 @@ foreach(var student in students)
 Just to find which students are also candidates. Now you could be more succinct..
 
 ```cs
-var studentCandidates = students.Where(student => candidates.Any(candidate => student.RegisteredName.Equals(candidate.Name)));
+var studentCandidates = students
+.Where(student => candidates.Any(candidate => student.RegisteredName.Equals(candidate.Name)));
 ```
 
 But consider that you are iterating through the students list for every entry in the candidates list. That's brutal. Now, not to overlook the value of the `Intersect` and `Union` extensions, there are also join clauses for situations where it's not assumed that equality will be determined by the default equality comparer.
