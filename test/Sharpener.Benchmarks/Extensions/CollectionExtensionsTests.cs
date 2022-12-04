@@ -25,13 +25,13 @@ public class CollectionExtensionsTests
         _itemsArray = _itemsList.ToArray();
     }
 
-    [Benchmark]
+    [Benchmark(Description = "list.ForAll()")]
     public void ForAll() => _itemsList.ForAll(item => item.Name = Name);
 
-    [Benchmark]
+    [Benchmark(Description = "list.ForEach()")]
     public void ForEach() => _itemsList.ForEach(item => item.Name = Name);
 
-    [Benchmark]
+    [Benchmark(Description = "foreach in list")]
     public void ForEachManual()
     {
         foreach (var item in _itemsList)
@@ -40,7 +40,7 @@ public class CollectionExtensionsTests
         }
     }
 
-    [Benchmark]
+    [Benchmark(Description = "for in list")]
     public void ForManual()
     {
         for (var i = 0; i < _itemsList.Count; i++)
@@ -49,27 +49,27 @@ public class CollectionExtensionsTests
         }
     }
 
-    [Benchmark]
+    [Benchmark(Description = "list.ToList()")]
     public void ToList_WhenWasList() => _itemsList.ToList();
 
-    [Benchmark]
+    [Benchmark(Description = "list.AsList()")]
     public void AsList_WhenWasList() => _itemsList.AsList();
 
-    [Benchmark]
+    [Benchmark(Description = "array.ToList()")]
     public void ToList() => _itemsArray.ToList();
 
-    [Benchmark]
+    [Benchmark(Description = "array.AsList()")]
     public void AsList() => _itemsArray.AsList();
 
-    [Benchmark]
+    [Benchmark(Description = "list.ToArray()")]
     public void ToArray() => _itemsList.ToArray();
 
-    [Benchmark]
+    [Benchmark(Description = "list.AsArray()")]
     public void AsArray() => _itemsList.AsArray();
 
-    [Benchmark]
+    [Benchmark(Description = "array.ToArray()")]
     public void ToArray_WhenWasArray() => _itemsArray.ToArray();
 
-    [Benchmark]
+    [Benchmark(Description = "array.AsArray()")]
     public void AsArray_WhenWasArray() => _itemsArray.AsArray();
 }
