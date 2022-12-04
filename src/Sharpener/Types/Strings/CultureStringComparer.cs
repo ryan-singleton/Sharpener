@@ -26,10 +26,7 @@ internal struct CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    public bool Equals(IStringComparer comparer)
-    {
-        return comparer.Equals(Source);
-    }
+    public bool Equals(IStringComparer comparer) => comparer.Equals(Source);
 
     /// <inheritdoc />
     public IStringComparer NoCase()

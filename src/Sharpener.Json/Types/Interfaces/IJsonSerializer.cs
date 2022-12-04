@@ -1,4 +1,4 @@
-namespace Sharpener.Types.Serialization.Interfaces;
+namespace Sharpener.Json.Types.Interfaces;
 
 /// <summary>
 /// The contract for a serializer for JSON.

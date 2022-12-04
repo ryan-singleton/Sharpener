@@ -1,7 +1,7 @@
 using AutoBogus;
 using BenchmarkDotNet.Attributes;
-using Sharpener.Benchmarks.Models;
 using Sharpener.Extensions;
+using Sharpener.Tests.Common.Models;
 
 namespace Sharpener.Benchmarks.Extensions;
 

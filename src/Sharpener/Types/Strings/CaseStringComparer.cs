@@ -1,4 +1,3 @@
-using Sharpener.Types.Serialization;
 using Sharpener.Types.Strings.Interfaces;
 
 namespace Sharpener.Types.Strings;
@@ -27,10 +26,7 @@ internal struct CaseStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    public bool Equals(IStringComparer comparer)
-    {
-        return comparer.Equals(Source);
-    }
+    public bool Equals(IStringComparer comparer) => comparer.Equals(Source);
 
     /// <inheritdoc />
     public IStringComparer NoCase()

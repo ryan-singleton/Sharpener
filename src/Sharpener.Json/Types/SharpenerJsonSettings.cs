@@ -1,6 +1,6 @@
-using Sharpener.Types.Serialization.Interfaces;
+using Sharpener.Json.Types.Interfaces;
 
-namespace Sharpener.Types.Serialization;
+namespace Sharpener.Json.Types;
 
 /// <summary>
 /// Global settings for all Sharpener JSON features.

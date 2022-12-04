@@ -1,4 +1,4 @@
-namespace Sharpener.Benchmarks.Models;
+namespace Sharpener.Tests.Common.Models;
 
 /// <summary>
 /// A simple model used for testing against.

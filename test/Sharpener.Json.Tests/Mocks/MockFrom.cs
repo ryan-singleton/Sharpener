@@ -1,7 +1,7 @@
-using Sharpener.Tests.Models;
-using Sharpener.Types.Serialization.Interfaces;
+using Sharpener.Json.Types.Interfaces;
+using Sharpener.Tests.Common.Models;
 
-namespace Sharpener.Tests.Mocks;
+namespace Sharpener.Json.Tests.Mocks;
 
 public class MockFrom : IJsonDeserializer
 {

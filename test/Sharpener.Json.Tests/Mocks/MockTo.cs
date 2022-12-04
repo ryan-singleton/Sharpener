@@ -1,6 +1,6 @@
-using Sharpener.Types.Serialization.Interfaces;
+using Sharpener.Json.Types.Interfaces;
 
-namespace Sharpener.Tests.Mocks;
+namespace Sharpener.Json.Tests.Mocks;
 
 public class MockTo : IJsonSerializer
 {

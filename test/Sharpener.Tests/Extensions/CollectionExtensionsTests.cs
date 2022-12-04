@@ -1,7 +1,4 @@
-using FluentAssertions;
-using Sharpener.Extensions;
-using Sharpener.Tests.Models;
-using Xunit;
+using Sharpener.Tests.Common.Models;
 
 namespace Sharpener.Tests.Extensions;
 
@@ -49,8 +46,8 @@ public class CollectionExtensionsTests
         (left, right) => new { Left = left, Right = right })?.AsList();
 
         // results.Should().HaveCount()
-        results!.Any(x => x.Left.Name.Equals("Bob")).Should().BeTrue();
-        results!.Any(x => x.Left.Name.Equals("Jane")).Should().BeTrue();
-        results!.Any(x => x.Right is null).Should().BeTrue();
+        _ = results!.Any(x => x.Left.Name.Equals("Bob")).Should().BeTrue();
+        _ = results!.Any(x => x.Left.Name.Equals("Jane")).Should().BeTrue();
+        _ = results!.Any(x => x.Right is null).Should().BeTrue();
     }
 }

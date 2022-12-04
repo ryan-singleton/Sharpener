@@ -1,4 +1,4 @@
-namespace Sharpener.Types.Serialization;
+namespace Sharpener.Types.Strings;
 
 /// <summary>
 /// Global settings for all Sharpener strings features.
@@ -8,10 +8,7 @@ public static class SharpenerStringsSettings
     /// <summary>
     /// Constructor.
     /// </summary>
-    static SharpenerStringsSettings()
-    {
-        SetDefaultCulture(StringComparison.Ordinal);
-    }
+    static SharpenerStringsSettings() => SetDefaultCulture(StringComparison.Ordinal);
 
     /// <summary>
     /// The default culture for case sensitive comparison.
@@ -62,20 +59,20 @@ public static class SharpenerStringsSettings
     {
         switch (stringComparison)
         {
-            case (StringComparison.CurrentCulture):
-            case (StringComparison.CurrentCultureIgnoreCase):
-                DefaultCultureCaseInsensitive = (StringComparison.CurrentCultureIgnoreCase);
-                DefaultCultureCaseSensitive = (StringComparison.CurrentCulture);
+            case StringComparison.CurrentCulture:
+            case StringComparison.CurrentCultureIgnoreCase:
+                DefaultCultureCaseInsensitive = StringComparison.CurrentCultureIgnoreCase;
+                DefaultCultureCaseSensitive = StringComparison.CurrentCulture;
                 break;
-            case (StringComparison.Ordinal):
-            case (StringComparison.OrdinalIgnoreCase):
-                DefaultCultureCaseInsensitive = (StringComparison.OrdinalIgnoreCase);
-                DefaultCultureCaseSensitive = (StringComparison.Ordinal);
+            case StringComparison.Ordinal:
+            case StringComparison.OrdinalIgnoreCase:
+                DefaultCultureCaseInsensitive = StringComparison.OrdinalIgnoreCase;
+                DefaultCultureCaseSensitive = StringComparison.Ordinal;
                 break;
-            case (StringComparison.InvariantCulture):
-            case (StringComparison.InvariantCultureIgnoreCase):
-                DefaultCultureCaseInsensitive = (StringComparison.InvariantCultureIgnoreCase);
-                DefaultCultureCaseSensitive = (StringComparison.InvariantCulture);
+            case StringComparison.InvariantCulture:
+            case StringComparison.InvariantCultureIgnoreCase:
+                DefaultCultureCaseInsensitive = StringComparison.InvariantCultureIgnoreCase;
+                DefaultCultureCaseSensitive = StringComparison.InvariantCulture;
                 break;
         }
     }

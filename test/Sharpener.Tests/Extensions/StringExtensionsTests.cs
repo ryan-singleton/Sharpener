@@ -1,7 +1,3 @@
-using FluentAssertions;
-using Sharpener.Extensions;
-using Xunit;
-
 namespace Sharpener.Tests.Extensions;
 
 public class StringExtensionsTests

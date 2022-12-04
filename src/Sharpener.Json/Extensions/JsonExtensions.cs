@@ -1,12 +1,12 @@
-using Sharpener.Types.Serialization;
-using Sharpener.Types.Serialization.Interfaces;
+using Sharpener.Json.Types;
+using Sharpener.Json.Types.Interfaces;
 
-namespace Sharpener.Extensions;
+namespace Sharpener.Json.Extensions;
 
 /// <summary>
 /// Extensions for serialization.
 /// </summary>
-public static class SerializationExtensions
+public static class JsonExtensions
 {
     private static IJsonSerializer? s_jsonSerializer;
 
