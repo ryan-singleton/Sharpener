@@ -36,7 +36,7 @@ public static class SerializationExtensions
     /// <returns></returns>
     public static string ToJson(this object source)
     {
-        var type = SharpenerJsonSettings.GetDefaultSerializer();
+        Type type = SharpenerJsonSettings.GetDefaultSerializer();
         if (s_jsonSerializer?.GetType() != type)
         {
             s_jsonSerializer = Activator.CreateInstance(type) as IJsonSerializer ?? throw new NullReferenceException("The default json serializer was null");
@@ -66,7 +66,7 @@ public static class SerializationExtensions
     /// <typeparam name="TResult">The type to deserialize to.</typeparam>
     public static TResult? FromJson<TResult>(this string json) where TResult : class
     {
-        var type = SharpenerJsonSettings.GetDefaultDeserializer();
+        Type type = SharpenerJsonSettings.GetDefaultDeserializer();
         if (s_jsonDeserializer?.GetType() != type)
         {
             s_jsonDeserializer = Activator.CreateInstance(type) as IJsonDeserializer ?? throw new NullReferenceException("The default json deserializer was null");

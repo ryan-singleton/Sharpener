@@ -34,7 +34,7 @@ public class CollectionExtensionsTests
     [Benchmark(Description = "foreach in list")]
     public void ForEachManual()
     {
-        foreach (var item in _itemsList)
+        foreach (Item item in _itemsList)
         {
             item.Name = Name;
         }
@@ -43,7 +43,7 @@ public class CollectionExtensionsTests
     [Benchmark(Description = "for in list")]
     public void ForManual()
     {
-        for (var i = 0; i < _itemsList.Count; i++)
+        for (int i = 0; i < _itemsList.Count; i++)
         {
             _itemsList[i].Name = Name;
         }

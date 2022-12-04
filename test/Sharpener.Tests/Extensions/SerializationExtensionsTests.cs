@@ -12,8 +12,8 @@ public class SerializationExtensionsTests
     public void ToJson_Success()
     {
         var item = new Item("guy", "person");
-        var asJson = item.ToJson();
-        var compareJson = JsonSerializer.Serialize(item, new JsonSerializerOptions { WriteIndented = true });
+        string asJson = item.ToJson();
+        string compareJson = JsonSerializer.Serialize(item, new JsonSerializerOptions { WriteIndented = true });
 
         _ = asJson.Should().Be(compareJson);
     }
@@ -22,8 +22,8 @@ public class SerializationExtensionsTests
     public void FromJson_Success()
     {
         var item = new Item("guy", "person");
-        var asJson = item.ToJson();
-        var asItem = asJson.FromJson<Item>();
+        string asJson = item.ToJson();
+        Item? asItem = asJson.FromJson<Item>();
 
         _ = asItem.Should().NotBeNull();
         _ = asItem!.Name.Should().Be(item.Name);

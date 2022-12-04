@@ -11,31 +11,31 @@ public class StringExtensionsTests
     private const string Compare = "Value";
 
     [GlobalSetup]
-    public void Setup()
+    public static void Setup()
     {
     }
 
     [Benchmark(Description = "string.Equals(string)")]
-    public void Equals_Original() => Source.Equals(Compare);
+    public static void Equals_Original() => Source.Equals(Compare);
 
     [Benchmark(Description = "string.Equals(string, StringComparison.Ordinal)")]
-    public void Case_Equivalent() => Source.Equals(Compare, StringComparison.Ordinal);
+    public static void Case_Equivalent() => Source.Equals(Compare, StringComparison.Ordinal);
 
     [Benchmark(Description = "string.Case().Equals(string)")]
-    public void Case() => Source.Case().Equals(Compare);
+    public static void Case() => Source.Case().Equals(Compare);
 
     [Benchmark(Description = "string.Equals(string, StringComparison.OrdinalIgnoreCase)")]
-    public void NoCase_Equivalent() => Source.Equals(Compare, StringComparison.OrdinalIgnoreCase);
+    public static void NoCase_Equivalent() => Source.Equals(Compare, StringComparison.OrdinalIgnoreCase);
 
     [Benchmark(Description = "string.NoCase().Equals(string)")]
-    public void NoCase() => Source.NoCase().Equals(Compare);
+    public static void NoCase() => Source.NoCase().Equals(Compare);
 
     [Benchmark(Description = "string.Equals(string, StringComparison.CurrentCultureIgnoreCase)")]
-    public void NoCase_Current_Equivalent() => Source.Equals(Compare, StringComparison.CurrentCultureIgnoreCase);
+    public static void NoCase_Current_Equivalent() => Source.Equals(Compare, StringComparison.CurrentCultureIgnoreCase);
 
     [Benchmark(Description = "string.NoCase().Current().Equals(string)")]
-    public void NoCase_Current() => Source.NoCase().Current().Equals(Compare);
+    public static void NoCase_Current() => Source.NoCase().Current().Equals(Compare);
 
     [Benchmark(Description = "string.Current().NoCase().Equals(string)")]
-    public void Current_NoCase() => Source.Current().NoCase().Equals(Compare);
+    public static void Current_NoCase() => Source.Current().NoCase().Equals(Compare);
 }

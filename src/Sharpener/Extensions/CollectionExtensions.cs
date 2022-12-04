@@ -16,12 +16,12 @@ public static class CollectionExtensions
     /// <typeparam name="T"></typeparam>
     public static void ForAll<T>(this IEnumerable<T> enumerable, Action<T> action)
     {
-        var asSpan = CollectionsMarshal.AsSpan(enumerable.AsList());
-        ref var searchSpace = ref MemoryMarshal.GetReference(asSpan);
+        Span<T> asSpan = CollectionsMarshal.AsSpan(enumerable.AsList());
+        ref T searchSpace = ref MemoryMarshal.GetReference(asSpan);
 
-        for (var i = 0; i < asSpan.Length; i++)
+        for (int i = 0; i < asSpan.Length; i++)
         {
-            var item = Unsafe.Add(ref searchSpace, i);
+            T? item = Unsafe.Add(ref searchSpace, i);
             action(item);
         }
     }

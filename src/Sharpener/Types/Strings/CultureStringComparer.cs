@@ -28,7 +28,7 @@ internal struct CultureStringComparer : IStringComparer
     /// <inheritdoc />
     public IStringComparer NoCase()
     {
-        var newComparison = Comparison switch
+        StringComparison newComparison = Comparison switch
         {
             StringComparison.CurrentCulture => StringComparison.CurrentCultureIgnoreCase,
             StringComparison.Ordinal => StringComparison.OrdinalIgnoreCase,
@@ -43,7 +43,7 @@ internal struct CultureStringComparer : IStringComparer
     /// <inheritdoc />
     public IStringComparer Case()
     {
-        var newComparison = Comparison switch
+        StringComparison newComparison = Comparison switch
         {
             StringComparison.CurrentCultureIgnoreCase => StringComparison.CurrentCulture,
             StringComparison.OrdinalIgnoreCase => StringComparison.Ordinal,
@@ -58,7 +58,7 @@ internal struct CultureStringComparer : IStringComparer
     /// <inheritdoc />
     public IStringComparer Current()
     {
-        var newComparison = Comparison switch
+        StringComparison newComparison = Comparison switch
         {
             StringComparison.Ordinal => StringComparison.CurrentCulture,
             StringComparison.InvariantCulture => StringComparison.CurrentCulture,
@@ -75,7 +75,7 @@ internal struct CultureStringComparer : IStringComparer
     /// <inheritdoc />
     public IStringComparer Invariant()
     {
-        var newComparison = Comparison switch
+        StringComparison newComparison = Comparison switch
         {
             StringComparison.Ordinal => StringComparison.InvariantCulture,
             StringComparison.CurrentCulture => StringComparison.InvariantCulture,
@@ -92,7 +92,7 @@ internal struct CultureStringComparer : IStringComparer
     /// <inheritdoc />
     public IStringComparer Ordinal()
     {
-        var newComparison = Comparison switch
+        StringComparison newComparison = Comparison switch
         {
             StringComparison.InvariantCulture => StringComparison.Ordinal,
             StringComparison.CurrentCulture => StringComparison.Ordinal,
