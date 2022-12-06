@@ -1,3 +1,5 @@
+// The Sharpener project licenses this file to you under the MIT license.
+
 using Sharpener.Tests.Common.Models;
 
 namespace Sharpener.Tests.Extensions;
@@ -17,7 +19,7 @@ public class CollectionExtensionsTests
         const string newName = "AffectedItem";
         _items.ForAll(x => x.Name = newName);
 
-        _ = _items.Should().AllSatisfy(x => x.Equals(newName));
+        _items.Should().AllSatisfy(x => x.Equals(newName));
     }
 
     [Fact]
@@ -46,8 +48,8 @@ public class CollectionExtensionsTests
         (left, right) => new { Left = left, Right = right })?.AsList();
 
         // results.Should().HaveCount()
-        _ = results!.Any(x => x.Left.Name.Equals("Bob")).Should().BeTrue();
-        _ = results!.Any(x => x.Left.Name.Equals("Jane")).Should().BeTrue();
-        _ = results!.Any(x => x.Right is null).Should().BeTrue();
+        results!.Any(x => x.Left.Name.Equals("Bob")).Should().BeTrue();
+        results!.Any(x => x.Left.Name.Equals("Jane")).Should().BeTrue();
+        results!.Any(x => x.Right is null).Should().BeTrue();
     }
 }

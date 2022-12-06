@@ -1,3 +1,5 @@
+// The Sharpener project licenses this file to you under the MIT license.
+
 using Sharpener.Json.Types;
 using Sharpener.Json.Types.Interfaces;
 
@@ -11,7 +13,6 @@ public static class JsonExtensions
     private static IJsonSerializer? s_jsonSerializer;
 
     private static IJsonDeserializer? s_jsonDeserializer;
-
 
     /// <summary>
     /// Creates JSON serialization according to the supplied type.
@@ -36,7 +37,7 @@ public static class JsonExtensions
     /// <returns></returns>
     public static string ToJson(this object source)
     {
-        Type type = SharpenerJsonSettings.GetDefaultSerializer();
+        var type = SharpenerJsonSettings.GetDefaultSerializer();
         if (s_jsonSerializer?.GetType() != type)
         {
             s_jsonSerializer = Activator.CreateInstance(type) as IJsonSerializer ?? throw new NullReferenceException("The default json serializer was null");
@@ -66,7 +67,7 @@ public static class JsonExtensions
     /// <typeparam name="TResult">The type to deserialize to.</typeparam>
     public static TResult? FromJson<TResult>(this string json) where TResult : class
     {
-        Type type = SharpenerJsonSettings.GetDefaultDeserializer();
+        var type = SharpenerJsonSettings.GetDefaultDeserializer();
         if (s_jsonDeserializer?.GetType() != type)
         {
             s_jsonDeserializer = Activator.CreateInstance(type) as IJsonDeserializer ?? throw new NullReferenceException("The default json deserializer was null");

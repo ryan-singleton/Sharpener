@@ -1,3 +1,5 @@
+// The Sharpener project licenses this file to you under the MIT license.
+
 using BenchmarkDotNet.Attributes;
 using Sharpener.Extensions;
 namespace Sharpener.Benchmarks.Extensions;

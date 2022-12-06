@@ -1,3 +1,5 @@
+// The Sharpener project licenses this file to you under the MIT license.
+
 using System.Text.Json;
 using Sharpener.Json.Types.Interfaces;
 

@@ -1,3 +1,5 @@
+// The Sharpener project licenses this file to you under the MIT license.
+
 using AutoBogus;
 using BenchmarkDotNet.Attributes;
 using Sharpener.Extensions;
@@ -34,7 +36,7 @@ public class CollectionExtensionsTests
     [Benchmark(Description = "foreach in list")]
     public void ForEachManual()
     {
-        foreach (Item item in _itemsList)
+        foreach (var item in _itemsList)
         {
             item.Name = Name;
         }
@@ -43,7 +45,7 @@ public class CollectionExtensionsTests
     [Benchmark(Description = "for in list")]
     public void ForManual()
     {
-        for (int i = 0; i < _itemsList.Count; i++)
+        for (var i = 0; i < _itemsList.Count; i++)
         {
             _itemsList[i].Name = Name;
         }
