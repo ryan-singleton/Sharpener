@@ -1,41 +1,85 @@
+<img src="branding/icon-white-stroke.svg"
+     alt="Sharpener icon"
+     style="float: left; height: 24px; margin-right: 10px;" />
+
 # Sharpener
 
-## What is it?
+A small scoped and modular ecosystem of packages that intend to provide quality of life improvements for C# developers. Each package provides these improvements within a domain of work, so that you can keep your references light and tailored to your needs.
 
-At the moment, it is a collection of quality-of-life features for C#. It is highly opinionated, although the goal is to be careful and iterative so that these opinionated features will not feel too.. well.. opinionated. A sort of pseudo-empirical if you will. Like enjoying the new Dune movie. Not awfully risky to say, right?
-Currently offers:
+## Table of Contents
 
-- Collection "As" alternatives. So, for example, if you call `ToList()` on a list, it will construct another list! `AsList()` will only provide the new list if it was not one already.
-  - Especially nice if you use Rider/Resharper and it constantly nags you about multiple enumeration (which is nice of it). Now you can address the warning with less chance of using as much memory.
-- Enumerable `ForAll()`, which is like `ForEach()` for lists. It uses `Span<T>`, so the memory implications should be lesser.
-- Syntactically sugarful serialization and deserialization, as well as having the ability to customize the serialization that you get from this logic.
-- Syntactically sugarful case and culture string comparison operations. In case you are tired of littering your code with `StringComparison.OrdinalIgnoreCase` all the time.
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Extended Features](#extended-features)
+- [Other Docs](#other-docs)
+- [Support](#support)
+- [Contributing](#contributing)
 
-## Collections
+## Features
 
-### AsList and AsArray
+The `Sharpener` package focuses on features for the basic runtime layer.
 
-Say you are in a method and one of the parameters was an `IEnumerable<string>`.
-So it could be anything that inherits from `IEnumerable`, couldn't it? But to avoid multiple enumeration warnings, you want to ensure that you have a list for this context.
+- Concise syntax for string comparisons
+  - reducing code clutter due to `StringComparison.SomethingIgnoreCase` spam.
+- Fast version of `ForEach` available to all `IEnumerable` types using `Span<T>`.
+- A variation from `Join` on lists that allows left joins called `LeftJoin`.
+- `As` variants of `ToList` and `ToArray` that will prefer to try casting before creating.
+  - If your IDE gives you "multiple enumeration warnings", this one is worth looking at.
+    See [Extended Features](#extended-features) for the other extended packages in the Sharpener ecosystem.
+
+## Installation
+
+**THESE DON'T WORK YET**
+Navigate to the directory of your .csproj file and then run this command
+`dotnet add package Sharpener`
+or
+`PM> Install-Package Sharpener`
+
+## Usage
+
+### Concise String Comparisons
 
 ```cs
-var peopleList = people.ToList()
+var name = "Rick Astley";
+var isRickRoll = name.NoCase().StartsWith("rick")
 ```
 
-If this was already a list, it'd be nice if this just casted the list as a list, if it was a list.
+Has culture builders as well like `Current()`, `Invariant()`, and `Ordinal()`.
+
+### ForAll
+
+Say you have an `IEnumerable<Student>`</Student> and you need to reset their `Absences` on all.
 
 ```cs
-var peopleList = people.AsList()
+students.ForAll(student => student.Absences = 0);
 ```
 
-This does exactly that.
+You don't need to cast it as a list and it will run faster with lower memory than if you called `ToList` and then `ForEach`.
+
+### Collection As Extensions
+
+Say you have that same enumerable from the above example. It has been passed down from method to method and you don't know, off hand, if it is a list or not.
+You perform two operations that may enumerate it twice, so your IDE warns you about this. If it is already a list, calling `ToList` will make another list from your list. What do you do to settle this warning?
+
+```cs
+var studentList = students.AsList();
+var bStudents = studentList.Select(student => student.Grade == "A");
+var bStudents = studentList.Select(student => student.Grade == "B");
+var cStudents = studentList.Select(student => student.Grade == "C");
+var bStudents = studentList.Select(student => student.Grade == "D");
+var cStudents = studentList.Select(student => student.Grade == "E");
+var bStudents = studentList.Select(student => student.Grade == "F");
+```
+
+Granted, `GroupBy` is the better option here, but you get the point.
 
 ### LeftJoin
 
 Say that you have two lists and you need to quickly find relationships between the two. For this situation, I've seen a lot of code that looks something like this.
 
 ```cs
-var studentCandidates = new List<Person>();
+var studentCandidates = new List<Student>();
 foreach(var student in students)
 {
     foreach(var candidate in candidates)
@@ -48,7 +92,7 @@ foreach(var student in students)
 }
 ```
 
-Just to find which students are also candidates. Now you could be more succinct..
+Just to find which students are also candidates. Now you could be more succinct.
 
 ```cs
 var studentCandidates = students
@@ -56,7 +100,7 @@ var studentCandidates = students
 ```
 
 But consider that you are iterating through the students list for every entry in the candidates list. That's brutal. Now, not to overlook the value of the `Intersect` and `Union` extensions, there are also join clauses for situations where it's not assumed that equality will be determined by the default equality comparer.
-.NET allows you to write code like this, for example
+.NET allows you to write code like this, for example.
 
 ```cs
 var studentCandidates = from student in students
@@ -95,110 +139,23 @@ candidate => candidate.RegisteredName,
 var studentCandidates = leftJoin.Where(pair => pair.Candidate is not null);
 ```
 
-## Serialization
+## Extended Features
 
-### WriteJson
+- [Json](docs/JSON.md)
+  - [Newtonsoft](docs/Newtonsoft.md)
+- [Http](docs/Http.md)
 
-To serialize something, you can now just write this.
+## Other Docs
 
-```cs
-var json = item.WriteJson();
-```
+- [Contributing](docs/CONTRIBUTING.md)
+- [Changelog](docs/CHANGELOG.md)
+- [Benchmarks](docs/BENCHMARKS.md)
+- [Roadmap](docs/ROADMAP.MD)
 
-Want it to stop writing indented? Create a serializer.
+## Support
 
-```cs
-/// <summary>
-/// A serializer for System.Text.Json that does not indent.
-/// </summary>
-public class JsonRawReader : IJsonReader
-{
-    private static JsonSerializerOptions s_options = new JsonSerializerOptions { WriteIndented = false };
-    /// <inheritdoc/>
-    public Func<object, string> Write => model => JsonSerializer.Serialize(model, s_options);
-}
-```
+Please [open an issue](https://github.com/r-singleton/Sharpener/issues/new) for support.
 
-And now you can either explicitly use it, or register it as the default.
-Register as default:
+## Contributing
 
-```cs
-SharpenerJsonSettings.SetDefaultWriter<JsonRawReader>();
-var json = item.WriteJson();
-```
-
-Explicit call, which is better for scenarios where you'd prefer not to change the default and you're accomodating an outlier scenario.
-
-```cs
-var json = item.WriteJson<JsonRawReader>();
-```
-
-### ReadJsonAs`<T>`
-
-Let's deserialize something. I've got some text that can deserilialize to an `Item`.
-
-```cs
-var item = json.ReadJsonAs<Item>();
-```
-
-And similar to the `WriteJson` options above, you can add a custom deserializer of your own for FromJson as well.
-
-## Strings
-
-This one is a bit opinionated. But, my dudes, I am so sick of writing `StringComparison.SomethingIgnoreCase` all over my code when I don't want to mind case sensitivity. And it's pretty often in my work.
-I don't fault the .NET team for this. It was tough to think of something that was logical to clean this mess up, but I have something that I'm fairly content with.
-First, let's have a look at a full chain.
-
-```cs
-var isEqual = "value".NoCase().Invariant().Equals("Value");
-var sameLogic = "value".Equals("Value", StringComparison.InvariantCultureIgnoreCase);
-```
-
-Both lines have the same result. The first allocates a few variables as parameters and return values. Otherwise, it's the same.
-However, that's as long as this Sharpener syntax gets. There are defaults to use. Are you ok with `StringComparison.OrdinalIgnoreCase`? Cool, let's do this.
-
-```cs
-var isEqual = "value".NoCase().Equals("Value");
-var sameLogic = "value".Equals("Value", StringComparison.OrdinalIgnoreCase);
-```
-
-I like the effect that this has on my code. Plus, I can also do `Contains` work in a mostly similar manner.
-
-```cs
-var doesContain = "some-value".NoCase().Contains("Value");
-var sameLogic = "some-value".Contains("Value", StringComparison.OrdinalIgnoreCase);
-```
-
-While there is also a `Case()` builder option, it's not really needed, since case sensitivity and ordinal culture are the defaults.
-
-```cs
-var isEqual = "value".Case().Equals("value");
-var sameLogic = "value".Equals("value");
-var alsoSameLogic = "value".Equals("value", StringComparison.Ordinal);
-```
-
-Want to change the default culture from ordinal?
-
-```cs
-SharpenerStringsSettings.SetDefaultCulture(StringComparison.CurrentCulture);
-```
-
-This will result in current culture being the default comparison and it will select the case insensitive variant as well.
-If you don't want the same culture per case sensitive scenario, you can even use
-
-```cs
-SharpenerStringsSettings.TrySetDefaultCultureCaseSensitive(StringComparison.CurrentCulture);
-SharpenerStringsSettings.TrySetDefaultCultureCaseInsensitive(StringComparison.InvariantCultureIgnoreCase);
-```
-
-Just note that these methods will return false if you try to set a case sensitive culture to the case insensitive method and vice versa.
-And in case you missed it in the first example, you have `Invariant()`, `Current()`, and `Ordinal()` builder functions too.
-
-### Links to other Docs
-
-[Roadmap](ROADMAP.MD)
-
-### Thank you
-
-This is my first Open Source repository. Feedback is welcome.
-[Ryan Singleton](mailto:ryan@facefire.com)
+Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits, and [open a pull request](https://github.com/r-singleton/Sharpener/compare/).
