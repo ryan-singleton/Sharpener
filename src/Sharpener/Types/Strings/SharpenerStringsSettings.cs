@@ -1,28 +1,23 @@
 // The Sharpener project and Facefire license this file to you under the MIT license.
-
 namespace Sharpener.Types.Strings;
-
 /// <summary>
 /// Global settings for all Sharpener strings features.
 /// </summary>
-public static class SharpenerStringsSettings
+public struct SharpenerStringsSettings
 {
     /// <summary>
     /// Constructor.
     /// </summary>
     static SharpenerStringsSettings() => SetDefaultCulture(StringComparison.Ordinal);
-
     /// <summary>
     /// The default culture for case sensitive comparison.
     /// </summary>
     /// Note that the default for this already matches
     public static StringComparison DefaultCultureCaseSensitive { get; private set; }
-
     /// <summary>
     /// The default culture for case insensitive comparison.
     /// </summary>
     public static StringComparison DefaultCultureCaseInsensitive { get; private set; }
-
     /// <summary>
     /// Sets the default culture for case insensitive comparison. Will return false if the parameter is not case insensitive.
     /// </summary>
@@ -37,7 +32,6 @@ public static class SharpenerStringsSettings
         }
         return false;
     }
-
     /// <summary>
     /// /// Sets the default culture for case sensitive comparison. Will return false if the parameter is not case sensitive.
     /// </summary>
@@ -52,7 +46,6 @@ public static class SharpenerStringsSettings
         }
         return false;
     }
-
     /// <summary>
     /// Sets the default culture for comparison. Sets both case sensitivities keying off of the parameter.
     /// </summary>

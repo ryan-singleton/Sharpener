@@ -1,15 +1,13 @@
 // The Sharpener project and Facefire license this file to you under the MIT license.
-
 namespace Sharpener.Json.Types.Interfaces;
-
 /// <summary>
-/// The contract for a deserializer for JSON.
+/// The contract for a serializer for JSON.
 /// </summary>
-public interface IJsonDeserializer
+public interface IJsonWriter
 {
     /// <summary>
-    /// The deserialization logic.
+    /// The serialization logic.
     /// </summary>
     /// <value></value>
-    Func<string, Type, object?> Deserialize { get; }
+    Func<object, string> Write { get; }
 }

@@ -3,21 +3,19 @@
 ## What is it?
 
 At the moment, it is a collection of quality-of-life features for C#. It is highly opinionated, although the goal is to be careful and iterative so that these opinionated features will not feel too.. well.. opinionated. A sort of pseudo-empirical if you will. Like enjoying the new Dune movie. Not awfully risky to say, right?
-
 Currently offers:
 
--   Collection "As" alternatives. So, for example, if you call `ToList()` on a list, it will construct another list! `AsList()` will only provide the new list if it was not one already.
-    -   Especially nice if you use Rider/Resharper and it constantly nags you about multiple enumeration (which is nice of it). Now you can address the warning with less chance of using as much memory.
--   Enumerable `ForAll()`, which is like `ForEach()` for lists. It uses `Span<T>`, so the memory implications should be lesser.
--   Syntactically sugarful serialization and deserialization, as well as having the ability to customize the serialization that you get from this logic.
--   Syntactically sugarful case and culture string comparison operations. In case you are tired of littering your code with `StringComparison.OrdinalIgnoreCase` all the time.
+- Collection "As" alternatives. So, for example, if you call `ToList()` on a list, it will construct another list! `AsList()` will only provide the new list if it was not one already.
+  - Especially nice if you use Rider/Resharper and it constantly nags you about multiple enumeration (which is nice of it). Now you can address the warning with less chance of using as much memory.
+- Enumerable `ForAll()`, which is like `ForEach()` for lists. It uses `Span<T>`, so the memory implications should be lesser.
+- Syntactically sugarful serialization and deserialization, as well as having the ability to customize the serialization that you get from this logic.
+- Syntactically sugarful case and culture string comparison operations. In case you are tired of littering your code with `StringComparison.OrdinalIgnoreCase` all the time.
 
 ## Collections
 
 ### AsList and AsArray
 
 Say you are in a method and one of the parameters was an `IEnumerable<string>`.
-
 So it could be anything that inherits from `IEnumerable`, couldn't it? But to avoid multiple enumeration warnings, you want to ensure that you have a list for this context.
 
 ```cs
@@ -58,7 +56,6 @@ var studentCandidates = students
 ```
 
 But consider that you are iterating through the students list for every entry in the candidates list. That's brutal. Now, not to overlook the value of the `Intersect` and `Union` extensions, there are also join clauses for situations where it's not assumed that equality will be determined by the default equality comparer.
-
 .NET allows you to write code like this, for example
 
 ```cs
@@ -68,7 +65,6 @@ select student;
 ```
 
 The performance of the above code is going to be magnitudes of order improved upon the other multiple iteration techniques. Keep that in mind for general knowledge. It's vastly underused.
-
 But not everyone likes the query syntax. If you want this, but in Linq syntax, .Net also offers this.
 
 ```cs
@@ -86,7 +82,6 @@ var leftJoin = from student in students
 join candidate in candidates on student.Name equals candidate.RegisteredName into joins
 from joined in joins.DefaultIfEmpty()
 select new {Student = student, Candidate = joined};
-
 var studentCandidates = leftJoin.Where(pair => pair.Candidate is not null);
 ```
 
@@ -97,18 +92,17 @@ var leftJoin = students.LeftJoin(candidates,
 student => student.Name,
 candidate => candidate.RegisteredName,
 (student, candidate) => new {Student = student, Candidate = candidate});
-
 var studentCandidates = leftJoin.Where(pair => pair.Candidate is not null);
 ```
 
 ## Serialization
 
-### ToJson
+### WriteJson
 
 To serialize something, you can now just write this.
 
 ```cs
-var asItemJson = item.ToJson();
+var json = item.WriteJson();
 ```
 
 Want it to stop writing indented? Create a serializer.
@@ -117,45 +111,42 @@ Want it to stop writing indented? Create a serializer.
 /// <summary>
 /// A serializer for System.Text.Json that does not indent.
 /// </summary>
-public class SystemToRaw : IJsonSerializer
+public class JsonRawReader : IJsonReader
 {
     private static JsonSerializerOptions s_options = new JsonSerializerOptions { WriteIndented = false };
     /// <inheritdoc/>
-    public Func<object, string> Serialize => model => JsonSerializer.Serialize(model, s_options);
+    public Func<object, string> Write => model => JsonSerializer.Serialize(model, s_options);
 }
 ```
 
 And now you can either explicitly use it, or register it as the default.
-
 Register as default:
 
 ```cs
-SharpenerJsonSettings.SetDefaultSerializer<SystemToRaw>();
-var asItemJson = item.ToJson();
+SharpenerJsonSettings.SetDefaultWriter<JsonRawReader>();
+var json = item.WriteJson();
 ```
 
 Explicit call, which is better for scenarios where you'd prefer not to change the default and you're accomodating an outlier scenario.
 
 ```cs
-var asItemJson = item.ToJson<SystemToRaw>();
+var json = item.WriteJson<JsonRawReader>();
 ```
 
-### FromJson
+### ReadJsonAs`<T>`
 
 Let's deserialize something. I've got some text that can deserilialize to an `Item`.
 
 ```cs
-var item = asItemJson.FromJson<Item>();
+var item = json.ReadJsonAs<Item>();
 ```
 
-And similar to the `ToJson` options above, you can add a custom deserializer of your own for FromJson as well.
+And similar to the `WriteJson` options above, you can add a custom deserializer of your own for FromJson as well.
 
 ## Strings
 
 This one is a bit opinionated. But, my dudes, I am so sick of writing `StringComparison.SomethingIgnoreCase` all over my code when I don't want to mind case sensitivity. And it's pretty often in my work.
-
 I don't fault the .NET team for this. It was tough to think of something that was logical to clean this mess up, but I have something that I'm fairly content with.
-
 First, let's have a look at a full chain.
 
 ```cs
@@ -164,7 +155,6 @@ var sameLogic = "value".Equals("Value", StringComparison.InvariantCultureIgnoreC
 ```
 
 Both lines have the same result. The first allocates a few variables as parameters and return values. Otherwise, it's the same.
-
 However, that's as long as this Sharpener syntax gets. There are defaults to use. Are you ok with `StringComparison.OrdinalIgnoreCase`? Cool, let's do this.
 
 ```cs
@@ -194,7 +184,6 @@ SharpenerStringsSettings.SetDefaultCulture(StringComparison.CurrentCulture);
 ```
 
 This will result in current culture being the default comparison and it will select the case insensitive variant as well.
-
 If you don't want the same culture per case sensitive scenario, you can even use
 
 ```cs
@@ -203,7 +192,6 @@ SharpenerStringsSettings.TrySetDefaultCultureCaseInsensitive(StringComparison.In
 ```
 
 Just note that these methods will return false if you try to set a case sensitive culture to the case insensitive method and vice versa.
-
 And in case you missed it in the first example, you have `Invariant()`, `Current()`, and `Ordinal()` builder functions too.
 
 ### Links to other Docs
@@ -213,5 +201,4 @@ And in case you missed it in the first example, you have `Invariant()`, `Current
 ### Thank you
 
 This is my first Open Source repository. Feedback is welcome.
-
 [Ryan Singleton](mailto:ryan@facefire.com)
