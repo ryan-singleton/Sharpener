@@ -1,32 +1,21 @@
-<img src="../branding/icon-white-stroke-40px.png"
+<img src="images/icon-white-stroke-40px.png"
      align="right"
      style="height: 40px;" />
-
 # Contributing
-
 ## About the Project
-
 ### Built with
-
 - .NET5 and above
 - Dependencies specific to modular packages
 - EditorConfig and `dotnet format`
 - [Microsoft code style](https://github.com/dotnet/aspnetcore/blob/main/.editorconfig)
-
 ## Getting Started
-
 Installation
-
 1. Clone the repo
-
 ```sh
 git clone https://github.com/r-singleton/Sharpener.git
 ```
-
 2. Open the solution with VS Code, Visual Studio 2022, or Rider
-
 ## Contributing
-
 1. Fork the Project
 2. Create your feature branch (`git checkout -b feature/cool-feature`)
 3. Run `dotnet format --severity info` at the .sln folder level
@@ -34,11 +23,8 @@ git clone https://github.com/r-singleton/Sharpener.git
 5. Commit your Changes (`git commit -m 'Add some feature'`)
 6. Push the Branch to Remote (`git push origin feature/cool-feature`)
 7. Open a Pull Request from your feature branch to this project develop branch
-
 ### Tips for VS Code Development
-
 Recommended extensions
-
 - C#
 - C# Extensions (latest)
 - C# Namespace Autocompletion
