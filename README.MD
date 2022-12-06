@@ -1,4 +1,4 @@
-<img src="branding/icon-white-stroke.svg"
+<img src="branding/icon-white-stroke-40px.png"
      align="right"
      style="height: 40px;" />
 
