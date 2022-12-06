@@ -1,3 +1,5 @@
+// The Sharpener project and Facefire license this file to you under the MIT license.
+
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -28,7 +30,6 @@ public static class CollectionExtensions
         from joined in joins.DefaultIfEmpty()
         select resultSelector(outerMember, joined);
 
-
     /// <summary>
     /// Perform an action on each member of an enumerable. Uses <see cref="Span{T}"/> for performance.
     /// </summary>
@@ -37,12 +38,12 @@ public static class CollectionExtensions
     /// <typeparam name="T"></typeparam>
     public static void ForAll<T>(this IEnumerable<T> enumerable, Action<T> action)
     {
-        Span<T> asSpan = CollectionsMarshal.AsSpan(enumerable.AsList());
-        ref T searchSpace = ref MemoryMarshal.GetReference(asSpan);
+        var asSpan = CollectionsMarshal.AsSpan(enumerable.AsList());
+        ref var searchSpace = ref MemoryMarshal.GetReference(asSpan);
 
-        for (int i = 0; i < asSpan.Length; i++)
+        for (var i = 0; i < asSpan.Length; i++)
         {
-            T? item = Unsafe.Add(ref searchSpace, i);
+            var item = Unsafe.Add(ref searchSpace, i);
             action(item);
         }
     }

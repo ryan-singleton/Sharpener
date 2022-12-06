@@ -1,3 +1,5 @@
+// The Sharpener project and Facefire license this file to you under the MIT license.
+
 using Sharpener.Types.Strings.Interfaces;
 
 namespace Sharpener.Types.Strings;
@@ -26,15 +28,12 @@ internal struct CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    public bool Equals(IStringComparer comparer)
-    {
-        return comparer.Equals(Source);
-    }
+    public bool Equals(IStringComparer comparer) => comparer.Equals(Source);
 
     /// <inheritdoc />
     public IStringComparer NoCase()
     {
-        StringComparison newComparison = Comparison switch
+        var newComparison = Comparison switch
         {
             StringComparison.CurrentCulture => StringComparison.CurrentCultureIgnoreCase,
             StringComparison.Ordinal => StringComparison.OrdinalIgnoreCase,
@@ -49,7 +48,7 @@ internal struct CultureStringComparer : IStringComparer
     /// <inheritdoc />
     public IStringComparer Case()
     {
-        StringComparison newComparison = Comparison switch
+        var newComparison = Comparison switch
         {
             StringComparison.CurrentCultureIgnoreCase => StringComparison.CurrentCulture,
             StringComparison.OrdinalIgnoreCase => StringComparison.Ordinal,
@@ -64,7 +63,7 @@ internal struct CultureStringComparer : IStringComparer
     /// <inheritdoc />
     public IStringComparer Current()
     {
-        StringComparison newComparison = Comparison switch
+        var newComparison = Comparison switch
         {
             StringComparison.Ordinal => StringComparison.CurrentCulture,
             StringComparison.InvariantCulture => StringComparison.CurrentCulture,
@@ -81,7 +80,7 @@ internal struct CultureStringComparer : IStringComparer
     /// <inheritdoc />
     public IStringComparer Invariant()
     {
-        StringComparison newComparison = Comparison switch
+        var newComparison = Comparison switch
         {
             StringComparison.Ordinal => StringComparison.InvariantCulture,
             StringComparison.CurrentCulture => StringComparison.InvariantCulture,
@@ -98,7 +97,7 @@ internal struct CultureStringComparer : IStringComparer
     /// <inheritdoc />
     public IStringComparer Ordinal()
     {
-        StringComparison newComparison = Comparison switch
+        var newComparison = Comparison switch
         {
             StringComparison.InvariantCulture => StringComparison.Ordinal,
             StringComparison.CurrentCulture => StringComparison.Ordinal,

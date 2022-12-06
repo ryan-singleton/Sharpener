@@ -1,3 +1,5 @@
+// The Sharpener project and Facefire license this file to you under the MIT license.
+
 using Sharpener.Types.Strings;
 using Sharpener.Types.Strings.Interfaces;
 

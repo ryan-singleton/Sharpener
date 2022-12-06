@@ -1,4 +1,5 @@
-using Sharpener.Types.Serialization;
+// The Sharpener project and Facefire license this file to you under the MIT license.
+
 using Sharpener.Types.Strings.Interfaces;
 
 namespace Sharpener.Types.Strings;
@@ -27,10 +28,7 @@ internal struct CaseStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    public bool Equals(IStringComparer comparer)
-    {
-        return comparer.Equals(Source);
-    }
+    public bool Equals(IStringComparer comparer) => comparer.Equals(Source);
 
     /// <inheritdoc />
     public IStringComparer NoCase()

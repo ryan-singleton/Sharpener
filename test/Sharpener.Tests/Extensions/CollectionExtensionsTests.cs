@@ -1,7 +1,6 @@
-using FluentAssertions;
-using Sharpener.Extensions;
-using Sharpener.Tests.Models;
-using Xunit;
+// The Sharpener project and Facefire license this file to you under the MIT license.
+
+using Sharpener.Tests.Common.Models;
 
 namespace Sharpener.Tests.Extensions;
 
@@ -20,7 +19,7 @@ public class CollectionExtensionsTests
         const string newName = "AffectedItem";
         _items.ForAll(x => x.Name = newName);
 
-        _ = _items.Should().AllSatisfy(x => x.Equals(newName));
+        _items.Should().AllSatisfy(x => x.Equals(newName));
     }
 
     [Fact]
