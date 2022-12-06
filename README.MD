@@ -1,6 +1,7 @@
 <img src="branding/icon-white-stroke.svg"
      alt="Sharpener icon"
-     style="float: left; height: 24px; margin-right: 10px;" />
+     align=left
+     style="height: 24px; margin-right: 10px;" />
 
 # Sharpener
 
