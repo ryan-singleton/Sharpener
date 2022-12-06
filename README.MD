@@ -64,12 +64,12 @@ You perform two operations that may enumerate it twice, so your IDE warns you ab
 
 ```cs
 var studentList = students.AsList();
-var bStudents = studentList.Select(student => student.Grade == "A");
+var aStudents = studentList.Select(student => student.Grade == "A");
 var bStudents = studentList.Select(student => student.Grade == "B");
 var cStudents = studentList.Select(student => student.Grade == "C");
-var bStudents = studentList.Select(student => student.Grade == "D");
-var cStudents = studentList.Select(student => student.Grade == "E");
-var bStudents = studentList.Select(student => student.Grade == "F");
+var dStudents = studentList.Select(student => student.Grade == "D");
+var eStudents = studentList.Select(student => student.Grade == "E");
+var fStudents = studentList.Select(student => student.Grade == "F");
 ```
 
 Granted, `GroupBy` is the better option here, but you get the point.
