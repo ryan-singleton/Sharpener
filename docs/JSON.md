@@ -1,6 +1,6 @@
-<img src="../branding/icon-white-stroke.svg"
-     alt="Sharpener icon"
-     style="float: left; height: 24px; margin-right: 10px;" />
+<img src="../branding/icon-white-stroke-40px.png"
+     align="right"
+     style="height: 40px;" />
 
 # Sharpener.Json
 
