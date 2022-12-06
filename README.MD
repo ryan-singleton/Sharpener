@@ -1,6 +1,6 @@
 <img src="branding/icon-white-stroke.svg"
      align="right"
-     style="height: 30px;" />
+     style="height: 40px;" />
 
 # Sharpener
 
