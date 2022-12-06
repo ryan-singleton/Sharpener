@@ -10,4 +10,4 @@ More `Span<T>` experimentation for performance improvements.
 
 ### Newtonsoft JSON
 
-Will create a `Sharpener.Newtonsoft` package with some extensions to call that will rewire the `SerializationSettings` class to automatically use Newtonsoft instead. But this specific repo is meant to be third party package agnostic as possible.
+Create a `Sharpener.NewtonsoftJson` package with some extensions to call that will rewire the `SharpenerJsonSettings` to automatically use Newtonsoft instead. But this specific repo is meant to be third party package agnostic as possible.
