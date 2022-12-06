@@ -1,4 +1,4 @@
-// The Sharpener project licenses this file to you under the MIT license.
+// The Sharpener project and Facefire license this file to you under the MIT license.
 
 using BenchmarkDotNet.Attributes;
 using Sharpener.Extensions;
