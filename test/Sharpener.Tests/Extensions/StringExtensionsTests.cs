@@ -43,7 +43,7 @@ public class StringExtensionsTests
             false, true, false, true, false, true, false, true, false
         };
         results.Should().HaveSameCount(expectedResults);
-        for (var i = 0; i < results.Count(); i++)
+        for (var i = 0; i < results.Length; i++)
         {
             var result = results[i];
             var expectedResult = expectedResults[i];
