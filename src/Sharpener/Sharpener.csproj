@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <PackageId>Sharpener</PackageId>
-    <Version>0.1.0-alpha.1</Version>
+    <Version>0.1.0</Version>
     <Authors>Ryan Singleton</Authors>
     <Company>Facefire</Company>
     <PackageProjectUrl>https://facefire.net</PackageProjectUrl>
@@ -15,7 +15,7 @@
     <PackageReadmeFile>JSON.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>quality-of-life qol json serialization dotnet csharp</PackageTags>
+    <PackageTags>quality-of-life qol dotnet csharp</PackageTags>
     <PackageReleaseNotes>https://github.com/r-singleton/Sharpener/blob/main/docs/CHANGELOG.md</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
