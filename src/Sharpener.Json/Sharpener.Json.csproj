@@ -3,14 +3,13 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>Ryan Singleton</Authors>
     <Company>Facefire</Company>
-    <PackageProjectUrl>https://facefire.net</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/r-singleton/Sharpener</PackageProjectUrl>
     <Description>Quality of life tools for C# JSON with syntactical extensions and configurability.</Description>
     <RepositoryUrl>https://github.com/r-singleton/Sharpener</RepositoryUrl>
     <PackageIcon>icon-white-stroke-128.png</PackageIcon>
-    <PackageReadmeFile>JSON.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>quality-of-life qol json serialization dotnet csharp</PackageTags>
