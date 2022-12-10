@@ -24,6 +24,14 @@ public class SerializationExtensionsTests
         asItem!.Name.Should().Be(item.Name);
     }
     [Fact]
+    public void WriteJson_SetDefaultFunc_Success()
+    {
+        var item = new Item("guy", "person");
+        SharpenerJsonSettings.SetDefaultWriter(_ => "stuff");
+        item.WriteJson().Should().Be("stuff");
+        SharpenerJsonSettings.ResetDefaults();
+    }
+    [Fact]
     public void WriteJson_SetDefault_Success()
     {
         var item = new Item("guy", "person");
@@ -42,6 +50,14 @@ public class SerializationExtensionsTests
     {
         var item = new Item("guy", "person");
         SharpenerJsonSettings.SetDefaultReader<JsonMockReader>();
+        item.WriteJson().ReadJsonAs<Item>()!.Name.Should().Be("other");
+        SharpenerJsonSettings.ResetDefaults();
+    }
+    [Fact]
+    public void ReadJsonAs_SetDefaultFunc_Success()
+    {
+        var item = new Item("guy", "person");
+        SharpenerJsonSettings.SetDefaultReader((_, _) => new Item("other", "person"));
         item.WriteJson().ReadJsonAs<Item>()!.Name.Should().Be("other");
         SharpenerJsonSettings.ResetDefaults();
     }

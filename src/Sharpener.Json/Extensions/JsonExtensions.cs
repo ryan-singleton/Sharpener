@@ -24,43 +24,27 @@ public static class JsonExtensions
         return s_cachedJsonWriter.Write(source);
     }
     /// <summary>
-    /// Creates a JSON string according to <see cref="SharpenerJsonSettings.GetDefaultWriter"/>.
+    /// Creates a JSON string according to <see cref="SharpenerJsonSettings.DefaultWriter"/>.
     /// /// </summary>
     /// <param name="source">The reference to serialize.</param>
     /// <returns></returns>
-    public static string WriteJson(this object source)
-    {
-        var type = SharpenerJsonSettings.GetDefaultWriter();
-        if (s_cachedJsonWriter?.GetType() != type)
-        {
-            s_cachedJsonWriter = Activator.CreateInstance(type) as IJsonWriter ?? throw new NullReferenceException("The default json writer was null");
-        }
-        return s_cachedJsonWriter!.Write(source);
-    }
+    public static string WriteJson(this object source) => SharpenerJsonSettings.DefaultWriter(source);
     /// <summary>
     /// Deserializes using JSON deserialization according to the supplied type.
     /// </summary>
     /// <typeparam name="TResult">The type to deserialize to.</typeparam>
     /// <typeparam name="TReader">The type of deserializer to use.</typeparam>
-    public static TResult? ReadJsonAs<TResult, TReader>(this string json) where TResult : class where TReader : IJsonReader, new()
+    public static TResult? ReadJsonAs<TResult, TReader>(this string json) where TReader : IJsonReader, new()
     {
         if (s_cachedJsonReader is not TReader)
         {
             s_cachedJsonReader = new TReader();
         }
-        return s_cachedJsonReader.Read(json, typeof(TResult)) as TResult;
+        return s_cachedJsonReader.Read(json, typeof(TResult)) is TResult result ? result : default(TResult);
     }
     /// <summary>
-    /// Deserializes using JSON deserialization according to <see cref="SharpenerJsonSettings.GetDefaultWriter"/>.
+    /// Deserializes using JSON deserialization according to <see cref="SharpenerJsonSettings.DefaultWriter"/>.
     /// </summary>
     /// <typeparam name="TResult">The type to deserialize to.</typeparam>
-    public static TResult? ReadJsonAs<TResult>(this string json) where TResult : class
-    {
-        var type = SharpenerJsonSettings.GetDefaultReader();
-        if (s_cachedJsonReader?.GetType() != type)
-        {
-            s_cachedJsonReader = Activator.CreateInstance(type) as IJsonReader ?? throw new NullReferenceException("The default json reader was null");
-        }
-        return s_cachedJsonReader.Read(json, typeof(TResult)) as TResult;
-    }
+    public static TResult? ReadJsonAs<TResult>(this string json) => SharpenerJsonSettings.DefaultReader(json, typeof(TResult)) is TResult result ? result : default(TResult);
 }
