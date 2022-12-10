@@ -11,28 +11,39 @@ public struct SharpenerJsonSettings
     /// </summary>
     /// <returns></returns>
     static SharpenerJsonSettings() => ResetDefaults();
-    private static Type _defaultWriter = default!;
-    private static Type _defaultReader = default!;
+    private static Func<object, string> _defaultWriter = default!;
+    private static Func<string, Type, object?> _defaultReader = default!;
     /// <summary>
     /// Gets the default serializer.
     /// </summary>
     /// <returns></returns>
-    public static Type GetDefaultWriter() => _defaultWriter;
+    public static Func<object, string> DefaultWriter => _defaultWriter;
     /// <summary>
     /// Gets the default deserializer.
     /// </summary>
     /// <returns></returns>
-    public static Type GetDefaultReader() => _defaultReader;
+    public static Func<string, Type, object?> DefaultReader => _defaultReader;
     /// <summary>
     /// Sets the default serializer.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public static void SetDefaultWriter<T>() where T : IJsonWriter, new() => _defaultWriter = typeof(T);
+    public static void SetDefaultWriter(Func<object, string> function) => _defaultWriter = function;
+    /// <summary>
+    /// <summary>
+    /// Sets the default serializer.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public static void SetDefaultWriter<T>() where T : IJsonWriter, new() => _defaultWriter = new T().Write;
     /// <summary>
     /// Gets the default serializer.
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public static void SetDefaultReader<T>() where T : IJsonReader, new() => _defaultReader = typeof(T);
+    public static void SetDefaultReader(Func<string, Type, object?> function) => _defaultReader = function;
+    /// <summary>
+    /// Gets the default serializer.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public static void SetDefaultReader<T>() where T : IJsonReader, new() => _defaultReader = new T().Read;
     /// <summary>
     /// Sets the JSON logic defaults back to System.Text.Json.
     /// </summary>
