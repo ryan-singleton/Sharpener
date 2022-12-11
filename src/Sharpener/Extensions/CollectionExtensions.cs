@@ -40,10 +40,10 @@ public static class CollectionExtensions
     /// <returns></returns>
     public static T[] Add<T>(this T[] array, T element)
     {
-        var span = new Span<T>(array);
-        var newArray = new T[array.Length + 1];
-        span.CopyTo(newArray);
-        newArray[array.Length] = element;
+        var arraySpan = new ReadOnlySpan<T>(array);
+        var newArray = new T[arraySpan.Length + 1];
+        arraySpan.CopyTo(newArray);
+        newArray[arraySpan.Length] = element;
         return newArray;
     }
     /// <summary>
@@ -60,8 +60,8 @@ public static class CollectionExtensions
     /// <returns></returns>
     public static T[] Remove<T>(this T[] array, T element)
     {
-        var arraySpan = new Span<T>(array);
-        var newArray = new T[array.Length - 1];
+        var arraySpan = new ReadOnlySpan<T>(array);
+        var newArray = new T[arraySpan.Length - 1];
         var index = Array.IndexOf(array, element);
         if (index >= 0)
         {
@@ -70,6 +70,15 @@ public static class CollectionExtensions
         }
         return newArray;
     }
+    // private static int IndexOf<T>(this ReadOnlySpan<T> aSpan, T aChar, int startIndex) where T: IEquatable<T>
+    //     {
+    //         var indexInSlice = aSpan.Slice(startIndex).IndexOf<T>(aChar);
+    //         if (indexInSlice == -1)
+    //         {
+    //             return -1;
+    //         }
+    //         return startIndex + indexInSlice;
+    //     }
     /// <summary>
     /// Removes all the elements that match the conditions defined by the specified predicate. Uses <see cref="Span{T}"/> for performance.
     /// </summary>
@@ -110,11 +119,11 @@ public static class CollectionExtensions
     /// <returns></returns>
     public static T[] AddRange<T>(this T[] array, IEnumerable<T> elements)
     {
-        var arraySpan = new Span<T>(array);
+        var arraySpan = new ReadOnlySpan<T>(array);
         var membersSpan = new Span<T>(elements.AsArray());
-        var newArray = new T[array.Length + membersSpan.Length];
+        var newArray = new T[arraySpan.Length + membersSpan.Length];
         arraySpan.CopyTo(newArray);
-        membersSpan.CopyTo(newArray.AsSpan()[array.Length..]);
+        membersSpan.CopyTo(newArray.AsSpan()[arraySpan.Length..]);
         return newArray;
     }
     /// <summary>
