@@ -40,11 +40,11 @@ public static class JsonExtensions
         {
             s_cachedJsonReader = new TReader();
         }
-        return s_cachedJsonReader.Read(json, typeof(TResult)) is TResult result ? result : default(TResult);
+        return s_cachedJsonReader.Read(json, typeof(TResult)) is TResult result ? result : default;
     }
     /// <summary>
     /// Deserializes using JSON deserialization according to <see cref="SharpenerJsonSettings.DefaultWriter"/>.
     /// </summary>
     /// <typeparam name="TResult">The type to deserialize to.</typeparam>
-    public static TResult? ReadJsonAs<TResult>(this string json) => SharpenerJsonSettings.DefaultReader(json, typeof(TResult)) is TResult result ? result : default(TResult);
+    public static TResult? ReadJsonAs<TResult>(this string json) => SharpenerJsonSettings.DefaultReader(json, typeof(TResult)) is TResult result ? result : default;
 }
