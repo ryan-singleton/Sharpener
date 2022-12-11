@@ -77,7 +77,7 @@ public class CollectionExtensionsTests
             "Chris"
         };
         var count = names.Length;
-        names = names.RemoveAll("Chris");
+        names = names.RemoveAll(x => x.Equals("Chris"));
         names.Should().HaveCount(count - 2);
     }
     [Fact]

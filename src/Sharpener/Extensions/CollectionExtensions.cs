@@ -27,40 +27,42 @@ public static class CollectionExtensions
         from joined in joins.DefaultIfEmpty()
         select resultSelector(outerMember, joined);
     /// <summary>
-    /// Adds a member to an array using <see cref="Span{T}"/>.
+    /// Adds an object to the end of the <see cref="Array"/>. Uses <see cref="Span{T}"/> for performance.
     /// </summary>
     /// <remarks>
-    /// This returns the result, it does not modify your input.
-    /// This is significantly more performant than converting to a <see cref="List{T}"/>, which is the general advice when working with arrays that need to be manipulated.
+    /// This returns the modified array, it does not modify the input.
+    /// This is significantly more performant than converting to a <see cref="List{T}"/> but only when the array is not
+    /// commonly added to or removed from. Otherwise, converting to a list is recommended.
     /// </remarks>
-    /// <param name="array">The array to add the member to.</param>
-    /// <param name="member">The member to add to the array.</param>
+    /// <param name="array">The array to add the element to.</param>
+    /// <param name="element">The element to add to the array.</param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static T[] Add<T>(this T[] array, T member)
+    public static T[] Add<T>(this T[] array, T element)
     {
         var span = new Span<T>(array);
         var newArray = new T[array.Length + 1];
         span.CopyTo(newArray);
-        newArray[array.Length] = member;
+        newArray[array.Length] = element;
         return newArray;
     }
     /// <summary>
-    /// Removes the first matching member of an array using <see cref="Span{T}"/>.
+    /// Removes the first occurrence of a specific object from the <see cref="Array"/>. Uses <see cref="Span{T}"/> for performance.
     /// </summary>
     /// <remarks>
-    /// This returns the result, it does not modify your input.
-    /// This is significantly more performant than converting to a <see cref="List{T}"/>, which is the general advice when working with arrays that need to be manipulated.
+    /// This returns the modified array, it does not modify the input.
+    /// This is significantly more performant than converting to a <see cref="List{T}"/> but only when the array is not
+    /// commonly added to or removed from. Otherwise, converting to a list is recommended.
     /// </remarks>
-    /// <param name="array">The array to remove a member from.</param>
-    /// <param name="member">The member to remove the first instance of from the array.</param>
+    /// <param name="array">The array to remove an element from.</param>
+    /// <param name="element">The element to remove the first instance of from the array.</param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static T[] Remove<T>(this T[] array, T member)
+    public static T[] Remove<T>(this T[] array, T element)
     {
         var arraySpan = new Span<T>(array);
         var newArray = new T[array.Length - 1];
-        var index = Array.IndexOf(array, member);
+        var index = Array.IndexOf(array, element);
         if (index >= 0)
         {
             arraySpan[..index].CopyTo(newArray);
@@ -69,23 +71,24 @@ public static class CollectionExtensions
         return newArray;
     }
     /// <summary>
-    /// Removes all matching instances from the array using <see cref="Span{T}"/>.
+    /// Removes all the elements that match the conditions defined by the specified predicate. Uses <see cref="Span{T}"/> for performance.
     /// </summary>
     /// /// <remarks>
-    /// This returns the result, it does not modify your input.
-    /// This is significantly more performant than converting to a <see cref="List{T}"/>, which is the general advice when working with arrays that need to be manipulated.
+    /// This returns the modified array, it does not modify the input.
+    /// This is significantly more performant than converting to a <see cref="List{T}"/> but only when the array is not
+    /// commonly added to or removed from. Otherwise, converting to a list is recommended.
     /// </remarks>
     /// <param name="array">The array to remove all instances from.</param>
-    /// <param name="member">What to remove all instances of.</param>
+    /// <param name="member">The conditions for removal.</param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static T[] RemoveAll<T>(this T[] array, T member)
+    public static T[] RemoveAll<T>(this T[] array, Func<T, bool> action)
     {
         var writeIndex = 0;
         var arraySpan = new Span<T>(array);
         for (var i = 0; i < arraySpan.Length; i++)
         {
-            if (!(arraySpan[i]!.Equals(member)))
+            if (!(action(arraySpan[i])))
             {
                 arraySpan[writeIndex] = arraySpan[i];
                 writeIndex++;
@@ -94,20 +97,21 @@ public static class CollectionExtensions
         return arraySpan[..writeIndex].ToArray();
     }
     /// <summary>
-    /// Adds a range of members to an array using <see cref="Span{T}"/>.
+    /// Adds the elements of the specified collection to the end of the <see cref="Array"/>. Uses <see cref="Span{T}"/> for performance.
     /// </summary>
     /// <remarks>
-    /// This returns the result, it does not modify your input.
-    /// This is significantly more performant than converting to a <see cref="List{T}"/>, which is the general advice when working with arrays that need to be manipulated.
+    /// This returns the modified array, it does not modify the input.
+    /// This is significantly more performant than converting to a <see cref="List{T}"/> but only when the array is not
+    /// commonly added to or removed from. Otherwise, converting to a list is recommended.
     /// </remarks>
-    /// <param name="array">The array to add the members to.</param>
-    /// <param name="members">The membersto add to the array.</param>
+    /// <param name="array">The array to add the elements to.</param>
+    /// <param name="elements">The elements to add to the array.</param>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    public static T[] AddRange<T>(this T[] array, IEnumerable<T> members)
+    public static T[] AddRange<T>(this T[] array, IEnumerable<T> elements)
     {
         var arraySpan = new Span<T>(array);
-        var membersSpan = new Span<T>(members.AsArray());
+        var membersSpan = new Span<T>(elements.AsArray());
         var newArray = new T[array.Length + membersSpan.Length];
         arraySpan.CopyTo(newArray);
         membersSpan.CopyTo(newArray.AsSpan()[array.Length..]);
