@@ -68,7 +68,7 @@ public class CollectionExtensionsTests
     public void Array_ToList_Add() => _itemsArray.ToList().Add(_item);
     [Benchmark(Description = "array.AddRange(membersArray)")]
     public void Array_AddRange() => _itemsArray.AddRange(_secondItemsArray);
-    [Benchmark(Description = "array.ToList().Add(membersArray)")]
+    [Benchmark(Description = "array.ToList().AddRange(membersArray)")]
     public void Array_ToList_AddRange() => _itemsArray.ToList().AddRange(_secondItemsArray);
     [Benchmark(Description = "array.Remove(member)")]
     public void Array_Remove() => _itemsArray.Remove(_itemsArray[2]);

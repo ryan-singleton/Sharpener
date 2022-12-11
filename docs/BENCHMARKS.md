@@ -14,30 +14,30 @@ Intel Core i9-9900K CPU 3.60GHz (Coffee Lake), 1 CPU, 16 logical and 8 physical 
 
 | Method                                                           | Count   |      Mean |     Error |    StdDev | Allocated |
 | ---------------------------------------------------------------- | ------- | --------: | --------: | --------: | --------: |
-| string.Equals(string)                                            | 100     |  2.695 ns | 0.0098 ns | 0.0082 ns |         - |
-| string.Equals(string, StringComparison.Ordinal)                  | 100     |  4.670 ns | 0.0113 ns | 0.0100 ns |         - |
-| string.Case().Equals(string)                                     | 100     |  4.708 ns | 0.0146 ns | 0.0130 ns |         - |
-| string.Equals(string, StringComparison.OrdinalIgnoreCase)        | 100     |  5.878 ns | 0.0177 ns | 0.0156 ns |         - |
-| string.NoCase().Equals(string)                                   | 100     |  5.744 ns | 0.0138 ns | 0.0123 ns |         - |
-| string.Equals(string, StringComparison.CurrentCultureIgnoreCase) | 100     | 74.415 ns | 0.1689 ns | 0.1411 ns |         - |
-| string.NoCase().Current().Equals(string)                         | 100     | 83.319 ns | 0.1790 ns | 0.1495 ns |      32 B |
-| string.Current().NoCase().Equals(string)                         | 100     | 84.264 ns | 0.1062 ns | 0.0941 ns |      32 B |
-| string.Equals(string)                                            | 100000  |  2.642 ns | 0.0067 ns | 0.0060 ns |         - |
-| string.Equals(string, StringComparison.Ordinal)                  | 100000  |  4.656 ns | 0.0163 ns | 0.0145 ns |         - |
-| string.Case().Equals(string)                                     | 100000  |  4.921 ns | 0.0136 ns | 0.0127 ns |         - |
-| string.Equals(string, StringComparison.OrdinalIgnoreCase)        | 100000  |  5.880 ns | 0.0529 ns | 0.0441 ns |         - |
-| string.NoCase().Equals(string)                                   | 100000  |  6.342 ns | 0.0812 ns | 0.0678 ns |         - |
-| string.Equals(string, StringComparison.CurrentCultureIgnoreCase) | 100000  | 71.148 ns | 0.0993 ns | 0.0881 ns |         - |
-| string.NoCase().Current().Equals(string)                         | 100000  | 81.430 ns | 0.3548 ns | 0.3319 ns |      32 B |
-| string.Current().NoCase().Equals(string)                         | 100000  | 82.724 ns | 1.1497 ns | 0.9600 ns |      32 B |
-| string.Equals(string)                                            | 1000000 |  2.537 ns | 0.0242 ns | 0.0226 ns |         - |
-| string.Equals(string, StringComparison.Ordinal)                  | 1000000 |  4.464 ns | 0.0330 ns | 0.0293 ns |         - |
-| string.Case().Equals(string)                                     | 1000000 |  4.712 ns | 0.0347 ns | 0.0324 ns |         - |
-| string.Equals(string, StringComparison.OrdinalIgnoreCase)        | 1000000 |  5.601 ns | 0.0298 ns | 0.0249 ns |         - |
-| string.NoCase().Equals(string)                                   | 1000000 |  5.484 ns | 0.0380 ns | 0.0355 ns |         - |
-| string.Equals(string, StringComparison.CurrentCultureIgnoreCase) | 1000000 | 70.381 ns | 0.4980 ns | 0.4658 ns |         - |
-| string.NoCase().Current().Equals(string)                         | 1000000 | 82.321 ns | 0.3182 ns | 0.2657 ns |      32 B |
-| string.Current().NoCase().Equals(string)                         | 1000000 | 82.013 ns | 0.4640 ns | 0.4340 ns |      32 B |
+| string.Equals(string)                                            | 100     |  2.643 ns | 0.0147 ns | 0.0138 ns |         - |
+| string.Equals(string, StringComparison.Ordinal)                  | 100     |  4.556 ns | 0.0215 ns | 0.0201 ns |         - |
+| string.Case().Equals(string)                                     | 100     |  4.822 ns | 0.0183 ns | 0.0171 ns |         - |
+| string.Equals(string, StringComparison.OrdinalIgnoreCase)        | 100     |  5.692 ns | 0.0139 ns | 0.0130 ns |         - |
+| string.NoCase().Equals(string)                                   | 100     |  5.646 ns | 0.0195 ns | 0.0182 ns |         - |
+| string.Equals(string, StringComparison.CurrentCultureIgnoreCase) | 100     | 71.116 ns | 0.1701 ns | 0.1420 ns |         - |
+| string.NoCase().Current().Equals(string)                         | 100     | 82.114 ns | 0.1825 ns | 0.1524 ns |      32 B |
+| string.Current().NoCase().Equals(string)                         | 100     | 82.182 ns | 0.5173 ns | 0.4839 ns |      32 B |
+| string.Equals(string)                                            | 100000  |  2.600 ns | 0.0118 ns | 0.0110 ns |         - |
+| string.Equals(string, StringComparison.Ordinal)                  | 100000  |  4.580 ns | 0.0130 ns | 0.0116 ns |         - |
+| string.Case().Equals(string)                                     | 100000  |  4.676 ns | 0.0780 ns | 0.0729 ns |         - |
+| string.Equals(string, StringComparison.OrdinalIgnoreCase)        | 100000  |  5.835 ns | 0.0321 ns | 0.0300 ns |         - |
+| string.NoCase().Equals(string)                                   | 100000  |  5.691 ns | 0.0254 ns | 0.0238 ns |         - |
+| string.Equals(string, StringComparison.CurrentCultureIgnoreCase) | 100000  | 72.109 ns | 0.2148 ns | 0.2009 ns |         - |
+| string.NoCase().Current().Equals(string)                         | 100000  | 80.602 ns | 0.5452 ns | 0.5100 ns |      32 B |
+| string.Current().NoCase().Equals(string)                         | 100000  | 77.569 ns | 0.6179 ns | 0.5159 ns |      32 B |
+| string.Equals(string)                                            | 1000000 |  2.180 ns | 0.0091 ns | 0.0080 ns |         - |
+| string.Equals(string, StringComparison.Ordinal)                  | 1000000 |  4.658 ns | 0.0131 ns | 0.0122 ns |         - |
+| string.Case().Equals(string)                                     | 1000000 |  4.674 ns | 0.0586 ns | 0.0548 ns |         - |
+| string.Equals(string, StringComparison.OrdinalIgnoreCase)        | 1000000 |  5.839 ns | 0.0894 ns | 0.0837 ns |         - |
+| string.NoCase().Equals(string)                                   | 1000000 |  5.735 ns | 0.0642 ns | 0.0501 ns |         - |
+| string.Equals(string, StringComparison.CurrentCultureIgnoreCase) | 1000000 | 73.278 ns | 0.2155 ns | 0.1910 ns |         - |
+| string.NoCase().Current().Equals(string)                         | 1000000 | 81.068 ns | 0.1345 ns | 0.1123 ns |      32 B |
+| string.Current().NoCase().Equals(string)                         | 1000000 | 80.128 ns | 0.5964 ns | 0.4980 ns |      32 B |
 
 Conclusions
 
@@ -55,68 +55,68 @@ Intel Core i9-9900K CPU 3.60GHz (Coffee Lake), 1 CPU, 16 logical and 8 physical 
   DefaultJob : .NET 6.0.9 (6.0.922.41905), X64 RyuJIT AVX2
 ```
 
-| Method                              | Count   |               Mean |           Error |          StdDev |  Allocated |
-| ----------------------------------- | ------- | -----------------: | --------------: | --------------: | ---------: |
-| list.ForAll()                       | 100     |        282.4624 ns |       2.8132 ns |       2.4939 ns |          - |
-| list.ForEach()                      | 100     |        316.8117 ns |       0.2893 ns |       0.2259 ns |          - |
-| foreach in list                     | 100     |        198.1339 ns |       0.3937 ns |       0.3682 ns |          - |
-| for in list                         | 100     |        159.0870 ns |       0.2858 ns |       0.2231 ns |          - |
-| list.ToList()                       | 100     |         64.3185 ns |       0.4487 ns |       0.4197 ns |      856 B |
-| list.AsList()                       | 100     |          0.4304 ns |       0.0049 ns |       0.0043 ns |          - |
-| array.ToList()                      | 100     |         74.7194 ns |       1.3879 ns |       1.2303 ns |      856 B |
-| array.AsList()                      | 100     |         76.0893 ns |       0.6528 ns |       0.6411 ns |      856 B |
-| list.ToArray()                      | 100     |         50.9780 ns |       0.9335 ns |       0.8275 ns |      824 B |
-| list.AsArray()                      | 100     |         60.2152 ns |       0.2484 ns |       0.2075 ns |      824 B |
-| array.ToArray()                     | 100     |         68.6360 ns |       0.7498 ns |       0.6647 ns |      824 B |
-| array.AsArray()                     | 100     |          0.2155 ns |       0.0033 ns |       0.0031 ns |          - |
-| array.Add(member)                   | 100     |         47.7517 ns |       0.3438 ns |       0.2684 ns |      832 B |
-| array.ToList().Add(member)          | 100     |        163.1836 ns |       2.5315 ns |       2.3680 ns |     2480 B |
-| array.AddRange(membersArray)        | 100     |         97.9960 ns |       1.4993 ns |       1.3291 ns |      984 B |
-| array.ToList().Add(membersArray)    | 100     |        183.7379 ns |       0.7945 ns |       0.7043 ns |     2480 B |
-| array.Remove(member)                | 100     |        100.6419 ns |       0.7025 ns |       0.5866 ns |      816 B |
-| array.ToList().Remove(member)       | 100     |        113.4565 ns |       0.9598 ns |       0.8978 ns |      856 B |
-| array.RemoveAll(condition)          | 100     |        296.4313 ns |       1.1950 ns |       1.0593 ns |      104 B |
-| array.ToList().RemoveAll(condition) | 100     |        718.3564 ns |       4.0215 ns |       3.3581 ns |      920 B |
-| list.ForAll()                       | 100000  |    286,684.0849 ns |   5,685.7944 ns |  15,274.5173 ns |          - |
-| list.ForEach()                      | 100000  |    325,002.2746 ns |   1,499.2105 ns |   1,170.4849 ns |          - |
-| foreach in list                     | 100000  |    232,289.3341 ns |   4,380.2059 ns |   4,301.9479 ns |          - |
-| for in list                         | 100000  |    231,067.1997 ns |   4,539.3603 ns |   5,902.4506 ns |          - |
-| list.ToList()                       | 100000  |    262,747.7539 ns |   4,844.8493 ns |   4,531.8750 ns |   800077 B |
-| list.AsList()                       | 100000  |          0.4286 ns |       0.0011 ns |       0.0009 ns |          - |
-| array.ToList()                      | 100000  |    268,222.4243 ns |   5,173.3886 ns |   6,726.8665 ns |   800078 B |
-| array.AsList()                      | 100000  |    268,367.3160 ns |   5,353.2960 ns |   5,950.1743 ns |   800077 B |
-| list.ToArray()                      | 100000  |    250,256.9420 ns |   4,928.7829 ns |  10,818.7980 ns |   800017 B |
-| list.AsArray()                      | 100000  |    252,843.3075 ns |   4,770.7458 ns |   9,416.9867 ns |   800010 B |
-| array.ToArray()                     | 100000  |    254,559.6915 ns |   5,079.3927 ns |  13,557.9275 ns |   800017 B |
-| array.AsArray()                     | 100000  |          0.4343 ns |       0.0045 ns |       0.0040 ns |          - |
-| array.Add(member)                   | 100000  |    253,843.9277 ns |   5,048.8264 ns |  14,404.5857 ns |   800025 B |
-| array.ToList().Add(member)          | 100000  |    564,938.4820 ns |  11,113.9041 ns |  15,580.1414 ns |  2400163 B |
-| array.AddRange(membersArray)        | 100000  |    255,569.4627 ns |   5,064.3542 ns |  13,605.0586 ns |   800178 B |
-| array.ToList().Add(membersArray)    | 100000  |    565,716.2184 ns |  10,415.6263 ns |   8,697.5197 ns |  2400149 B |
-| array.Remove(member)                | 100000  |    256,028.6536 ns |   4,939.4524 ns |   6,246.8257 ns |   800008 B |
-| array.ToList().Remove(member)       | 100000  |    293,324.7001 ns |   4,110.1967 ns |   3,643.5823 ns |   800078 B |
-| array.RemoveAll(condition)          | 100000  |    718,188.6914 ns |  60,354.6586 ns | 177,957.0725 ns |      105 B |
-| array.ToList().RemoveAll(condition) | 100000  |  1,037,514.4857 ns |  20,170.8535 ns |  21,582.5873 ns |   800434 B |
-| list.ForAll()                       | 1000000 |  6,286,558.5156 ns | 123,060.0466 ns | 115,110.4439 ns |        7 B |
-| list.ForEach()                      | 1000000 |  6,267,922.4888 ns |  97,172.4881 ns |  86,140.8797 ns |        7 B |
-| foreach in list                     | 1000000 |  6,253,316.0677 ns |  97,992.3617 ns |  91,662.1160 ns |        7 B |
-| for in list                         | 1000000 |  6,196,562.7232 ns |  77,695.2439 ns |  68,874.8100 ns |        7 B |
-| list.ToList()                       | 1000000 |  5,327,887.6042 ns | 102,824.6808 ns |  96,182.2702 ns |  8000110 B |
-| list.AsList()                       | 1000000 |          0.2116 ns |       0.0053 ns |       0.0047 ns |          - |
-| array.ToList()                      | 1000000 |  5,282,575.8333 ns |  91,556.1431 ns |  85,641.6731 ns |  8000110 B |
-| array.AsList()                      | 1000000 |  5,232,088.2031 ns |  70,707.0341 ns |  66,139.4036 ns |  8000110 B |
-| list.ToArray()                      | 1000000 |  5,264,212.1354 ns |  84,570.2837 ns |  79,107.0959 ns |  8000078 B |
-| list.AsArray()                      | 1000000 |  5,296,209.9524 ns | 105,885.5350 ns | 133,911.2986 ns |  8000078 B |
-| array.ToArray()                     | 1000000 |  5,244,830.4167 ns | 104,838.4908 ns |  98,065.9894 ns |  8000078 B |
-| array.AsArray()                     | 1000000 |          0.2197 ns |       0.0053 ns |       0.0047 ns |          - |
-| array.Add(member)                   | 1000000 |  5,312,529.0104 ns |  94,310.5638 ns |  88,218.1599 ns |  8000086 B |
-| array.ToList().Add(member)          | 1000000 |  6,431,003.8206 ns | 128,259.3091 ns | 319,410.1878 ns | 24000481 B |
-| array.AddRange(membersArray)        | 1000000 |  5,221,626.6276 ns |  64,778.0142 ns |  50,574.4126 ns |  8000238 B |
-| array.ToList().Add(membersArray)    | 1000000 |  6,214,308.5399 ns | 123,694.0802 ns | 181,309.1789 ns | 24000610 B |
-| array.Remove(member)                | 1000000 |  5,260,015.9180 ns |  97,605.0742 ns |  95,861.2338 ns |  8000070 B |
-| array.ToList().Remove(member)       | 1000000 |  6,054,426.8229 ns |  55,383.0305 ns |  51,805.3211 ns |  8000110 B |
-| array.RemoveAll(condition)          | 1000000 | 14,479,129.2411 ns | 227,541.0635 ns | 201,709.2260 ns |  8000135 B |
-| array.ToList().RemoveAll(condition) | 1000000 | 14,731,266.4583 ns |  67,367.1366 ns |  63,015.2614 ns |  8000175 B |
+| Method                                | Count   |               Mean |           Error |          StdDev |             Median |  Allocated |
+| ------------------------------------- | ------- | -----------------: | --------------: | --------------: | -----------------: | ---------: |
+| list.ForAll()                         | 100     |        287.1548 ns |       4.8526 ns |       6.3098 ns |        284.8127 ns |          - |
+| list.ForEach()                        | 100     |        284.7799 ns |       0.3207 ns |       0.2504 ns |        284.6804 ns |          - |
+| foreach in list                       | 100     |        200.4375 ns |       3.4061 ns |       3.0195 ns |        199.0455 ns |          - |
+| for in list                           | 100     |        159.0303 ns |       0.2544 ns |       0.2380 ns |        159.1357 ns |          - |
+| list.ToList()                         | 100     |         65.2797 ns |       1.0203 ns |       0.8520 ns |         65.2465 ns |      856 B |
+| list.AsList()                         | 100     |          0.4294 ns |       0.0066 ns |       0.0059 ns |          0.4264 ns |          - |
+| array.ToList()                        | 100     |         74.2299 ns |       1.1057 ns |       0.9802 ns |         74.2885 ns |      856 B |
+| array.AsList()                        | 100     |         72.3096 ns |       0.8228 ns |       0.7697 ns |         72.3512 ns |      856 B |
+| list.ToArray()                        | 100     |         49.4659 ns |       0.9716 ns |       1.0396 ns |         49.7126 ns |      824 B |
+| list.AsArray()                        | 100     |         59.4056 ns |       0.5640 ns |       0.5276 ns |         59.5047 ns |      824 B |
+| array.ToArray()                       | 100     |         66.0091 ns |       0.8259 ns |       0.6896 ns |         66.2358 ns |      824 B |
+| array.AsArray()                       | 100     |          0.2157 ns |       0.0014 ns |       0.0011 ns |          0.2159 ns |          - |
+| array.Add(member)                     | 100     |         55.7403 ns |       1.0975 ns |       1.0266 ns |         55.1892 ns |      832 B |
+| array.ToList().Add(member)            | 100     |        155.2842 ns |       2.9093 ns |       2.7214 ns |        154.7431 ns |     2480 B |
+| array.AddRange(membersArray)          | 100     |         90.4790 ns |       0.9390 ns |       0.8784 ns |         90.4858 ns |      984 B |
+| array.ToList().AddRange(membersArray) | 100     |        179.3185 ns |       1.2501 ns |       0.9760 ns |        179.2334 ns |     2480 B |
+| array.Remove(member)                  | 100     |         95.1714 ns |       0.7806 ns |       0.7301 ns |         95.1428 ns |      816 B |
+| array.ToList().Remove(member)         | 100     |        113.5840 ns |       2.2275 ns |       3.1226 ns |        112.2163 ns |      856 B |
+| array.RemoveAll(condition)            | 100     |        296.2594 ns |       1.0538 ns |       0.9342 ns |        295.9815 ns |      104 B |
+| array.ToList().RemoveAll(condition)   | 100     |        788.2978 ns |      11.6702 ns |       9.1113 ns |        783.7741 ns |      920 B |
+| list.ForAll()                         | 100000  |    292,220.4804 ns |   5,761.5403 ns |  15,278.7875 ns |    285,953.0762 ns |          - |
+| list.ForEach()                        | 100000  |    276,478.7737 ns |   2,123.5251 ns |   1,882.4497 ns |    276,278.2715 ns |          - |
+| foreach in list                       | 100000  |    210,212.1754 ns |   4,031.4752 ns |   4,140.0282 ns |    208,087.3779 ns |          - |
+| for in list                           | 100000  |    214,975.3812 ns |   3,042.3258 ns |   2,540.4798 ns |    214,497.4121 ns |          - |
+| list.ToList()                         | 100000  |    252,593.3865 ns |   4,841.7658 ns |   5,180.6351 ns |    250,724.9023 ns |   800082 B |
+| list.AsList()                         | 100000  |          0.2416 ns |       0.0240 ns |       0.0225 ns |          0.2539 ns |          - |
+| array.ToList()                        | 100000  |    256,933.4488 ns |   5,082.0885 ns |   7,912.1995 ns |    256,979.5654 ns |   800078 B |
+| array.AsList()                        | 100000  |    256,735.4662 ns |   5,097.6930 ns |   6,446.9495 ns |    257,324.0723 ns |   800078 B |
+| list.ToArray()                        | 100000  |    241,724.3193 ns |   4,741.1296 ns |   9,577.3157 ns |    243,516.0889 ns |   800016 B |
+| list.AsArray()                        | 100000  |    239,297.2168 ns |   4,782.4278 ns |  12,765.2679 ns |    239,194.1895 ns |   800015 B |
+| array.ToArray()                       | 100000  |    242,073.1110 ns |   4,839.2595 ns |  11,779.4264 ns |    241,527.4170 ns |   800020 B |
+| array.AsArray()                       | 100000  |          0.1980 ns |       0.0017 ns |       0.0014 ns |          0.1974 ns |          - |
+| array.Add(member)                     | 100000  |    252,521.3756 ns |   5,040.3855 ns |   8,281.4979 ns |    253,188.5742 ns |   800027 B |
+| array.ToList().Add(member)            | 100000  |    533,333.6227 ns |  10,594.0729 ns |  14,851.4107 ns |    535,023.3398 ns |  2400145 B |
+| array.AddRange(membersArray)          | 100000  |    243,777.1592 ns |   4,868.3471 ns |  13,651.3672 ns |    246,461.5234 ns |   800178 B |
+| array.ToList().AddRange(membersArray) | 100000  |    529,034.6973 ns |  10,439.2022 ns |  15,624.9064 ns |    528,342.7246 ns |  2400140 B |
+| array.Remove(member)                  | 100000  |    239,253.7050 ns |   4,757.1252 ns |  12,615.2211 ns |    241,452.5146 ns |   800007 B |
+| array.ToList().Remove(member)         | 100000  |    276,216.6936 ns |   5,389.4241 ns |   7,377.1046 ns |    273,623.7793 ns |   800078 B |
+| array.RemoveAll(condition)            | 100000  |    722,547.2389 ns |  14,375.7507 ns |  30,007.5451 ns |    717,823.3887 ns |   800381 B |
+| array.ToList().RemoveAll(condition)   | 100000  |    893,255.9635 ns |   4,206.0163 ns |   3,934.3103 ns |    894,714.9414 ns |   800472 B |
+| list.ForAll()                         | 1000000 |  5,465,727.5260 ns |  21,304.9198 ns |  19,928.6352 ns |  5,469,512.1094 ns |        8 B |
+| list.ForEach()                        | 1000000 |  5,485,919.6429 ns |  24,291.6617 ns |  21,533.9254 ns |  5,483,908.5938 ns |        7 B |
+| foreach in list                       | 1000000 |  5,376,657.1875 ns |  23,939.9112 ns |  22,393.4078 ns |  5,379,749.2188 ns |        7 B |
+| for in list                           | 1000000 |  5,354,379.4792 ns |  18,013.1910 ns |  16,849.5500 ns |  5,352,898.4375 ns |        7 B |
+| list.ToList()                         | 1000000 |  4,835,544.0625 ns |  96,588.2353 ns |  90,348.6952 ns |  4,862,678.9062 ns |  8000110 B |
+| list.AsList()                         | 1000000 |          0.2014 ns |       0.0035 ns |       0.0031 ns |          0.2017 ns |          - |
+| array.ToList()                        | 1000000 |  4,806,206.1979 ns |  84,893.6821 ns |  79,409.6029 ns |  4,828,608.5938 ns |  8000110 B |
+| array.AsList()                        | 1000000 |  4,804,540.5208 ns |  73,318.8556 ns |  68,582.5030 ns |  4,831,218.7500 ns |  8000110 B |
+| list.ToArray()                        | 1000000 |  4,799,392.3698 ns |  79,456.9603 ns |  74,324.0900 ns |  4,798,543.3594 ns |  8000078 B |
+| list.AsArray()                        | 1000000 |  4,811,368.9062 ns |  78,422.3492 ns |  73,356.3141 ns |  4,844,948.4375 ns |  8000078 B |
+| array.ToArray()                       | 1000000 |  4,813,089.2708 ns |  86,918.1579 ns |  81,303.2988 ns |  4,792,583.5938 ns |  8000078 B |
+| array.AsArray()                       | 1000000 |          0.2083 ns |       0.0027 ns |       0.0021 ns |          0.2091 ns |          - |
+| array.Add(member)                     | 1000000 |  4,807,320.6510 ns |  76,878.1966 ns |  71,911.9128 ns |  4,801,109.7656 ns |  8000086 B |
+| array.ToList().Add(member)            | 1000000 |  6,090,543.4814 ns | 121,454.9199 ns | 281,490.2453 ns |  6,055,098.8281 ns | 24000482 B |
+| array.AddRange(membersArray)          | 1000000 |  4,808,702.2917 ns |  76,213.8944 ns |  71,290.5241 ns |  4,826,896.8750 ns |  8000238 B |
+| array.ToList().AddRange(membersArray) | 1000000 |  6,095,736.6655 ns | 120,577.4866 ns | 226,473.7473 ns |  6,063,239.8438 ns | 24000550 B |
+| array.Remove(member)                  | 1000000 |  4,817,705.2865 ns |  94,062.6872 ns |  87,986.2960 ns |  4,844,812.1094 ns |  8000070 B |
+| array.ToList().Remove(member)         | 1000000 |  5,475,281.3021 ns |  84,528.3341 ns |  79,067.8562 ns |  5,476,521.8750 ns |  8000110 B |
+| array.RemoveAll(condition)            | 1000000 | 13,296,286.8304 ns |  80,477.7317 ns |  71,341.4129 ns | 13,304,075.7812 ns |  8000135 B |
+| array.ToList().RemoveAll(condition)   | 1000000 | 13,825,874.2188 ns |  59,145.1058 ns |  52,430.5958 ns | 13,820,512.5000 ns |  8000175 B |
 
 Conclusions
 
@@ -126,7 +126,7 @@ Conclusions
   - Large sized arrays run at about the same speed but 3x less memory.
   - After 3 calls, the cost of creating a new list is surpassed for using lists.
 - Array `Remove` extension breaks even typically. Suggest sticking to 3x or less rule.
-- Array `RemoveAll` is nuts. Shows incredible gains in memory and speed except at large size, where it suddenly breaks even.
+- Array `RemoveAll` shows significant gains in small arrays but balances out in large arrays.
   - Needs more investigation.
 - `ForAll` on a small list is comparable to `ForEach`.
 - `ForAll` on a large list scales to compare to the faster `foreach` and `for`.
