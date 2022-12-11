@@ -27,17 +27,19 @@ public class StringExtensionsTests
     [Fact]
     public async void Equals_Parallel_Success()
     {
-        var tasks = new List<Task<bool>>();
-        tasks.Add(Task.Run(() => "value".Equals("Value")));
-        tasks.Add(Task.Run(() => "value".NoCase().Equals("Value")));
-        tasks.Add(Task.Run(() => "value".Case().Equals("Value")));
-        tasks.Add(Task.Run(() => "value".NoCase().Ordinal().Equals("Value")));
-        tasks.Add(Task.Run(() => "value".Case().Ordinal().Equals("Value")));
-        tasks.Add(Task.Run(() => "value".NoCase().Current().Equals("Value")));
-        tasks.Add(Task.Run(() => "value".Case().Current().Equals("Value")));
-        tasks.Add(Task.Run(() => "value".NoCase().Invariant().Equals("Value")));
-        tasks.Add(Task.Run(() => "value".Case().Invariant().Equals("Value")));
-        var results = await Task.WhenAll<bool>(tasks);
+        var tasks = new List<Task<bool>>
+        {
+            Task.Run(() => "value".Equals("Value")),
+            Task.Run(() => "value".NoCase().Equals("Value")),
+            Task.Run(() => "value".Case().Equals("Value")),
+            Task.Run(() => "value".NoCase().Ordinal().Equals("Value")),
+            Task.Run(() => "value".Case().Ordinal().Equals("Value")),
+            Task.Run(() => "value".NoCase().Current().Equals("Value")),
+            Task.Run(() => "value".Case().Current().Equals("Value")),
+            Task.Run(() => "value".NoCase().Invariant().Equals("Value")),
+            Task.Run(() => "value".Case().Invariant().Equals("Value"))
+        };
+        var results = await Task.WhenAll(tasks).ConfigureAwait(false);
         var expectedResults = new List<bool>()
         {
             false, true, false, true, false, true, false, true, false
