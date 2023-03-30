@@ -5,7 +5,8 @@ namespace Sharpener.Types.Ticker;
 /// </summary>
 public struct Ticker : IDisposable
 {
-    private long? _startTicks;
+    private long _startTicks = long.MinValue;
+
     /// <summary>
     /// Constructor.
     /// </summary>
@@ -17,24 +18,28 @@ public struct Ticker : IDisposable
             _startTicks = UtcNowTicks;
         }
     }
+
     /// <summary>
     /// Starts the ticker.
     /// </summary>
     public void Start() => _startTicks = UtcNowTicks;
+
     /// <summary>
     /// Ticks since the ticker was started. Will throw an exception if the ticker has not been started already which occurs by default in the constructor but can be turned off.
     /// </summary>
     /// <returns></returns>
-    public long ElapsedTicks => _startTicks is not null ? (long)(UtcNowTicks - _startTicks) : throw new NotSupportedException("Start the ticker before getting elapsed ticks.");
+    public long ElapsedTicks => _startTicks is not long.MinValue ? (long)(UtcNowTicks - _startTicks) : throw new NotSupportedException("Start the ticker before getting elapsed ticks.");
+
     /// <summary>
     /// The current UTC now in ticks.
     /// </summary>
     public static long UtcNowTicks => DateTime.UtcNow.Ticks;
+
     /// <summary>
     /// Disposal logic of the ticker.
     /// </summary>
     public void Dispose()
     {
-        _startTicks = null;
+        _startTicks = long.MinValue;
     }
 }
