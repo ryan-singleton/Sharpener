@@ -18,8 +18,8 @@
     <PackageReleaseNotes>https://github.com/r-singleton/Sharpener/blob/main/docs/CHANGELOG.md</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="../../docs/JSON.md" Pack="true" PackagePath="\" />
-    <None Include="../../docs/images/icon-white-stroke-128.png" Pack="true" PackagePath="\" />
+    <None Include="../../docs/JSON.md" Pack="true" PackagePath="\"/>
+    <None Include="../../docs/images/icon-white-stroke-128.png" Pack="true" PackagePath="\"/>
   </ItemGroup>
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
