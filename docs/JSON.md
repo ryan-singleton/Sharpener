@@ -1,21 +1,20 @@
-<img src="images/icon-white-stroke-40px.png"
-align="right"
-style="height: 40px;" />
-
+<img src="images/sharpener-logo-40.png"
+     align="right"
+     style="height: 40px;" />
+     
 # Sharpener.Json
 
 A small scoped package that extends the base `Sharpener` package as well as `System.Text.Json` for serialization and
 deserializationn.
 
 ## Table of Contents
-
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Extended Features](#extended-features)
-- [Support](#support)
-- [Contributing](#contributing)
-
+- [Sharpener.Json](#sharpenerjson)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [WriteJson](#writejson)
+    - [ReadJsonAs`<TResult>`](#readjsonastresult)
 ## Features
 
 The `Sharpener.Json` package focuses on features for the basic runtime layer's json tooling.
