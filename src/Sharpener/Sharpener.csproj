@@ -5,21 +5,31 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <PackageId>Sharpener</PackageId>
-    <Version>0.1.1</Version>
+    <Version>0.1.5</Version>
     <Authors>Ryan Singleton</Authors>
-    <Company>Facefire</Company>
-    <PackageProjectUrl>https://github.com/r-singleton/Sharpener</PackageProjectUrl>
+    <Company>North of Real</Company>
+    <PackageProjectUrl>https://github.com/ryan-singleton/Sharpener</PackageProjectUrl>
     <Description>Quality of life tools for C# including string case insensitive syntax and left join linq for collections.</Description>
     <RepositoryUrl>https://github.com/r-singleton/Sharpener</RepositoryUrl>
-    <PackageIcon>icon-white-stroke-128.png</PackageIcon>
+    <PackageIcon>sharpener-logo-128.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>quality-of-life qol dotnet csharp</PackageTags>
-    <PackageReleaseNotes>https://github.com/r-singleton/Sharpener/blob/main/docs/CHANGELOG.md</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/ryan-singleton/Sharpener/blob/main/docs/CHANGELOG.md</PackageReleaseNotes>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="../../docs/JSON.md" Pack="true" PackagePath="\" />
-    <None Include="../../docs/images/icon-white-stroke-128.png" Pack="true" PackagePath="\" />
+    <None Include="..\..\docs\images\sharpener-logo-128.png">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+      <Link>Docs\sharpener-logo-128.png</Link>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+      <Link>Docs\README.md</Link>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
