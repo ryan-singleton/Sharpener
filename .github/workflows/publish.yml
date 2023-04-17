@@ -44,12 +44,12 @@ jobs:
       run: |
         dotnet build --configuration Release --no-restore --source https://api.nuget.org/v3/index.json --verbosity minimal ${{ env.PROJECTS }}
         if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
-          dotnet pack --configuration Release --no-restore --no-build --output ./bin/Release --version-suffix "alpha-${{ github.sha }}" ${{ env.PROJECTS }} | sed 's/ / src\//g' | sed 's/^/src\//'
+          dotnet pack --configuration Release --no-restore --no-build --output ./bin/Release --version-suffix "alpha-${{ github.sha }}" ${{ env.PROJECTS }}
         else
-          dotnet pack --configuration Release --no-restore --no-build --output ./bin/Release ${{ env.PROJECTS }} | sed 's/ / src\//g' | sed 's/^/src\//'
+          dotnet pack --configuration Release --no-restore --no-build --output ./bin/Release ${{ env.PROJECTS }}
         fi
     - name: Publish package to nuget.org
       run: |
-        for PACKAGE in $(ls ./bin/Release/*.nupkg); do
+        for PACKAGE in $(ls src*./bin/Release/*.nupkg); do
           dotnet nuget push $PACKAGE -s "https://api.nuget.org/v3/index.json" -k ${{ secrets.NUGET_PUBLISH_API_KEY }} --skip-duplicate
         done
