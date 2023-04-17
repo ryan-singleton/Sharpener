@@ -35,6 +35,8 @@ jobs:
         PROJECTS=$(echo $CHANGED_FILES | grep -o -E '.+\.csproj$' | tr '\n' ';')
         echo "::set-env name=PROJECTS::$PROJECTS"
         echo $PROJECTS
+    - name: Restore NuGets
+      run: nuget restore
     - name: Build and package
       run: |
         dotnet build --configuration Release --no-restore --source https://api.nuget.org/v3/index.json --verbosity minimal ${{ env.PROJECTS }}
