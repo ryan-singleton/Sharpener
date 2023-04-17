@@ -2,12 +2,14 @@ name: Build and Deploy NuGet Package
 on:
   push:
     paths:
+     - '.github/workflows/**'
      - 'src/**'
     branches:
       - main
       - develop
   pull_request:
     paths:
+     - '.github/workflows/**'
      - 'src/**'
     types: [closed]
     branches:
@@ -26,17 +28,6 @@ jobs:
         dotnet-version: |
           5.0.x
           6.0.x
-    - name: Determine changed projects
-      run: |
-        CHANGED_FILES=$(git --no-pager diff --name-only HEAD $(git merge-base HEAD ${{ github.base_ref }}))
-        if [[ -z "$CHANGED_FILES" ]]; then
-          echo "No changes detected. Skipping build."
-          exit 0
-        fi
-        echo "Changes detected. Continuing build."
-        PROJECTS=$(echo $CHANGED_FILES | grep -o -E '.+\.csproj$' | tr '\n' ';')
-        echo "::set-env name=PROJECTS::$PROJECTS"
-        echo $PROJECTS
     - name: Restore dependencies
       run: |
         dotnet restore --source "https://api.nuget.org/v3/index.json" --no-cache
