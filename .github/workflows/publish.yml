@@ -51,5 +51,5 @@ jobs:
     - name: Publish package to nuget.org
       run: |
         for PACKAGE in $(ls ./bin/Release/*.nupkg); do
-          dotnet nuget push $PACKAGE -s "https://api.nuget.org/v3/index.json" -k ${{ secrets.NUGET_PUBLISH_API_KEY }}
+          dotnet nuget push $PACKAGE -s "https://api.nuget.org/v3/index.json" -k ${{ secrets.NUGET_PUBLISH_API_KEY }} --skip-duplicate
         done
