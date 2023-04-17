@@ -28,6 +28,6 @@
     </AssemblyAttribute>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sharpener\Sharpener.csproj" />
+    <ProjectReference Include="..\Sharpener\Sharpener.csproj"/>
   </ItemGroup>
 </Project>

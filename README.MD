@@ -28,6 +28,8 @@ The `Sharpener` package focuses on features for the basic runtime layer.
 
 - Concise syntax for string comparisons
   - reducing code clutter due to `StringComparison.SomethingIgnoreCase` spam.
+- Array extensions `Add`, `AddRange`, `Remove`, and `RemoveAll`.
+  - Faster than converting to `List<T>` in one-off situations for large arrays.
 - Fast version of `ForEach` available to all `IEnumerable` types using `Span<T>`.
 - A variation from `Join` on lists that allows left joins called `LeftJoin`.
 - `As` variants of `ToList` and `ToArray` that will prefer to try casting before creating.
@@ -51,6 +53,15 @@ var isRickRoll = name.NoCase().StartsWith("rick")
 ```
 
 Has culture builders as well like `Current()`, `Invariant()`, and `Ordinal()`.
+
+### Array Add and Remove
+
+```cs
+itemsArray = itemsArray.Add(newItem);
+```
+
+These extensions are a better choice than converting to `List` when the array will be rarely manipulated. Even more so when the array is large. But when manipulations of the array will be common, conversion to a `List` is more appropriate.
+They create a new array using `Span<T>` for high performance, which means that you must re-assign the output to either a new variable or the original one. This is unlike the `List` operations, where the list is changed by the call.
 
 ### ForAll
 

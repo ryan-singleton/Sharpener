@@ -1,8 +1,8 @@
-// The Sharpener project and Facefire license this file to you under the MIT license.
-
-using Sharpener.Types.Strings.Interfaces;
+// The Sharpener project licenses this file to you under the MIT license.
 
 namespace Sharpener.Types.Strings;
+
+using Interfaces;
 
 /// <inheritdoc />
 internal struct CultureStringComparer : IStringComparer
@@ -11,13 +11,13 @@ internal struct CultureStringComparer : IStringComparer
     public string Source { get; }
 
     /// <summary>
-    /// The culture.
+    ///     The culture.
     /// </summary>
     /// <value></value>
-    internal StringComparison Comparison { get; private set; }
+    private StringComparison Comparison { get; set; }
 
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     /// <param name="source"></param>
     /// <param name="comparison"></param>
@@ -28,7 +28,10 @@ internal struct CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    public bool Equals(IStringComparer comparer) => comparer.Equals(Source);
+    public bool Equals(IStringComparer comparer)
+    {
+        return comparer.Equals(Source);
+    }
 
     /// <inheritdoc />
     public IStringComparer NoCase()
@@ -112,14 +115,26 @@ internal struct CultureStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    public bool Equals(string compare) => Source.Equals(compare, Comparison);
+    public bool Equals(string compare)
+    {
+        return Source.Equals(compare, Comparison);
+    }
 
     /// <inheritdoc />
-    public bool Contains(string compare) => Source.Contains(compare, Comparison);
+    public bool Contains(string compare)
+    {
+        return Source.Contains(compare, Comparison);
+    }
 
     /// <inheritdoc />
-    public bool EndsWith(string compare) => Source.EndsWith(compare, Comparison);
+    public bool EndsWith(string compare)
+    {
+        return Source.EndsWith(compare, Comparison);
+    }
 
     /// <inheritdoc />
-    public bool StartsWith(string compare) => Source.StartsWith(compare, Comparison);
+    public bool StartsWith(string compare)
+    {
+        return Source.StartsWith(compare, Comparison);
+    }
 }

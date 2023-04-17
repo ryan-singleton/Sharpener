@@ -1,8 +1,8 @@
-// The Sharpener project and Facefire license this file to you under the MIT license.
-
-using Sharpener.Types.Strings.Interfaces;
+// The Sharpener project licenses this file to you under the MIT license.
 
 namespace Sharpener.Types.Strings;
+
+using Interfaces;
 
 /// <inheritdoc />
 internal struct CaseStringComparer : IStringComparer
@@ -11,13 +11,13 @@ internal struct CaseStringComparer : IStringComparer
     public string Source { get; }
 
     /// <summary>
-    /// Whether to ignore case or not.
+    ///     Whether to ignore case or not.
     /// </summary>
     /// <value></value>
-    internal bool Ignore { get; private set; }
+    private bool Ignore { get; set; }
 
     /// <summary>
-    /// Constructor.
+    ///     Constructor.
     /// </summary>
     /// <param name="source"></param>
     /// <param name="ignore"></param>
@@ -28,7 +28,10 @@ internal struct CaseStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    public bool Equals(IStringComparer comparer) => comparer.Equals(Source);
+    public bool Equals(IStringComparer comparer)
+    {
+        return comparer.Equals(Source);
+    }
 
     /// <inheritdoc />
     public IStringComparer NoCase()
@@ -45,37 +48,58 @@ internal struct CaseStringComparer : IStringComparer
     }
 
     /// <inheritdoc />
-    public IStringComparer Current() => Ignore
-        ? new CultureStringComparer(Source, StringComparison.CurrentCultureIgnoreCase)
-        : new CultureStringComparer(Source, StringComparison.CurrentCulture);
+    public IStringComparer Current()
+    {
+        return Ignore
+            ? new CultureStringComparer(Source, StringComparison.CurrentCultureIgnoreCase)
+            : new CultureStringComparer(Source, StringComparison.CurrentCulture);
+    }
 
     /// <inheritdoc />
-    public IStringComparer Ordinal() => Ignore
-        ? new CultureStringComparer(Source, StringComparison.OrdinalIgnoreCase)
-        : new CultureStringComparer(Source, StringComparison.Ordinal);
+    public IStringComparer Ordinal()
+    {
+        return Ignore
+            ? new CultureStringComparer(Source, StringComparison.OrdinalIgnoreCase)
+            : new CultureStringComparer(Source, StringComparison.Ordinal);
+    }
 
     /// <inheritdoc />
-    public IStringComparer Invariant() => Ignore
-        ? new CultureStringComparer(Source, StringComparison.InvariantCultureIgnoreCase)
-        : new CultureStringComparer(Source, StringComparison.InvariantCulture);
+    public IStringComparer Invariant()
+    {
+        return Ignore
+            ? new CultureStringComparer(Source, StringComparison.InvariantCultureIgnoreCase)
+            : new CultureStringComparer(Source, StringComparison.InvariantCulture);
+    }
 
     /// <inheritdoc />
-    public bool Equals(string compare) => Ignore
-        ? Source.Equals(compare, SharpenerStringsSettings.DefaultCultureCaseInsensitive)
-        : Source.Equals(compare, SharpenerStringsSettings.DefaultCultureCaseSensitive);
+    public bool Equals(string compare)
+    {
+        return Ignore
+            ? Source.Equals(compare, SharpenerStringsSettings.DefaultCultureCaseInsensitive)
+            : Source.Equals(compare, SharpenerStringsSettings.DefaultCultureCaseSensitive);
+    }
 
     /// <inheritdoc />
-    public bool Contains(string compare) => Ignore
-        ? Source.Contains(compare, SharpenerStringsSettings.DefaultCultureCaseInsensitive)
-        : Source.Contains(compare, SharpenerStringsSettings.DefaultCultureCaseSensitive);
+    public bool Contains(string compare)
+    {
+        return Ignore
+            ? Source.Contains(compare, SharpenerStringsSettings.DefaultCultureCaseInsensitive)
+            : Source.Contains(compare, SharpenerStringsSettings.DefaultCultureCaseSensitive);
+    }
 
     /// <inheritdoc />
-    public bool StartsWith(string compare) => Ignore
-        ? Source.StartsWith(compare, SharpenerStringsSettings.DefaultCultureCaseInsensitive)
-        : Source.StartsWith(compare, SharpenerStringsSettings.DefaultCultureCaseSensitive);
+    public bool StartsWith(string compare)
+    {
+        return Ignore
+            ? Source.StartsWith(compare, SharpenerStringsSettings.DefaultCultureCaseInsensitive)
+            : Source.StartsWith(compare, SharpenerStringsSettings.DefaultCultureCaseSensitive);
+    }
 
     /// <inheritdoc />
-    public bool EndsWith(string compare) => Ignore
-        ? Source.EndsWith(compare, SharpenerStringsSettings.DefaultCultureCaseInsensitive)
-        : Source.EndsWith(compare, SharpenerStringsSettings.DefaultCultureCaseSensitive);
+    public bool EndsWith(string compare)
+    {
+        return Ignore
+            ? Source.EndsWith(compare, SharpenerStringsSettings.DefaultCultureCaseInsensitive)
+            : Source.EndsWith(compare, SharpenerStringsSettings.DefaultCultureCaseSensitive);
+    }
 }

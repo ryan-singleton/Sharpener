@@ -195,7 +195,7 @@ dotnet_diagnostic.IDE0060.severity = warning
 dotnet_diagnostic.IDE0062.severity = warning
 # IDE0073: File header
 dotnet_diagnostic.IDE0073.severity = warning
-file_header_template = The Sharpener project and Facefire license this file to you under the MIT license.
+file_header_template = The Sharpener project licenses this file to you under the MIT license.
 # IDE0161: Convert to file-scoped namespace
 dotnet_diagnostic.IDE0161.severity = warning
 # IDE0200: Lambda expression can be removed

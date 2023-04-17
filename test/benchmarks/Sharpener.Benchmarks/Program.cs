@@ -1,8 +1,10 @@
-// The Sharpener project and Facefire license this file to you under the MIT license.
+// The Sharpener project licenses this file to you under the MIT license.
+
+namespace Sharpener.Benchmarks;
 
 using BenchmarkDotNet.Running;
-using Sharpener.Benchmarks.Extensions;
-namespace Sharpener.Benchmarks;
+using Extensions;
+
 public class Program
 {
     public static void Main()
