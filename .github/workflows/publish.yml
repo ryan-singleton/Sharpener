@@ -35,9 +35,7 @@ jobs:
         echo $PROJECTS
     - name: Restore dependencies
       run: |
-        dotnet restore
-          --source "https://api.nuget.org/v3/index.json"
-          --no-cache
+        dotnet restore --source "https://api.nuget.org/v3/index.json" --no-cache
         if ! nuget sources list | grep -q "nuget.org"; then
           nuget sources add -name "nuget.org" -source "https://api.nuget.org/v3/index.json" -username ${{ secrets.NUGET_PUBLISH_USERNAME }} -password ${{ secrets.NUGET_PUBLISH_API_KEY }}
         fi
