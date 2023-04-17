@@ -3,10 +3,12 @@ on:
   push:
     branches:
       - main
+      - develop
   pull_request:
     types: [closed]
     branches:
         - main
+        - develop
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -25,8 +27,12 @@ jobs:
         echo "::set-env name=PROJECTS::$PROJECTS"
     - name: Build and package
       run: |
-        dotnet build --configuration Release --no-restore --source https://api.nuget.org/v3/index.json --verbosity minimal --projects ${{ env.PROJECTS }}
-        dotnet pack --configuration Release --no-restore --no-build --output ./bin/Release ${{ env.PROJECTS }}
+        dotnet build --configuration Release --no-restore --source https://api.nuget.org/v3/index.json --verbosity minimal ${{ env.PROJECTS }}
+        if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+          dotnet pack --configuration Release --no-restore --no-build --output ./bin/Release --version-suffix "alpha-${{ github.sha }}" ${{ env.PROJECTS }}
+        else
+          dotnet pack --configuration Release --no-restore --no-build --output ./bin/Release ${{ env.PROJECTS }}
+        fi
     - name: Authenticate with nuget.org
       run: nuget sources add -name "nuget.org" -source "https://api.nuget.org/v3/index.json" -username ${{ secrets.NUGET_PUBLISH_USERNAME }} -password ${{ secrets.NUGET_PUBLISH_API_KEY }}
     - name: Publish package to nuget.org
