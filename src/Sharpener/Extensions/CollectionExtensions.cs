@@ -130,7 +130,7 @@ public static class CollectionExtensions
     /// <typeparam name="TKey">The type of the keys returned by the key selector functions.</typeparam>
     /// <typeparam name="TResult">The type of the result elements.</typeparam>
     /// <returns>
-    ///     An <see cref="IEnumerable{T}" /> that has elements of type <see cref="TResult" /> that are obtained by
+    ///     An <see cref="IEnumerable{T}" /> that has elements of result type that are obtained by
     ///     performing a left join on two sequences.
     /// </returns>
     public static IEnumerable<TResult> LeftJoin<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer,
