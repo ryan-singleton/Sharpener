@@ -1,4 +1,4 @@
-<img src="docs/images/icon-white-stroke-40px.png"
+<img src="docs/images/sharpener-logo-40.png"
      align="right"
      style="height: 40px;" />
 
@@ -8,13 +8,19 @@ A small scoped and modular ecosystem of packages that intend to provide quality 
 
 ## Table of Contents
 
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Extended Features](#extended-features)
-- [Other Docs](#other-docs)
-- [Support](#support)
-- [Contributing](#contributing)
+- [Sharpener](#sharpener)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Concise String Comparisons](#concise-string-comparisons)
+    - [ForAll](#forall)
+    - [Collection As Extensions](#collection-as-extensions)
+    - [LeftJoin](#leftjoin)
+  - [Extended Features](#extended-features)
+  - [Other Docs](#other-docs)
+  - [Support](#support)
+  - [Contributing](#contributing)
 
 ## Features
 
