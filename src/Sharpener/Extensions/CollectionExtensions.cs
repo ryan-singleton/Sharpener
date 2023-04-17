@@ -63,7 +63,7 @@ public static class CollectionExtensions
     /// <returns></returns>
     public static T[] AsArray<T>(this IEnumerable<T> enumerable)
     {
-        return enumerable.IsArray() ? (T[])enumerable : enumerable.ToArray();
+        return enumerable.GetType() == typeof(T[]) ? (T[])enumerable : enumerable.ToArray();
     }
 
     /// <summary>
@@ -74,7 +74,7 @@ public static class CollectionExtensions
     /// <returns></returns>
     public static List<T> AsList<T>(this IEnumerable<T> enumerable)
     {
-        return enumerable.IsList() ? (List<T>)enumerable : enumerable.ToList();
+        return enumerable.GetType() == typeof(List<T>) ? (List<T>)enumerable : enumerable.ToList();
     }
 
     /// <summary>
