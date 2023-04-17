@@ -24,7 +24,7 @@ jobs:
           6.0.x
     - name: Determine changed projects
       run: |
-        CHANGED_FILES=$(git --no-pager diff --relative=src/ --name-only HEAD $(git merge-base HEAD ${{ github.base_ref }}))
+        CHANGED_FILES=$(git --no-pager diff --name-only HEAD $(git merge-base HEAD ${{ github.base_ref }}) --diff-filter=d --relative=src/)
         if [[ -z "$CHANGED_FILES" ]]; then
           echo "No changes detected. Skipping build."
           exit 0
