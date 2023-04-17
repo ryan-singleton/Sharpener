@@ -31,6 +31,7 @@ jobs:
           echo "No changes detected. Skipping build."
           exit 0
         fi
+        echo "Changes detected. Continuing build."
         PROJECTS=$(echo $CHANGED_FILES | sed "s/ /;/g")
         echo "::set-env name=PROJECTS::$PROJECTS"
         echo $PROJECTS
