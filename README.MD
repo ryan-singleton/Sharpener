@@ -1,40 +1,42 @@
 <img src="docs/images/sharpener-logo-40.png"
-     align="right"
-     style="height: 40px;" />
+align="right"
+style="height: 40px;" />
 
 # Sharpener
 
-A small scoped and modular ecosystem of packages that intend to provide quality of life improvements for C# developers. Each package provides these improvements within a domain of work, so that you can keep your references light and tailored to your needs.
+A small scoped and modular ecosystem of packages that intend to provide quality of life improvements for C# developers.
+Each package provides these improvements within a domain of work, so that you can keep your references light and
+tailored to your needs.
 
 ## Table of Contents
 
 - [Sharpener](#sharpener)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [Installation](#installation)
-  - [Usage](#usage)
-    - [Concise String Comparisons](#concise-string-comparisons)
-    - [ForAll](#forall)
-    - [Collection As Extensions](#collection-as-extensions)
-    - [LeftJoin](#leftjoin)
-  - [Extended Features](#extended-features)
-  - [Other Docs](#other-docs)
-  - [Support](#support)
-  - [Contributing](#contributing)
+    - [Table of Contents](#table-of-contents)
+    - [Features](#features)
+    - [Installation](#installation)
+    - [Usage](#usage)
+        - [Concise String Comparisons](#concise-string-comparisons)
+        - [ForAll](#forall)
+        - [Collection As Extensions](#collection-as-extensions)
+        - [LeftJoin](#leftjoin)
+    - [Extended Features](#extended-features)
+    - [Other Docs](#other-docs)
+    - [Support](#support)
+    - [Contributing](#contributing)
 
 ## Features
 
 The `Sharpener` package focuses on features for the basic runtime layer.
 
 - Concise syntax for string comparisons
-  - reducing code clutter due to `StringComparison.SomethingIgnoreCase` spam.
+    - reducing code clutter due to `StringComparison.SomethingIgnoreCase` spam.
 - Array extensions `Add`, `AddRange`, `Remove`, and `RemoveAll`.
-  - Faster than converting to `List<T>` in one-off situations for large arrays.
+    - Faster than converting to `List<T>` in one-off situations for large arrays.
 - Fast version of `ForEach` available to all `IEnumerable` types using `Span<T>`.
 - A variation from `Join` on lists that allows left joins called `LeftJoin`.
 - `As` variants of `ToList` and `ToArray` that will prefer to try casting before creating.
-  - If your IDE gives you "multiple enumeration warnings", this one is worth looking at.
-    See [Extended Features](#extended-features) for the other extended packages in the Sharpener ecosystem.
+    - If your IDE gives you "multiple enumeration warnings", this one is worth looking at.
+      See [Extended Features](#extended-features) for the other extended packages in the Sharpener ecosystem.
 
 ## Installation
 
@@ -60,8 +62,10 @@ Has culture builders as well like `Current()`, `Invariant()`, and `Ordinal()`.
 itemsArray = itemsArray.Add(newItem);
 ```
 
-These extensions are a better choice than converting to `List` when the array will be rarely manipulated. Even more so when the array is large. But when manipulations of the array will be common, conversion to a `List` is more appropriate.
-They create a new array using `Span<T>` for high performance, which means that you must re-assign the output to either a new variable or the original one. This is unlike the `List` operations, where the list is changed by the call.
+These extensions are a better choice than converting to `List` when the array will be rarely manipulated. Even more so
+when the array is large. But when manipulations of the array will be common, conversion to a `List` is more appropriate.
+They create a new array using `Span<T>` for high performance, which means that you must re-assign the output to either a
+new variable or the original one. This is unlike the `List` operations, where the list is changed by the call.
 
 ### ForAll
 
@@ -71,12 +75,15 @@ Say you have an `IEnumerable<Student>`</Student> and you need to reset their `Ab
 students.ForAll(student => student.Absences = 0);
 ```
 
-You don't need to cast it as a list and it will run faster with lower memory than if you called `ToList` and then `ForEach`.
+You don't need to cast it as a list and it will run faster with lower memory than if you called `ToList` and
+then `ForEach`.
 
 ### Collection As Extensions
 
-Say you have that same enumerable from the above example. It has been passed down from method to method and you don't know, off hand, if it is a list or not.
-You perform two operations that may enumerate it twice, so your IDE warns you about this. If it is already a list, calling `ToList` will make another list from your list. What do you do to settle this warning?
+Say you have that same enumerable from the above example. It has been passed down from method to method and you don't
+know, off hand, if it is a list or not.
+You perform two operations that may enumerate it twice, so your IDE warns you about this. If it is already a list,
+calling `ToList` will make another list from your list. What do you do to settle this warning?
 
 ```cs
 var studentList = students.AsList();
@@ -92,7 +99,8 @@ Granted, `GroupBy` is the better option here, but you get the point.
 
 ### LeftJoin
 
-Say that you have two lists and you need to quickly find relationships between the two. For this situation, I've seen a lot of code that looks something like this.
+Say that you have two lists and you need to quickly find relationships between the two. For this situation, I've seen a
+lot of code that looks something like this.
 
 ```cs
 var studentCandidates = new List<Student>();
@@ -115,7 +123,9 @@ var studentCandidates = students
 .Where(student => candidates.Any(candidate => student.RegisteredName.Equals(candidate.Name)));
 ```
 
-But consider that you are iterating through the students list for every entry in the candidates list. That's brutal. Now, not to overlook the value of the `Intersect` and `Union` extensions, there are also join clauses for situations where it's not assumed that equality will be determined by the default equality comparer.
+But consider that you are iterating through the students list for every entry in the candidates list. That's brutal.
+Now, not to overlook the value of the `Intersect` and `Union` extensions, there are also join clauses for situations
+where it's not assumed that equality will be determined by the default equality comparer.
 .NET allows you to write code like this, for example.
 
 ```cs
@@ -124,7 +134,8 @@ join candidate in candidates on student.Name equals candidate.RegisteredName
 select student;
 ```
 
-The performance of the above code is going to be magnitudes of order improved upon the other multiple iteration techniques. Keep that in mind for general knowledge. It's vastly underused.
+The performance of the above code is going to be magnitudes of order improved upon the other multiple iteration
+techniques. Keep that in mind for general knowledge. It's vastly underused.
 But not everyone likes the query syntax. If you want this, but in Linq syntax, .Net also offers this.
 
 ```cs
@@ -134,7 +145,8 @@ candidate => candidate.RegisteredName,
 (student, candidate) => student);
 ```
 
-But there's one issue. What if you want a `left join`. A join where, when no equality is found, you still get the value from the first (students) list so that you know that it did not have a match. There are times where you'll need this.
+But there's one issue. What if you want a `left join`. A join where, when no equality is found, you still get the value
+from the first (students) list so that you know that it did not have a match. There are times where you'll need this.
 The query syntax offers `into` and `DefaultIfEmpty` for it.
 
 ```cs
@@ -145,7 +157,10 @@ select new {Student = student, Candidate = joined};
 var studentCandidates = leftJoin.Where(pair => pair.Candidate is not null);
 ```
 
-But to have this in Linq syntax, `Join` doesn't really offer much there. Now, you can use `GroupJoin` to achieve this with Linq, but it's a much more complex lambda structure than one really needs for a simple left join. So now you can simply repeat the previous `Join` sample, but replace it with `LeftJoin` and you'll receive results where the second (candidates) had no match.
+But to have this in Linq syntax, `Join` doesn't really offer much there. Now, you can use `GroupJoin` to achieve this
+with Linq, but it's a much more complex lambda structure than one really needs for a simple left join. So now you can
+simply repeat the previous `Join` sample, but replace it with `LeftJoin` and you'll receive results where the second (
+candidates) had no match.
 
 ```cs
 var leftJoin = students.LeftJoin(candidates,
@@ -158,7 +173,7 @@ var studentCandidates = leftJoin.Where(pair => pair.Candidate is not null);
 ## Extended Features
 
 - [Json](docs/JSON.md)
-  - [Newtonsoft](docs/Newtonsoft.md)
+    - [Newtonsoft](docs/Newtonsoft.md)
 - [Http](docs/Http.md)
 
 ## Other Docs
@@ -174,4 +189,5 @@ Please [open an issue](https://github.com/r-singleton/Sharpener/issues/new) for 
 
 ## Contributing
 
-Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits, and [open a pull request](https://github.com/r-singleton/Sharpener/compare/).
+Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits,
+and [open a pull request](https://github.com/r-singleton/Sharpener/compare/).

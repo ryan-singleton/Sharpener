@@ -17,7 +17,7 @@
     <PackageReleaseNotes>https://github.com/ryan-singleton/Sharpener/blob/main/docs/CHANGELOG.md</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <None Include="..\..\docs\images\sharpener-logo-128.png">
       <Pack>true</Pack>
@@ -30,7 +30,7 @@
       <Link>Docs\README.md</Link>
     </None>
   </ItemGroup>
-  
+
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>$(MSBuildProjectName).Test</_Parameter1>
@@ -40,9 +40,9 @@
     </AssemblyAttribute>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sharpener\Sharpener.csproj" />
+    <ProjectReference Include="..\Sharpener\Sharpener.csproj"/>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Docs\" />
+    <Folder Include="Docs\"/>
   </ItemGroup>
 </Project>
