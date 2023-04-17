@@ -16,15 +16,24 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Setup .NET
+    - name: Setup .NET5
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '5.0.x'
+    - name: Setup .NET6
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
     - name: Determine changed projects
       run: |
         CHANGED_FILES=$(git --no-pager diff --name-only HEAD $(git merge-base HEAD ${{ github.base_ref }}) | grep ".csproj")
+        if [[ -z "$CHANGED_FILES" ]]; then
+          echo "No changes detected. Skipping build."
+          exit 0
+        fi
         PROJECTS=$(echo $CHANGED_FILES | sed "s/ /;/g")
         echo "::set-env name=PROJECTS::$PROJECTS"
+        echo $PROJECTS
     - name: Build and package
       run: |
         dotnet build --configuration Release --no-restore --source https://api.nuget.org/v3/index.json --verbosity minimal ${{ env.PROJECTS }}
