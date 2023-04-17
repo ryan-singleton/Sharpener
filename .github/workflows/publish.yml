@@ -16,12 +16,14 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-    - name: Setup .NET
+    - name: Setup .NET5
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: |
-        '5.0.x'
-        '6.0.x'
+        dotnet-version: '5.0.x'
+    - name: Setup .NET6
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
     - name: Determine changed projects
       run: |
         CHANGED_FILES=$(git --no-pager diff --name-only HEAD $(git merge-base HEAD ${{ github.base_ref }}) | grep ".csproj")
