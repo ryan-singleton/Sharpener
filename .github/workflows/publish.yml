@@ -38,7 +38,7 @@ jobs:
     - name: Build and package
       run: |
         dotnet build --configuration Release --no-restore --source https://api.nuget.org/v3/index.json --verbosity minimal
-        if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+        if [[ "${{ github.ref }}" != "refs/heads/main" ]]; then
           dotnet pack --configuration Release --no-restore --no-build --output ./bin/Release --version-suffix "alpha-${{ github.sha }}"
         else
           dotnet pack --configuration Release --no-restore --no-build --output ./bin/Release
