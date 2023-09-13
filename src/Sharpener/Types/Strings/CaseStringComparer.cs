@@ -82,9 +82,16 @@ internal struct CaseStringComparer : IStringComparer
     /// <inheritdoc />
     public bool Contains(string compare)
     {
+        # if NET5_0_OR_GREATER
         return Ignore
             ? Source.Contains(compare, SharpenerStringsSettings.DefaultCultureCaseInsensitive)
             : Source.Contains(compare, SharpenerStringsSettings.DefaultCultureCaseSensitive);
+        #endif
+        #if NETSTANDARD2_0_OR_GREATER
+        return Ignore
+            ? Source.IndexOf(compare, StringComparison.CurrentCultureIgnoreCase) >= 0
+            : Source.IndexOf(compare, StringComparison.CurrentCulture) >= 0;
+        #endif
     }
 
     /// <inheritdoc />

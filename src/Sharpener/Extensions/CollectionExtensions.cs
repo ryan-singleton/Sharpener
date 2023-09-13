@@ -1,9 +1,10 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
-namespace Sharpener.Extensions;
-
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+
+namespace Sharpener.Extensions;
 
 /// <summary>
 ///     Extensions for collections of all types.
@@ -20,8 +21,8 @@ public static class CollectionExtensions
     /// </remarks>
     /// <param name="array">The array to add the element to.</param>
     /// <param name="element">The element to add to the array.</param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <typeparam name="T"> The type of the elements in the array.</typeparam>
+    /// <returns> The modified array.</returns>
     public static T[] Add<T>(this T[] array, T element)
     {
         var arraySpan = new ReadOnlySpan<T>(array);
@@ -42,25 +43,31 @@ public static class CollectionExtensions
     /// </remarks>
     /// <param name="array">The array to add the elements to.</param>
     /// <param name="elements">The elements to add to the array.</param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <typeparam name="T"> The type of the elements in the array.</typeparam>
+    /// <returns> The modified array.</returns>
     public static T[] AddRange<T>(this T[] array, IEnumerable<T> elements)
     {
+#if NET5_0_OR_GREATER
         var arraySpan = new ReadOnlySpan<T>(array);
         var membersSpan = new Span<T>(elements.AsArray());
         var newArray = new T[arraySpan.Length + membersSpan.Length];
         arraySpan.CopyTo(newArray);
         membersSpan.CopyTo(newArray.AsSpan()[arraySpan.Length..]);
         return newArray;
+#endif
+
+#if NETSTANDARD2_0_OR_GREATER
+        return array.Concat(elements).ToArray();
+#endif
     }
 
     /// <summary>
     ///     Creates an array from the enumerable only if it is not already an array. Otherwise, simply returns it casted as an
     ///     array.
     /// </summary>
-    /// <param name="enumerable"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <param name="enumerable"> The enumerable to cast or convert to an array.</param>
+    /// <typeparam name="T"> The type of the elements in the array.</typeparam>
+    /// <returns> The enumerable as an array.</returns>
     public static T[] AsArray<T>(this IEnumerable<T> enumerable)
     {
         return enumerable.GetType() == typeof(T[]) ? (T[])enumerable : enumerable.ToArray();
@@ -69,9 +76,9 @@ public static class CollectionExtensions
     /// <summary>
     ///     Creates a list from the enumerable only if it is not already a list. Otherwise, simply returns it casted as a list.
     /// </summary>
-    /// <param name="enumerable"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <param name="enumerable"> The enumerable to cast or convert to a list.</param>
+    /// <typeparam name="T"> The type of the elements in the list.</typeparam>
+    /// <returns> The enumerable as a list.</returns>
     public static List<T> AsList<T>(this IEnumerable<T> enumerable)
     {
         return enumerable.GetType() == typeof(List<T>) ? (List<T>)enumerable : enumerable.ToList();
@@ -80,11 +87,12 @@ public static class CollectionExtensions
     /// <summary>
     ///     Perform an action on each member of an enumerable. Uses <see cref="Span{T}" /> for performance.
     /// </summary>
-    /// <param name="enumerable"></param>
-    /// <param name="action"></param>
-    /// <typeparam name="T"></typeparam>
+    /// <param name="enumerable"> The enumerable to perform the action on.</param>
+    /// <param name="action">   The action to perform on each member.</param>
+    /// <typeparam name="T"> The type of the elements in the enumerable.</typeparam>
     public static void ForAll<T>(this IEnumerable<T> enumerable, Action<T> action)
     {
+#if NET5_0_OR_GREATER
         var asSpan = CollectionsMarshal.AsSpan(enumerable.AsList());
         ref var searchSpace = ref MemoryMarshal.GetReference(asSpan);
         for (var i = 0; i < asSpan.Length; i++)
@@ -92,14 +100,23 @@ public static class CollectionExtensions
             var item = Unsafe.Add(ref searchSpace, i);
             action(item);
         }
+#endif
+
+#if NETSTANDARD2_0_OR_GREATER
+        var asSpan = enumerable.AsArray().AsSpan();
+        for (int i = 0; i < asSpan.Length; i++)
+        {
+            action(asSpan[i]);
+        }
+#endif
     }
 
     /// <summary>
     ///     Checks if the enumerable is an array or not.
     /// </summary>
-    /// <param name="enumerable"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <param name="enumerable"> The enumerable to check.</param>
+    /// <typeparam name="T"> The type of the elements in the enumerable.</typeparam>
+    /// <returns> True if the enumerable is an array, false otherwise.</returns>
     public static bool IsArray<T>(this IEnumerable<T> enumerable)
     {
         return enumerable.GetType() == typeof(T[]);
@@ -108,12 +125,39 @@ public static class CollectionExtensions
     /// <summary>
     ///     Checks if the enumerable is a list or not.
     /// </summary>
-    /// <param name="enumerable"></param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <param name="enumerable"> The enumerable to check.</param>
+    /// <typeparam name="T"> The type of the elements in the enumerable.</typeparam>
+    /// <returns> True if the enumerable is a list, false otherwise.</returns>
     public static bool IsList<T>(this IEnumerable<T> enumerable)
     {
         return enumerable.GetType() == typeof(List<T>);
+    }
+
+    /// <summary>
+    ///     Returns true if the enumerable is null or empty.
+    /// </summary>
+    /// <param name="enumerable">
+    ///     The enumerable to check.
+    /// </param>
+    /// <typeparam name="T">
+    ///     The type of the enumerable.
+    /// </typeparam>
+    /// <returns>
+    ///     <c>true</c> if the enumerable is null or empty; otherwise, <c>false</c>.
+    /// </returns>
+    public static bool IsNullOrEmpty<T>([NotNullWhen(false)] this IEnumerable<T>? enumerable)
+    {
+        if (enumerable is null)
+        {
+            return true;
+        }
+
+        return enumerable switch
+        {
+            T[] array => array.Length == 0,
+            ICollection<T> collection => collection.Count == 0,
+            _ => !enumerable.Any()
+        };
     }
 
     /// <summary>
@@ -154,10 +198,11 @@ public static class CollectionExtensions
     /// </remarks>
     /// <param name="array">The array to remove an element from.</param>
     /// <param name="element">The element to remove the first instance of from the array.</param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <typeparam name="T"> The type of the elements in the array.</typeparam>
+    /// <returns> The modified array.</returns>
     public static T[] Remove<T>(this T[] array, T element)
     {
+#if NET5_0_OR_GREATER
         var arraySpan = new ReadOnlySpan<T>(array);
         var newArray = new T[arraySpan.Length - 1];
         var index = Array.IndexOf(array, element);
@@ -169,6 +214,22 @@ public static class CollectionExtensions
         arraySpan[..index].CopyTo(newArray);
         arraySpan[(index + 1)..].CopyTo(newArray.AsSpan()[index..]);
         return newArray;
+#endif
+
+#if NETSTANDARD2_0_OR_GREATER
+        var newArray = new T[array.Length - 1];
+        var index = Array.IndexOf(array, element);
+        if (index < 0)
+        {
+            return newArray;
+        }
+
+        var source = array.AsSpan();
+        var destination = newArray.AsSpan();
+        source.Slice(0, index).CopyTo(destination);
+        source.Slice(index + 1).CopyTo(destination.Slice(index));
+        return newArray;
+#endif
     }
 
     /// <summary>
@@ -182,10 +243,21 @@ public static class CollectionExtensions
     /// </remarks>
     /// <param name="array">The array to remove all instances from.</param>
     /// <param name="action">The conditions for removal.</param>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
+    /// <typeparam name="T"> The type of the elements in the array.</typeparam>
+    /// <returns> The modified array.</returns>
     public static T[] RemoveAll<T>(this T[] array, Func<T, bool> action)
     {
+        if (array is null)
+        {
+            throw new ArgumentNullException(nameof(array));
+        }
+
+        if (action is null)
+        {
+            throw new ArgumentNullException(nameof(action));
+        }
+
+#if NET5_0_OR_GREATER
         var writeIndex = 0;
         var arraySpan = new Span<T>(array);
         for (var i = 0; i < arraySpan.Length; i++)
@@ -195,10 +267,26 @@ public static class CollectionExtensions
                 continue;
             }
 
-            arraySpan[writeIndex] = arraySpan[i];
-            writeIndex++;
+            arraySpan[writeIndex++] = arraySpan[i];
         }
 
         return arraySpan[..writeIndex].ToArray();
+#endif
+
+#if NETSTANDARD2_0_OR_GREATER
+        var writeIndex = 0;
+        var newArray = new T[array.Length];
+
+        for (var i = 0; i < array.Length; i++)
+        {
+            if (action(array[i]))
+            {
+                continue;
+            }
+            newArray[writeIndex++] = array[i];
+        }
+
+        return newArray.AsSpan(0, writeIndex).ToArray();
+#endif
     }
 }
