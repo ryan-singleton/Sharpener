@@ -8,7 +8,8 @@
 
 ### Built with
 
-- .NET5 and above
+- .NET Standard 2.0 and above
+  - Optimized for .NET 5 and above
 - Dependencies specific to modular packages
 - EditorConfig and `dotnet format`
 - [Microsoft code style](https://github.com/dotnet/aspnetcore/blob/main/.editorconfig)
@@ -20,7 +21,7 @@ Installation
 1. Clone the repo
 
 ```sh
-git clone https://github.com/r-singleton/Sharpener.git
+git clone https://github.com/ryan-singleton/Sharpener.git
 ```
 
 2. Open the solution with VS Code, Visual Studio 2022, or Rider
@@ -52,7 +53,7 @@ Recommended extensions
 - C# XML Documentation Comments
 - Auto-Using for C#
 - Path Intellisense
-- Remove empty lines
+- Remove empty lines[HTTP.md](HTTP.md)
 - Prettier
 - XML (by Redhat)
 - .NET Core Test Explorer

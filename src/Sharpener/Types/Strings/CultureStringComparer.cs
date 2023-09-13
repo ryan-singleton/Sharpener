@@ -123,7 +123,13 @@ internal struct CultureStringComparer : IStringComparer
     /// <inheritdoc />
     public bool Contains(string compare)
     {
+        #if NET5_0_OR_GREATER
         return Source.Contains(compare, Comparison);
+        #endif
+        #if NETSTANDARD2_0_OR_GREATER
+        return Source.IndexOf(compare, Comparison) >= 0;
+        #endif
+
     }
 
     /// <inheritdoc />

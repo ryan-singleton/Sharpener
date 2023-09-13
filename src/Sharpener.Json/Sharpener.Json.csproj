@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <LangVersion>11</LangVersion>
     <Version>0.1.5</Version>
     <Authors>Ryan Singleton</Authors>
     <Company>North of Real</Company>
@@ -16,6 +16,7 @@
     <PackageTags>quality-of-life qol json serialization dotnet csharp</PackageTags>
     <PackageReleaseNotes>https://github.com/ryan-singleton/Sharpener/blob/main/docs/CHANGELOG.md</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -40,9 +41,12 @@
     </AssemblyAttribute>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sharpener\Sharpener.csproj"/>
+    <ProjectReference Include="..\Sharpener\Sharpener.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Docs\"/>
+    <Folder Include="Docs\" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework.StartsWith(netstandard))' == 'true' Or '$(TargetFramework.StartsWith(netcoreapp))' == 'true'">
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 </Project>
