@@ -11,31 +11,33 @@ tailored to your needs.
 ## Table of Contents
 
 - [Sharpener](#sharpener)
-    - [Table of Contents](#table-of-contents)
-    - [Features](#features)
-    - [Installation](#installation)
-    - [Usage](#usage)
-        - [Concise String Comparisons](#concise-string-comparisons)
-        - [ForAll](#forall)
-        - [Collection As Extensions](#collection-as-extensions)
-        - [LeftJoin](#leftjoin)
-    - [Extended Features](#extended-features)
-    - [Other Docs](#other-docs)
-    - [Support](#support)
-    - [Contributing](#contributing)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [Concise String Comparisons](#concise-string-comparisons)
+    - [Array Add and Remove](#array-add-and-remove)
+    - [ForAll](#forall)
+    - [Collection As Extensions](#collection-as-extensions)
+    - [LeftJoin](#leftjoin)
+  - [REST and HTTP Features](#rest-and-http-features)
+  - [Extended Features](#extended-features)
+  - [Other Docs](#other-docs)
+  - [Support](#support)
+  - [Contributing](#contributing)
 
 ## Features
 
 The `Sharpener` package focuses on features for the basic runtime layer.
 
 - Concise syntax for string comparisons
-    - reducing code clutter due to `StringComparison.SomethingIgnoreCase` spam.
+  - reducing code clutter due to `StringComparison.SomethingIgnoreCase` spam.
 - Array extensions `Add`, `AddRange`, `Remove`, and `RemoveAll`.
-    - Faster than converting to `List<T>` in one-off situations for large arrays.
+  - Faster than converting to `List<T>` in one-off situations for large arrays.
 - Fast version of `ForEach` available to all `IEnumerable` types using `Span<T>`.
 - A variation from `Join` on lists that allows left joins called `LeftJoin`.
 - `As` variants of `ToList` and `ToArray` that will prefer to try casting before creating.
-    - If your IDE gives you "multiple enumeration warnings", this one is worth looking at.
+  - If your IDE gives you "multiple enumeration warnings", this one is worth looking at.
       See [Extended Features](#extended-features) for the other extended packages in the Sharpener ecosystem.
 
 ## Installation
@@ -170,11 +172,37 @@ candidate => candidate.RegisteredName,
 var studentCandidates = leftJoin.Where(pair => pair.Candidate is not null);
 ```
 
+## REST and HTTP Features
+
+The baked-in tooling for writing web requests can be ugly, verbose, and difficult to test. This is why there are many
+libraries like [RestSharp](https://restsharp.dev/) and [Flurl](https://flurl.dev/) that offer new and more manageable
+ways to write requests. Influenced by these, but with intent to keep our footprint and framework shallow, so that you
+are staying closer to the fundamental .NET level, this library offers you a simple and basic set of features for fluent
+request syntax.
+
+```cs
+var result = await httpClient.Rest("https://nice-service.com/api")
+    .SetPaths("accounts", "create")
+    .SetBearerToken(token)
+    .AddQueries(new
+    {
+        Expired = false,
+        Owner = true,
+    })
+    .SetJsonContent(createAccount)
+    .PostAsync()
+    .ReadJsonAs<CreatedAccount>();
+
+var createdAccount = result.IsSuccess
+    ? result.Value
+    : // handle failures
+```
+
 ## Extended Features
 
 - [Json](docs/JSON.md)
-    - [Newtonsoft](docs/Newtonsoft.md)
-- [Http](docs/Http.md)
+  - [Newtonsoft](docs/Newtonsoft.md)
+- [REST](docs/Rest.md)
 
 ## Other Docs
 
@@ -185,9 +213,9 @@ var studentCandidates = leftJoin.Where(pair => pair.Candidate is not null);
 
 ## Support
 
-Please [open an issue](https://github.com/r-singleton/Sharpener/issues/new) for support.
+Please [open an issue](https://github.com/ryan-singleton/Sharpener/issues/new) for support.
 
 ## Contributing
 
 Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits,
-and [open a pull request](https://github.com/r-singleton/Sharpener/compare/).
+and [open a pull request](https://github.com/ryan-singleton/Sharpener/compare/).

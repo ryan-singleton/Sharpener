@@ -10,12 +10,12 @@ deserializationn.
 ## Table of Contents
 
 - [Sharpener.Json](#sharpenerjson)
-    - [Table of Contents](#table-of-contents)
-    - [Features](#features)
-    - [Installation](#installation)
-    - [Usage](#usage)
-        - [WriteJson](#writejson)
-        - [ReadJsonAs`<TResult>`](#readjsonastresult)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Installation](#installation)
+  - [Usage](#usage)
+    - [WriteJson](#writejson)
+    - [ReadJsonAs`<TResult>`](#readjsonastresult)
 
 ## Features
 

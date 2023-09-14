@@ -1,8 +1,8 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
-namespace Sharpener.Json.Types;
+using Sharpener.Json.Types.Interfaces;
 
-using Interfaces;
+namespace Sharpener.Json.Types;
 
 /// <summary>
 ///     Global settings for all Sharpener JSON features.

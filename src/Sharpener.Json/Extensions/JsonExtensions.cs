@@ -1,9 +1,9 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
-namespace Sharpener.Json.Extensions;
+using Sharpener.Json.Types;
+using Sharpener.Json.Types.Interfaces;
 
-using Types;
-using Types.Interfaces;
+namespace Sharpener.Json.Extensions;
 
 /// <summary>
 ///     Extensions for serialization.
@@ -58,7 +58,7 @@ public static class JsonExtensions
     ///     ///
     /// </summary>
     /// <param name="source">The reference to serialize.</param>
-    /// <returns></returns>
+    /// <returns>  The JSON formatted string.</returns>
     public static string WriteJson(this object source)
     {
         return SharpenerJsonSettings.DefaultWriter(source);

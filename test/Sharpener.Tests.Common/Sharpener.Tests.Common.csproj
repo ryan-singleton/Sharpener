@@ -7,10 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoBogus" />
-    <PackageReference Include="benchmarkdotnet" />
-    <PackageReference Include="FluentAssertions" />
-    <PackageReference Include="Moq" />
+    <PackageReference Include="AutoBogus"/>
+    <PackageReference Include="benchmarkdotnet"/>
+    <PackageReference Include="FluentAssertions"/>
+    <PackageReference Include="NSubstitute"/>
   </ItemGroup>
 
 </Project>

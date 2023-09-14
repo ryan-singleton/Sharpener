@@ -54,9 +54,7 @@ public static class CollectionExtensions
         arraySpan.CopyTo(newArray);
         membersSpan.CopyTo(newArray.AsSpan()[arraySpan.Length..]);
         return newArray;
-#endif
-
-#if NETSTANDARD2_0_OR_GREATER
+#else
         return array.Concat(elements).ToArray();
 #endif
     }
@@ -100,9 +98,7 @@ public static class CollectionExtensions
             var item = Unsafe.Add(ref searchSpace, i);
             action(item);
         }
-#endif
-
-#if NETSTANDARD2_0_OR_GREATER
+#else
         var asSpan = enumerable.AsArray().AsSpan();
         for (int i = 0; i < asSpan.Length; i++)
         {
@@ -214,9 +210,7 @@ public static class CollectionExtensions
         arraySpan[..index].CopyTo(newArray);
         arraySpan[(index + 1)..].CopyTo(newArray.AsSpan()[index..]);
         return newArray;
-#endif
-
-#if NETSTANDARD2_0_OR_GREATER
+#else
         var newArray = new T[array.Length - 1];
         var index = Array.IndexOf(array, element);
         if (index < 0)
@@ -271,9 +265,7 @@ public static class CollectionExtensions
         }
 
         return arraySpan[..writeIndex].ToArray();
-#endif
-
-#if NETSTANDARD2_0_OR_GREATER
+#else
         var writeIndex = 0;
         var newArray = new T[array.Length];
 
