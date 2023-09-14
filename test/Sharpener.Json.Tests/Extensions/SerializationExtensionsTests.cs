@@ -1,12 +1,12 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
-namespace Sharpener.Json.Tests.Extensions;
-
 using System.Text.Json;
-using Json.Extensions;
-using Mocks;
+using Sharpener.Json.Extensions;
+using Sharpener.Json.Tests.Mocks;
+using Sharpener.Json.Types;
 using Sharpener.Tests.Common.Models;
-using Types;
+
+namespace Sharpener.Json.Tests.Extensions;
 
 public class SerializationExtensionsTests
 {

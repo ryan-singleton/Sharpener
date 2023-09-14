@@ -1,10 +1,16 @@
 name: Build and Deploy NuGet Package
 on:
   push:
+    paths:
+     - '.github/workflows/**'
+     - 'src/**'
     branches:
       - main
       - develop
   pull_request:
+    paths:
+     - '.github/workflows/**'
+     - 'src/**'
     types: [closed]
     branches:
         - main
@@ -22,17 +28,6 @@ jobs:
         dotnet-version: |
           5.0.x
           6.0.x
-    - name: Determine changed projects
-      run: |
-        CHANGED_FILES=$(git --no-pager diff --name-only HEAD $(git merge-base HEAD ${{ github.base_ref }}) --diff-filter=d --relative=src/)
-        if [[ -z "$CHANGED_FILES" ]]; then
-          echo "No changes detected. Skipping build."
-          exit 0
-        fi
-        echo "Changes detected. Continuing build."
-        PROJECTS=$(echo $CHANGED_FILES | grep -o -E '.+\.csproj$' | tr '\n' ';')
-        echo "::set-env name=PROJECTS::$PROJECTS"
-        echo $PROJECTS
     - name: Restore dependencies
       run: |
         dotnet restore --source "https://api.nuget.org/v3/index.json" --no-cache
@@ -42,14 +37,14 @@ jobs:
       shell: bash
     - name: Build and package
       run: |
-        dotnet build --configuration Release --no-restore --source https://api.nuget.org/v3/index.json --verbosity minimal ${{ env.PROJECTS }}
-        if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
-          dotnet pack --configuration Release --no-restore --no-build --output ./bin/Release --version-suffix "alpha-${{ github.sha }}" ${{ env.PROJECTS }}
+        dotnet build --configuration Release --no-restore --source https://api.nuget.org/v3/index.json --verbosity minimal
+        if [[ "${{ github.ref }}" != "refs/heads/main" ]]; then
+          dotnet pack --configuration Release --no-restore --no-build --output ./bin/Release --version-suffix "alpha-${{ github.sha }}"
         else
-          dotnet pack --configuration Release --no-restore --no-build --output ./bin/Release ${{ env.PROJECTS }}
+          dotnet pack --configuration Release --no-restore --no-build --output ./bin/Release
         fi
     - name: Publish package to nuget.org
       run: |
-        for PACKAGE in $(find ./src -name "*.nupkg"); do
+        for PACKAGE in $(ls ./bin/Release/*.nupkg); do
           dotnet nuget push $PACKAGE -s "https://api.nuget.org/v3/index.json" -k ${{ secrets.NUGET_PUBLISH_API_KEY }} --skip-duplicate
         done

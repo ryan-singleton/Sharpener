@@ -1,8 +1,8 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
-namespace Sharpener.Types.Strings;
+using Sharpener.Types.Strings.Interfaces;
 
-using Interfaces;
+namespace Sharpener.Types.Strings;
 
 /// <inheritdoc />
 internal struct CultureStringComparer : IStringComparer
@@ -123,7 +123,11 @@ internal struct CultureStringComparer : IStringComparer
     /// <inheritdoc />
     public bool Contains(string compare)
     {
+#if NET5_0_OR_GREATER
         return Source.Contains(compare, Comparison);
+#else
+        return Source.IndexOf(compare, Comparison) >= 0;
+#endif
     }
 
     /// <inheritdoc />

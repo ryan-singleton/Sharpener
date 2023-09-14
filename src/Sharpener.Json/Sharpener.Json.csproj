@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>0.1.5</Version>
+    <LangVersion>11</LangVersion>
+    <Version>0.1.7</Version>
     <Authors>Ryan Singleton</Authors>
     <Company>North of Real</Company>
     <PackageProjectUrl>https://github.com/ryan-singleton/Sharpener</PackageProjectUrl>
@@ -16,6 +16,7 @@
     <PackageTags>quality-of-life qol json serialization dotnet csharp</PackageTags>
     <PackageReleaseNotes>https://github.com/ryan-singleton/Sharpener/blob/main/docs/CHANGELOG.md</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -33,7 +34,7 @@
 
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>$(MSBuildProjectName).Test</_Parameter1>
+      <_Parameter1>$(MSBuildProjectName).Tests</_Parameter1>
     </AssemblyAttribute>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>$(MSBuildProjectName).Benchmarks</_Parameter1>
@@ -44,5 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Docs\"/>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(TargetFramework.StartsWith(netstandard))' == 'true' Or '$(TargetFramework.StartsWith(netcoreapp))' == 'true'">
+    <PackageReference Include="System.Text.Json"/>
   </ItemGroup>
 </Project>

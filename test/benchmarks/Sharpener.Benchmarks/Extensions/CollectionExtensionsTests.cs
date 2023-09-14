@@ -1,11 +1,11 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
-namespace Sharpener.Benchmarks.Extensions;
-
 using AutoBogus;
 using BenchmarkDotNet.Attributes;
 using Sharpener.Extensions;
-using Tests.Common.Models;
+using Sharpener.Tests.Common.Models;
+
+namespace Sharpener.Benchmarks.Extensions;
 
 [MemoryDiagnoser(false)]
 public class CollectionExtensionsTests

@@ -1,8 +1,8 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
-namespace Sharpener.Types.Strings;
+using Sharpener.Types.Strings.Interfaces;
 
-using Interfaces;
+namespace Sharpener.Types.Strings;
 
 /// <inheritdoc />
 internal struct CaseStringComparer : IStringComparer
@@ -82,9 +82,15 @@ internal struct CaseStringComparer : IStringComparer
     /// <inheritdoc />
     public bool Contains(string compare)
     {
+# if NET5_0_OR_GREATER
         return Ignore
             ? Source.Contains(compare, SharpenerStringsSettings.DefaultCultureCaseInsensitive)
             : Source.Contains(compare, SharpenerStringsSettings.DefaultCultureCaseSensitive);
+#else
+        return Ignore
+            ? Source.IndexOf(compare, StringComparison.CurrentCultureIgnoreCase) >= 0
+            : Source.IndexOf(compare, StringComparison.CurrentCulture) >= 0;
+#endif
     }
 
     /// <inheritdoc />
