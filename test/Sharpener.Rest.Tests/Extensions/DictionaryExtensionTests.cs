@@ -3,7 +3,7 @@
 using FluentAssertions;
 using Sharpener.Json.Extensions;
 using Sharpener.Rest.Extensions;
-using Sharpener.Tests.Common.Models;
+using Sharpener.Rest.Tests.Models;
 
 namespace Sharpener.Rest.Tests.Extensions;
 
