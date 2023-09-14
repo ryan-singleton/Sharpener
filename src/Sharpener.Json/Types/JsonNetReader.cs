@@ -1,9 +1,9 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
-namespace Sharpener.Json.Types;
-
 using System.Text.Json;
-using Interfaces;
+using Sharpener.Json.Types.Interfaces;
+
+namespace Sharpener.Json.Types;
 
 /// <summary>
 ///     A deserializer for System.Text.Json.

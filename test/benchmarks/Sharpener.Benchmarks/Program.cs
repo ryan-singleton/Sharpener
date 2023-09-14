@@ -1,9 +1,9 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
-namespace Sharpener.Benchmarks;
-
 using BenchmarkDotNet.Running;
-using Extensions;
+using Sharpener.Benchmarks.Extensions;
+
+namespace Sharpener.Benchmarks;
 
 public class Program
 {

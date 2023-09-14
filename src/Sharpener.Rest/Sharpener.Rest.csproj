@@ -1,20 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>11</LangVersion>
-    <PackageId>Sharpener</PackageId>
-    <Version>0.1.7s</Version>
+    <PackageId>Sharpener.Rest</PackageId>
+    <Version>0.1.7</Version>
     <Authors>Ryan Singleton</Authors>
     <Company>North of Real</Company>
     <PackageProjectUrl>https://github.com/ryan-singleton/Sharpener</PackageProjectUrl>
-    <Description>Quality of life tools for C# including string case insensitive syntax and left join linq for collections.</Description>
+    <Description>Quality of life tools for C# with respect to http and rest requests.</Description>
     <RepositoryUrl>https://github.com/ryan-singleton/Sharpener</RepositoryUrl>
     <PackageIcon>sharpener-logo-128.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>quality-of-life qol dotnet csharp</PackageTags>
+    <PackageTags>quality-of-life qol dotnet csharp http rest</PackageTags>
     <PackageReleaseNotes>https://github.com/ryan-singleton/Sharpener/blob/main/docs/CHANGELOG.md</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
@@ -39,7 +40,14 @@
       <_Parameter1>$(MSBuildProjectName).Benchmarks</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework.StartsWith(netstandard))' == 'true' Or '$(TargetFramework.StartsWith(netcoreapp))' == 'true'">
-    <PackageReference Include="System.Memory"/>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Sharpener.Json\Sharpener.Json.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" />
+    <PackageReference Include="Microsoft.Extensions.Http" />
+  </ItemGroup>
+
 </Project>

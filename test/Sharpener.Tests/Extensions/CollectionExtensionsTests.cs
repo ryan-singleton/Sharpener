@@ -1,8 +1,8 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
-namespace Sharpener.Tests.Extensions;
+using Sharpener.Tests.Common.Models;
 
-using Common.Models;
+namespace Sharpener.Tests.Extensions;
 
 public class CollectionExtensionsTests
 {
@@ -81,7 +81,11 @@ public class CollectionExtensionsTests
         var results = leftItems.LeftJoin(rightItems,
             left => left.Name,
             right => right?.Name,
-            (left, right) => new { Left = left, Right = right }).AsList();
+            (left, right) => new
+            {
+                Left = left,
+                Right = right
+            }).AsList();
 
         results.Any(x => x.Left.Name.Equals("Bob")).Should().BeTrue();
         results.Any(x => x.Left.Name.Equals("Jane")).Should().BeTrue();

@@ -2,7 +2,7 @@
      align="right"
      style="height: 40px;" />
 
-# Contributing
+# Guide to Contributing
 
 ## About the Project
 
@@ -53,7 +53,7 @@ Recommended extensions
 - C# XML Documentation Comments
 - Auto-Using for C#
 - Path Intellisense
-- Remove empty lines[HTTP.md](HTTP.md)
+- Remove empty lines
 - Prettier
 - XML (by Redhat)
 - .NET Core Test Explorer

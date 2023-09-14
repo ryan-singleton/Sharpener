@@ -1,9 +1,9 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
-namespace Sharpener.Extensions;
+using Sharpener.Types.Strings;
+using Sharpener.Types.Strings.Interfaces;
 
-using Types.Strings;
-using Types.Strings.Interfaces;
+namespace Sharpener.Extensions;
 
 /// <summary>
 ///     Extensions for strings.

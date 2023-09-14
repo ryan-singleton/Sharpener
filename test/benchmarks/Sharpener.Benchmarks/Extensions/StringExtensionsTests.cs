@@ -1,9 +1,9 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
-namespace Sharpener.Benchmarks.Extensions;
-
 using BenchmarkDotNet.Attributes;
 using Sharpener.Extensions;
+
+namespace Sharpener.Benchmarks.Extensions;
 
 [MemoryDiagnoser(false)]
 public class StringExtensionsTests

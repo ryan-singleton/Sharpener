@@ -1,9 +1,9 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
-namespace Sharpener.Json.Tests.Mocks;
-
+using Sharpener.Json.Types.Interfaces;
 using Sharpener.Tests.Common.Models;
-using Types.Interfaces;
+
+namespace Sharpener.Json.Tests.Mocks;
 
 public class JsonMockReader : IJsonReader
 {
