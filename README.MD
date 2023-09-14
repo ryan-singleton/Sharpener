@@ -20,6 +20,7 @@ tailored to your needs.
     - [ForAll](#forall)
     - [Collection As Extensions](#collection-as-extensions)
     - [LeftJoin](#leftjoin)
+  - [REST and HTTP Features](#rest-and-http-features)
   - [Extended Features](#extended-features)
   - [Other Docs](#other-docs)
   - [Support](#support)
@@ -169,6 +170,32 @@ student => student.Name,
 candidate => candidate.RegisteredName,
 (student, candidate) => new {Student = student, Candidate = candidate});
 var studentCandidates = leftJoin.Where(pair => pair.Candidate is not null);
+```
+
+## REST and HTTP Features
+
+The baked-in tooling for writing web requests can be ugly, verbose, and difficult to test. This is why there are many
+libraries like [RestSharp](https://restsharp.dev/) and [Flurl](https://flurl.dev/) that offer new and more manageable
+ways to write requests. Influenced by these, but with intent to keep our footprint and framework shallow, so that you
+are staying closer to the fundamental .NET level, this library offers you a simple and basic set of features for fluent
+request syntax.
+
+```cs
+var result = await httpClient.Rest("https://nice-service.com/api")
+    .SetPaths("accounts", "create")
+    .SetBearerToken(token)
+    .AddQueries(new
+    {
+        Expired = false,
+        Owner = true,
+    })
+    .SetJsonContent(createAccount)
+    .PostAsync()
+    .ReadJsonAs<CreatedAccount>();
+
+var createdAccount = result.IsSuccess
+    ? result.Value
+    : // handle failures
 ```
 
 ## Extended Features
