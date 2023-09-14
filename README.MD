@@ -202,7 +202,7 @@ var createdAccount = result.IsSuccess
 
 - [Json](docs/JSON.md)
   - [Newtonsoft](docs/Newtonsoft.md)
-- [REST](docs/Rest.md)
+- [REST](docs/REST.md)
 
 ## Other Docs
 
