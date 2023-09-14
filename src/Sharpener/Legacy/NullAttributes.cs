@@ -109,7 +109,7 @@ internal
     public bool ReturnValue { get; }
 }
 
-/// <summary>Specifies that the output will be non-null if the named parameter is non-null.</summary>
+/// <summary>   Specifies that the output will be non-null if the named parameter is non-null.</summary>
 [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.ReturnValue,
     AllowMultiple = true)]
 #if INTERNAL_NULLABLE_ATTRIBUTES
