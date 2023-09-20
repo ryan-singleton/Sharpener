@@ -13,6 +13,7 @@ tailored to your needs.
 - [Sharpener](#sharpener)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
+  - [Snappify Samples](#snappify-samples)
   - [Installation](#installation)
   - [Usage](#usage)
     - [Concise String Comparisons](#concise-string-comparisons)
@@ -43,6 +44,14 @@ The `Sharpener` package focuses on features for the basic runtime layer.
 - `As` variants of `ToList` and `ToArray` that will prefer to try casting before creating.
   - If your IDE gives you "multiple enumeration warnings", this one is worth looking at.
       See [Extended Features](#extended-features) for the other extended packages in the Sharpener ecosystem.
+
+## Snappify Samples
+
+![Snappify](docs/images/snappify-sample.png)
+
+- [Sharpener](https://snappify.com/view/310ef43b-3e6e-4ae0-bd7f-831b68abc491)
+- [Sharpener.Json](https://snappify.com/view/f434abb3-0f4f-4471-8642-91997a9d73e0)
+- [Sharpener.Rest](https://snappify.com/view/77c280d5-dd7e-48db-bdeb-f09767cf25e3)
 
 ## Installation
 
