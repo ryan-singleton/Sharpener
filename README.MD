@@ -13,6 +13,7 @@ tailored to your needs.
 - [Sharpener](#sharpener)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
+  - [Snappify Samples](#snappify-samples)
   - [Installation](#installation)
   - [Usage](#usage)
     - [Concise String Comparisons](#concise-string-comparisons)
@@ -44,6 +45,14 @@ The `Sharpener` package focuses on features for the basic runtime layer.
   - If your IDE gives you "multiple enumeration warnings", this one is worth looking at.
       See [Extended Features](#extended-features) for the other extended packages in the Sharpener ecosystem.
 
+## Snappify Samples
+
+![Snappify](docs/images/snappify-sample.png)
+
+- [Sharpener](https://snappify.com/view/310ef43b-3e6e-4ae0-bd7f-831b68abc491)
+- [Sharpener.Json](https://snappify.com/view/f434abb3-0f4f-4471-8642-91997a9d73e0)
+- [Sharpener.Rest](https://snappify.com/view/77c280d5-dd7e-48db-bdeb-f09767cf25e3)
+
 ## Installation
 
 Navigate to the directory of your .csproj file and then run this command
@@ -54,8 +63,6 @@ or
 ## Usage
 
 ### Concise String Comparisons
-
-<div style="overflow:hidden;margin-left:auto;margin-right:auto;border-radius:10px;width:100%;max-width:784.44px;position:relative"><div style="width:100%;padding-bottom:44.617816531538416%"></div><iframe width="784.44" height="350" title="Demonstrates concise string comparisons in C#" src="https://snappify.com/embed/f434abb3-0f4f-4471-8642-91997a9d73e0?responsive=1" allow="clipboard-write" allowfullscreen="" style="background:#eee;position:absolute;left:0;top:0;width:100%" frameborder="0"></iframe></div>
 
 ```cs
 var name = "Rick Astley";
