@@ -4,7 +4,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>11</LangVersion>
     <PackageId>Sharpener</PackageId>
-    <Version>0.1.8</Version>
+    <Version>0.1.9</Version>
     <Authors>Ryan Singleton</Authors>
     <Company>North of Real</Company>
     <PackageProjectUrl>https://github.com/ryan-singleton/Sharpener</PackageProjectUrl>
@@ -40,6 +40,6 @@
     </AssemblyAttribute>
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework.StartsWith(netstandard))' == 'true' Or '$(TargetFramework.StartsWith(netcoreapp))' == 'true'">
-    <PackageReference Include="System.Memory"/>
+    <PackageReference Include="System.Memory" />
   </ItemGroup>
 </Project>
