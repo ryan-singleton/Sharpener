@@ -16,6 +16,10 @@ tailored to your needs.
   - [Installation](#installation)
   - [Usage](#usage)
     - [Concise String Comparisons](#concise-string-comparisons)
+    - [Fallback for Strings That Cannot be Null](#fallback-for-strings-that-cannot-be-null)
+    - [Collection IsNullOrEmpty](#collection-isnullorempty)
+    - [Batch Large Collections](#batch-large-collections)
+    - [DistinctBy for Versions Prior to .NET 6](#distinctby-for-versions-prior-to-net-6)
     - [Array Add and Remove](#array-add-and-remove)
     - [ForAll](#forall)
     - [Collection As Extensions](#collection-as-extensions)
@@ -57,6 +61,22 @@ var isRickRoll = name.NoCase().StartsWith("rick")
 ```
 
 Has culture builders as well like `Current()`, `Invariant()`, and `Ordinal()`.
+
+### Fallback for Strings That Cannot be Null
+
+Say you are generating a lookup key based on the values of a type. While some of those values are nullable, like strings, you need every property to generate *something*. You can now use `myString.OrFallback()` and if the string was null or whitespace, you'll end up with "null". If you require a different fallback, you can either use `myString.OrFallback("myFallback")` or you can change the default fallback by changing the `SharpenerStringsSettings.DefaultFallback` value.
+
+### Collection IsNullOrEmpty
+
+For any implementation of `IEnumerable<T>`, you can now call `myCollection.IsNullOrEmpty()` instead of gymnastics like `myCollection?.Any() != true`. It will also check types to be sure that the parameter is not already an array or collection, which should have a flattened `Count` or `Length` value to use already. Failing that, only then does it iterate to check if there are values within.
+
+### Batch Large Collections
+
+It's not uncommon to have the need for breaking a large collection up into a collection of smaller collections. Especially good for work that requires transactions, save points, and so on. You can now use `myCollection.ToBatches(30)` to have a collection of arrays with 30 members.
+
+### DistinctBy for Versions Prior to .NET 6
+
+Since Sharpener is now compatible with .NET Standard 2.0 and above, this makes this highly useful extension available for versions prior to .NET 6. It is not generated for .NET 6 and above, so there should be no conflicts with the built in method when it's available out of the box.
 
 ### Array Add and Remove
 

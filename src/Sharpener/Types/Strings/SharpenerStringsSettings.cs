@@ -1,5 +1,7 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
+using Sharpener.Extensions;
+
 namespace Sharpener.Types.Strings;
 
 /// <summary>
@@ -14,6 +16,11 @@ public struct SharpenerStringsSettings
     {
         SetDefaultCulture(StringComparison.Ordinal);
     }
+
+    /// <summary>
+    ///     The default fallback value for a string when calling <see cref="StringExtensions.OrFallback" />.
+    /// </summary>
+    public static string DefaultFallback { get; set; } = "null";
 
     /// <summary>
     ///     The default culture for case sensitive comparison.
