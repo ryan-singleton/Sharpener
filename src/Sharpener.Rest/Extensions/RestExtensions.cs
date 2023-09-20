@@ -1,5 +1,6 @@
 ﻿// The Sharpener project licenses this file to you under the MIT license.
 
+using System.Globalization;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
@@ -29,6 +30,19 @@ public static class RestExtensions
         HttpStatusCode.RequestTimeout, (HttpStatusCode)425, (HttpStatusCode)429, HttpStatusCode.InternalServerError,
         HttpStatusCode.BadGateway, HttpStatusCode.ServiceUnavailable, HttpStatusCode.GatewayTimeout
     };
+
+    /// <summary>
+    ///     Creates an <see cref="HttpClient" /> that is named by the url that is also the assigned base address.
+    /// </summary>
+    /// <param name="factory"> The factory that will create the client.</param>
+    /// <param name="baseUrl"> The base url that will be assigned to the <see cref="HttpClient.BaseAddress" />.</param>
+    /// <returns> The <see cref="HttpClient" /> with a base address and an associated class name for which it serves.</returns>
+    public static HttpClient CreateUrlClient(this IHttpClientFactory factory, string baseUrl)
+    {
+        var client = factory.CreateClient(baseUrl.GetHashCode().ToString(CultureInfo.CurrentCulture));
+        client.SetBaseAddress(baseUrl);
+        return client;
+    }
 
     /// <summary>
     ///     Creates an <see cref="HttpClient" /> that is named by the class type that it serves for later factory calls.
