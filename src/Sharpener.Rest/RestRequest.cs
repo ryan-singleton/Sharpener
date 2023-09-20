@@ -1,6 +1,7 @@
 ﻿// The Sharpener project licenses this file to you under the MIT license.
 
 using System.Net.Http.Headers;
+using System.Text;
 using System.Web;
 using Sharpener.Extensions;
 using Sharpener.Rest.Extensions;
@@ -300,6 +301,26 @@ public sealed class RestRequest
     {
         RetryOptions = new RetryOptions();
         configure?.Invoke(RetryOptions);
+        return this;
+    }
+
+    /// <summary>
+    ///     Adds the provided object as a string payload in the request.
+    /// </summary>
+    /// <param name="content">The request body.</param>
+    /// <param name="encoding"> The encoding of the content. Defaults to UTF-8.</param>
+    /// <param name="mediaType"> The media type of the content. Defaults to text/plain.</param>
+    /// <returns> The current state of the REST request</returns>
+    public RestRequest WithStringContent(string content, Encoding? encoding = null, string? mediaType = null)
+    {
+        if (string.IsNullOrEmpty(content))
+        {
+            return this;
+        }
+
+        mediaType ??= "text/plain";
+        Request.Content = new StringContent(content, encoding ?? Encoding.UTF8, mediaType);
+        Request.Content.Headers.ContentType = new MediaTypeWithQualityHeaderValue(mediaType);
         return this;
     }
 }
