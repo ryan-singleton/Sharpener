@@ -55,6 +55,8 @@ or
 
 ### Concise String Comparisons
 
+<div style="overflow:hidden;margin-left:auto;margin-right:auto;border-radius:10px;width:100%;max-width:784.44px;position:relative"><div style="width:100%;padding-bottom:44.617816531538416%"></div><iframe width="784.44" height="350" title="Demonstrates concise string comparisons in C#" src="https://snappify.com/embed/f434abb3-0f4f-4471-8642-91997a9d73e0?responsive=1" allow="clipboard-write" allowfullscreen="" style="background:#eee;position:absolute;left:0;top:0;width:100%" frameborder="0"></iframe></div>
+
 ```cs
 var name = "Rick Astley";
 var isRickRoll = name.NoCase().StartsWith("rick")
