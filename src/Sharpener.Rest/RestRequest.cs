@@ -271,6 +271,29 @@ public sealed class RestRequest
     }
 
     /// <summary>
+    ///     Adds the provided object as a multipart form data payload in the request.
+    /// </summary>
+    /// <param name="values"> The object defining the form content.</param>
+    /// <returns> The <see cref="RestRequest" /> that is being configured.</returns>
+    public RestRequest SetMultipartFormData(object values)
+    {
+        var dictionary = values.ToParameters<string, string>();
+        if (dictionary is null)
+        {
+            return this;
+        }
+
+        var content = new MultipartFormDataContent();
+        foreach (var pair in dictionary)
+        {
+            content.Add(new StringContent(pair.Value ?? string.Empty), pair.Key);
+        }
+
+        Request.Content = content;
+        return this;
+    }
+
+    /// <summary>
     ///     Adds values to the request path. They are concatenated with slashes. This will not overwrite previous calls to this
     ///     method.
     /// </summary>
