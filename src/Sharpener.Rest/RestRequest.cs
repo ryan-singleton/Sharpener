@@ -275,20 +275,22 @@ public sealed class RestRequest
     /// </summary>
     /// <param name="values"> The object defining the form content.</param>
     /// <returns> The <see cref="RestRequest" /> that is being configured.</returns>
+    [Obsolete("Use SetMultipartFormData with the delegate function instead.")]
     public RestRequest SetMultipartFormData(object values)
     {
-        var dictionary = values.ToParameters<string, string>();
-        if (dictionary is null)
-        {
-            return this;
-        }
+        SetMultipartFormData(content => content.AddStringParts(values));
+        return this;
+    }
 
+    /// <summary>
+    ///     Adds multipart form data content to the request.
+    /// </summary>
+    /// <param name="buildContent"> The action that builds the content.</param>
+    /// <returns> The <see cref="RestRequest" /> that is being configured.</returns>
+    public RestRequest SetMultipartFormData(Action<MultipartFormDataContent> buildContent)
+    {
         var content = new MultipartFormDataContent();
-        foreach (var pair in dictionary)
-        {
-            content.Add(new StringContent(pair.Value ?? string.Empty), pair.Key);
-        }
-
+        buildContent(content);
         Request.Content = content;
         return this;
     }
