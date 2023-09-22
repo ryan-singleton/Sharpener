@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>11</LangVersion>
     <PackageId>Sharpener.Rest</PackageId>
-    <Version>0.1.9</Version>
+    <Version>0.2.0</Version>
     <Authors>Ryan Singleton</Authors>
     <Company>North of Real</Company>
     <PackageProjectUrl>https://github.com/ryan-singleton/Sharpener</PackageProjectUrl>
