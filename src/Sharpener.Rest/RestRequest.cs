@@ -169,7 +169,9 @@ public sealed class RestRequest
                 "The RestRequest must have an assigned HttpClient to perform Send operations.");
         }
 
-        var func = () => _httpClient.SendAsync(new HttpRequestMessage(httpMethod, CurrentUri));
+        Request.Method = httpMethod;
+        Request.RequestUri = CurrentUri;
+        var func = () => _httpClient.SendAsync(Request);
         if (RetryOptions is null)
         {
             return await func().ConfigureAwait(false);
