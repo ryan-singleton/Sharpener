@@ -3,7 +3,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>11</LangVersion>
-    <Version>0.2.2</Version>
+    <Version>0.2.3</Version>
     <Authors>Ryan Singleton</Authors>
     <Company>North of Real</Company>
     <PackageProjectUrl>https://github.com/ryan-singleton/Sharpener</PackageProjectUrl>

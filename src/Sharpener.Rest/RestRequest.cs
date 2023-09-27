@@ -5,6 +5,7 @@ using System.Text;
 using System.Web;
 using Sharpener.Extensions;
 using Sharpener.Rest.Extensions;
+using Sharpener.Rest.Factories;
 using Sharpener.Rest.Retry;
 
 namespace Sharpener.Rest;
@@ -19,7 +20,7 @@ public sealed class RestRequest
     /// <summary>
     ///     The request that will be built and sent.
     /// </summary>
-    internal readonly HttpRequestMessage Request;
+    internal readonly HttpRequestMessageBuilder Request;
 
     /// <summary>
     ///     The builder of the <see cref="Uri" /> that will be used in the request.
@@ -53,7 +54,7 @@ public sealed class RestRequest
 
         _httpClient = httpClient;
         UriBuilder = new UriBuilder(httpClient.BaseAddress);
-        Request = new HttpRequestMessage();
+        Request = new HttpRequestMessageBuilder();
     }
 
     /// <summary>
@@ -94,7 +95,7 @@ public sealed class RestRequest
     /// </summary>
     /// <param name="name">The name of the query parameter.</param>
     /// <param name="value">The value of the parameter.</param>
-    /// <returns></returns>
+    /// <returns> The <see cref="RestRequest" /> that is being configured.</returns>
     public RestRequest AddQuery(string name, object? value)
     {
         if (string.IsNullOrEmpty(name) || value is null)
@@ -111,7 +112,7 @@ public sealed class RestRequest
     /// <summary>
     ///     Sends the request with a DELETE method.
     /// </summary>
-    /// <returns></returns>
+    /// <returns> The <see cref="HttpResponseMessage" /> from the request.</returns>
     public async Task<HttpResponseMessage> DeleteAsync()
     {
         return await SendAsync(HttpMethod.Delete).ConfigureAwait(false);
@@ -120,7 +121,7 @@ public sealed class RestRequest
     /// <summary>
     ///     Sends the request with a GET method.
     /// </summary>
-    /// <returns></returns>
+    /// <returns> The <see cref="HttpResponseMessage" /> from the request.</returns>
     public async Task<HttpResponseMessage> GetAsync()
     {
         return await SendAsync(HttpMethod.Get).ConfigureAwait(false);
@@ -129,7 +130,7 @@ public sealed class RestRequest
     /// <summary>
     ///     Sends the request with a PATCH method.
     /// </summary>
-    /// <returns></returns>
+    /// <returns> The <see cref="HttpResponseMessage" /> from the request.</returns>
     public async Task<HttpResponseMessage> PatchAsync()
     {
         return await SendAsync(new HttpMethod("PATCH")).ConfigureAwait(false);
@@ -138,7 +139,7 @@ public sealed class RestRequest
     /// <summary>
     ///     Sends the request with a POST method.
     /// </summary>
-    /// <returns></returns>
+    /// <returns> The <see cref="HttpResponseMessage" /> from the request.</returns>
     public async Task<HttpResponseMessage> PostAsync()
     {
         return await SendAsync(HttpMethod.Post).ConfigureAwait(false);
@@ -147,7 +148,7 @@ public sealed class RestRequest
     /// <summary>
     ///     Sends the request with a PUT method.
     /// </summary>
-    /// <returns></returns>
+    /// <returns> The <see cref="HttpResponseMessage" /> from the request.</returns>
     public async Task<HttpResponseMessage> PutAsync()
     {
         return await SendAsync(HttpMethod.Put).ConfigureAwait(false);
@@ -169,9 +170,7 @@ public sealed class RestRequest
                 "The RestRequest must have an assigned HttpClient to perform Send operations.");
         }
 
-        Request.Method = httpMethod;
-        Request.RequestUri = CurrentUri;
-        var func = () => _httpClient.SendAsync(Request);
+        var func = () => _httpClient.SendAsync(Request.Build(httpMethod, CurrentUri));
         if (RetryOptions is null)
         {
             return await func().ConfigureAwait(false);
@@ -259,7 +258,7 @@ public sealed class RestRequest
     ///     Adds the provided object as a JSON payload in the request.
     /// </summary>
     /// <param name="content">The request body.</param>
-    /// <returns></returns>
+    /// <returns> The <see cref="RestRequest" /> that is being configured.</returns>
     public RestRequest SetJsonContent(object? content)
     {
         if (content is null)
@@ -311,7 +310,7 @@ public sealed class RestRequest
     ///     method.
     /// </summary>
     /// <param name="paths">The path values to add to the request url in the end.</param>
-    /// <returns></returns>
+    /// <returns> The <see cref="RestRequest" /> that is being configured.</returns>
     public RestRequest SetPaths(params string?[] paths)
     {
         paths = paths
@@ -346,7 +345,7 @@ public sealed class RestRequest
     /// <param name="content">The request body.</param>
     /// <param name="encoding"> The encoding of the content. Defaults to UTF-8.</param>
     /// <param name="mediaType"> The media type of the content. Defaults to text/plain.</param>
-    /// <returns> The current state of the REST request</returns>
+    /// <returns> The <see cref="RestRequest" /> that is being configured.</returns>
     public RestRequest WithStringContent(string content, Encoding? encoding = null, string? mediaType = null)
     {
         if (string.IsNullOrEmpty(content))
