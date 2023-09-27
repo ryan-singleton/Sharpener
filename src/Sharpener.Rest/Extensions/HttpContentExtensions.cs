@@ -36,11 +36,11 @@ public static class HttpContentExtensions
     /// <param name="content"> The <see cref="MultipartFormDataContent" /> to add the file to.</param>
     /// <param name="name">The control name of the part.</param>
     /// <param name="file">The local path to the file.</param>
-    /// <param name="contentType"> The content type of the file.</param>
+    /// <param name="mediaType"> The media type of the file. Defaults to application/octet-stream.</param>
     /// <exception cref="ArgumentException">name must not be empty</exception>
     /// <exception cref="ArgumentException">file must not be empty</exception>
     public static void AddFile(this MultipartFormDataContent content, string name, string file,
-        string? contentType = null)
+        string? mediaType = "application/octet-stream")
     {
         if (string.IsNullOrWhiteSpace(file))
         {
@@ -55,9 +55,9 @@ public static class HttpContentExtensions
         var filename = Path.GetFileName(file);
         var fileStream = File.OpenRead(file);
         var fileContent = new StreamContent(fileStream);
-        if (!string.IsNullOrWhiteSpace(contentType))
+        if (!string.IsNullOrWhiteSpace(mediaType))
         {
-            fileContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue(mediaType);
         }
 
         content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
@@ -76,10 +76,12 @@ public static class HttpContentExtensions
     /// <param name="content">The <see cref="MultipartFormDataContent" /> to add the part to.</param>
     /// <param name="name">The control name of the part.</param>
     /// <param name="data">The content of the part, which will be serialized to JSON.</param>
+    /// <param name="mediaType"> The media type of the json. Defaults to application/json.</param>
     /// <exception cref="ArgumentException">name must not be empty</exception>
-    public static void AddJson(this MultipartFormDataContent content, string name, object data)
+    public static void AddJson(this MultipartFormDataContent content, string name, object data,
+        string? mediaType = "application/json")
     {
-        content.AddContent(name, new StringContent(data.WriteJson(), Encoding.UTF8, "application/json"));
+        content.AddContent(name, new StringContent(data.WriteJson(), Encoding.UTF8, mediaType));
     }
 
     /// <summary>
@@ -88,12 +90,12 @@ public static class HttpContentExtensions
     /// <param name="content">The <see cref="MultipartFormDataContent" /> to add the part to.</param>
     /// <param name="name">The control name of the part.</param>
     /// <param name="value">The string value of the part.</param>
-    /// <param name="contentType">The content type of the parts.</param>
+    /// <param name="mediaType"> The media type of the part. Defaults to text/plain.</param>
     /// <exception cref="ArgumentException">name must not be empty</exception>
     public static void AddString(this MultipartFormDataContent content, string name, string value,
-        string? contentType = null)
+        string? mediaType = "text/plain")
     {
-        content.AddContent(name, new StringContent(value, Encoding.UTF8, contentType));
+        content.AddContent(name, new StringContent(value, Encoding.UTF8, mediaType));
     }
 
     /// <summary>
@@ -101,9 +103,10 @@ public static class HttpContentExtensions
     /// </summary>
     /// <param name="content">The <see cref="MultipartFormDataContent" /> to add the parts to.</param>
     /// <param name="data">The data to add.</param>
-    /// <param name="contentType">The content type of the parts.</param>
+    /// <param name="mediaType"> The media type of the parts. Defaults to text/plain.</param>
     /// <exception cref="ArgumentException">Data failed to convert to key value pairs.</exception>
-    public static void AddStringParts(this MultipartFormDataContent content, object data, string? contentType = null)
+    public static void AddStringParts(this MultipartFormDataContent content, object data,
+        string? mediaType = "text/plain")
     {
         var parameters = data.ToParameters<string, string>();
         if (parameters is null || parameters.Count == 0)
@@ -114,7 +117,7 @@ public static class HttpContentExtensions
         foreach (var pair in parameters.Where(pair =>
                      !string.IsNullOrWhiteSpace(pair.Key) && !string.IsNullOrWhiteSpace(pair.Value)))
         {
-            content.AddString(pair.Key, pair.Value?.ToString(CultureInfo.InvariantCulture)!, contentType);
+            content.AddString(pair.Key, pair.Value?.ToString(CultureInfo.InvariantCulture)!, mediaType);
         }
     }
 
@@ -124,11 +127,13 @@ public static class HttpContentExtensions
     /// <param name="content">The <see cref="MultipartFormDataContent" /> to add the part to.</param>
     /// <param name="name">The control name of the part.</param>
     /// <param name="data">The content of the part, whose properties will be parsed and serialized to URL-encoded format.</param>
+    /// <param name="mediaType"> The media type of the form. Defaults to application/x-www-form-urlencoded.</param>
     /// <exception cref="ArgumentException">name must not be empty</exception>
-    public static void AddUrlEncoded(this MultipartFormDataContent content, string name, object data)
+    public static void AddUrlEncoded(this MultipartFormDataContent content, string name, object data,
+        string? mediaType = "application/x-www-form-urlencoded")
     {
         content.AddContent(name,
-            new StringContent(data.ToUrlEncodedString(), Encoding.UTF8, "application/x-www-form-urlencoded"));
+            new StringContent(data.ToUrlEncodedString(), Encoding.UTF8, mediaType));
     }
 
     /// <summary>
