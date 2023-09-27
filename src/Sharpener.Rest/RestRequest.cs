@@ -286,12 +286,21 @@ public sealed class RestRequest
     ///     Adds multipart form data content to the request.
     /// </summary>
     /// <param name="buildContent"> The action that builds the content.</param>
+    /// <param name="mediaType"> The media type of the content. Defaults to multipart/form-data.</param>
+    /// <param name="boundary"> The boundary of the content. Defaults to ----WebKitFormBoundary7GuI94hQ253xT0v.</param>
     /// <returns> The <see cref="RestRequest" /> that is being configured.</returns>
-    public RestRequest SetMultipartFormData(Action<MultipartFormDataContent> buildContent)
+    public RestRequest SetMultipartFormData(Action<MultipartFormDataContent> buildContent,
+        string? mediaType = "multipart/form-data", string boundary = "----WebKitFormBoundary7GuI94hQ253xT0v")
     {
-        var content = new MultipartFormDataContent();
+        var content = new MultipartFormDataContent(boundary);
         buildContent(content);
         Request.Content = content;
+        if (string.IsNullOrWhiteSpace(mediaType))
+        {
+            return this;
+        }
+
+        Request.Content.Headers.ContentType = new MediaTypeWithQualityHeaderValue(mediaType);
         return this;
     }
 
