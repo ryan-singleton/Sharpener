@@ -43,7 +43,7 @@ public static class RestExtensions
     }
 
     /// <summary>
-    ///     Creates a <see cref="RestRequest" /> using the <see cref="HttpClient" />. The client must have a base address
+    ///     Creates a <see cref="IRestRequest" /> using the <see cref="HttpClient" />. The client must have a base address
     ///     assigned.
     /// </summary>
     /// <param name="httpClient">
@@ -54,8 +54,8 @@ public static class RestExtensions
     ///     The base address to assign if one is not already set. If null, the <see cref="HttpClient" />
     ///     's current base address will be unaffected.
     /// </param>
-    /// <returns></returns>
-    public static RestRequest Rest(this HttpClient httpClient, Uri? baseAddress = null)
+    /// <returns> The <see cref="IRestRequest" /> to create.</returns>
+    public static IRestRequest Rest(this HttpClient httpClient, Uri? baseAddress = null)
     {
         if (baseAddress is not null)
         {
