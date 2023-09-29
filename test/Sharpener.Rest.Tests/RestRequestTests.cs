@@ -19,7 +19,7 @@ public class RestRequestTests
         httpTest.RespondWithJson(fake);
 
         const string name = "someName";
-        var restRequest = httpTest.Client.Rest();
+        var restRequest = (RestRequest)httpTest.Client.Rest();
         var result = await restRequest
             .SetPaths("name", "value", "context")
             .SetBearerToken("testToken")
