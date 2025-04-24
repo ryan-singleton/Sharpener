@@ -133,7 +133,7 @@ public static class AuthExtensions
     /// </summary>
     private static string? GetAuthenticationTokenInternal(this object headers, string scheme)
     {
-        if (headers == null)
+        if (headers is null)
         {
             throw new ArgumentNullException(nameof(headers));
         }
@@ -143,28 +143,14 @@ public static class AuthExtensions
             throw new ArgumentNullException(nameof(scheme));
         }
 
-        string? authHeader = null;
-        switch (headers)
+        var authHeader = headers switch
         {
-            case IHeaderDictionary headerDictionary:
-            {
-                if (headerDictionary.TryGetValue(AuthHeader, out var authValues))
-                {
-                    authHeader = authValues.FirstOrDefault();
-                }
-
-                break;
-            }
-            case HttpHeaders httpHeaders:
-            {
-                if (httpHeaders.TryGetValues(AuthHeader, out var authValues))
-                {
-                    authHeader = authValues.FirstOrDefault();
-                }
-
-                break;
-            }
-        }
+            IHeaderDictionary headerDictionary when headerDictionary.TryGetValue(AuthHeader, out var values) => values
+                .FirstOrDefault(),
+            HttpHeaders httpHeaders when httpHeaders.TryGetValues(AuthHeader, out var values) =>
+                values.FirstOrDefault(),
+            _ => string.Empty
+        } ?? string.Empty;
 
         if (string.IsNullOrWhiteSpace(authHeader) || authHeader.NoCase().Contains(scheme) != true)
         {
@@ -180,7 +166,7 @@ public static class AuthExtensions
     /// </summary>
     private static void SetAuthenticationTokenInternal(this object headers, string scheme, string token)
     {
-        if (headers == null)
+        if (headers is null)
         {
             throw new ArgumentNullException(nameof(headers));
         }

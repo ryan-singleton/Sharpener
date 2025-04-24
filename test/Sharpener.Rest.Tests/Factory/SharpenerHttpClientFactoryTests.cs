@@ -1,7 +1,6 @@
 ﻿// The Sharpener project licenses this file to you under the MIT license.
 
 
-using FluentAssertions;
 using Sharpener.Rest.Factories;
 
 namespace Sharpener.Rest.Tests.Factory;
@@ -14,9 +13,9 @@ public class SharpenerHttpClientFactoryTests
         var factory = new SharpenerHttpClientFactory();
         const string clientName = "TestClient";
         var client = factory.CreateClient(clientName);
-        client.Should().NotBeNull();
-        SharpenerHttpClientFactory.CachedClients.Should().ContainKey(clientName);
-        SharpenerHttpClientFactory.CachedClients[clientName].Should().Be(client);
+        client.ShouldNotBeNull();
+        SharpenerHttpClientFactory.CachedClients.ShouldContainKey(clientName);
+        SharpenerHttpClientFactory.CachedClients[clientName].ShouldBe(client);
     }
 
     [Fact]
@@ -27,6 +26,6 @@ public class SharpenerHttpClientFactoryTests
         var existingClient = new HttpClient();
         SharpenerHttpClientFactory.CachedClients[clientName] = existingClient;
         var client = factory.CreateClient(clientName);
-        client.Should().Be(existingClient);
+        client.ShouldBe(existingClient);
     }
 }

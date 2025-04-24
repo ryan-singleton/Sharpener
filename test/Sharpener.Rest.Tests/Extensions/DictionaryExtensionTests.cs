@@ -1,6 +1,5 @@
 ﻿// The Sharpener project licenses this file to you under the MIT license.
 
-using FluentAssertions;
 using Sharpener.Json.Extensions;
 using Sharpener.Rest.Extensions;
 using Sharpener.Rest.Tests.Models;
@@ -14,6 +13,6 @@ public class DictionaryExtensionTests
     {
         var item = new Item("guy", "person");
         var parameters = item.ToParameters<string, object>();
-        parameters!.WriteJson().Should().Be(item.WriteJson());
+        parameters!.WriteJson().ShouldBe(item.WriteJson());
     }
 }

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <LangVersion>11</LangVersion>
+    <LangVersion>12</LangVersion>
     <PackageId>Sharpener.Rest</PackageId>
     <Version>0.2.4</Version>
     <Authors>Ryan Singleton</Authors>

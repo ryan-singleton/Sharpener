@@ -1,6 +1,5 @@
 ﻿// The Sharpener project licenses this file to you under the MIT license.
 
-using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Sharpener.Rest.Extensions;
 
@@ -16,7 +15,7 @@ public class AuthenticationExtensionTests
 
         var token = headers.GetAuthToken("Basic");
 
-        token.Should().BeNull();
+        token.ShouldBeNull();
     }
 
     [Fact]
@@ -27,7 +26,7 @@ public class AuthenticationExtensionTests
 
         var token = headers.GetAuthToken("Bearer");
 
-        token.Should().Be("testToken");
+        token.ShouldBe("testToken");
     }
 
     [Fact]
@@ -38,7 +37,7 @@ public class AuthenticationExtensionTests
 
         var token = headers.GetAuthToken("Basic");
 
-        token.Should().BeNull();
+        token.ShouldBeNull();
     }
 
     [Fact]
@@ -49,7 +48,7 @@ public class AuthenticationExtensionTests
 
         var token = headers.GetAuthToken("Bearer");
 
-        token.Should().Be("testToken");
+        token.ShouldBe("testToken");
     }
 
     [Fact]
@@ -60,7 +59,7 @@ public class AuthenticationExtensionTests
 
         var token = headers.GetBasicToken();
 
-        token.Should().BeNull();
+        token.ShouldBeNull();
     }
 
     [Fact]
@@ -71,7 +70,7 @@ public class AuthenticationExtensionTests
 
         var token = headers.GetBasicToken();
 
-        token.Should().Be("dXNlcm5hbWU6cGFzc3dvcmQ=");
+        token.ShouldBe("dXNlcm5hbWU6cGFzc3dvcmQ=");
     }
 
     [Fact]
@@ -82,7 +81,7 @@ public class AuthenticationExtensionTests
 
         var token = headers.GetBasicToken();
 
-        token.Should().BeNull();
+        token.ShouldBeNull();
     }
 
     [Fact]
@@ -93,7 +92,7 @@ public class AuthenticationExtensionTests
 
         var token = headers.GetBasicToken();
 
-        token.Should().Be("dXNlcm5hbWU6cGFzc3dvcmQ=");
+        token.ShouldBe("dXNlcm5hbWU6cGFzc3dvcmQ=");
     }
 
     [Fact]
@@ -104,7 +103,7 @@ public class AuthenticationExtensionTests
 
         var token = headers.GetBearerToken();
 
-        token.Should().BeNull();
+        token.ShouldBeNull();
     }
 
     [Fact]
@@ -115,7 +114,7 @@ public class AuthenticationExtensionTests
 
         var token = headers.GetBearerToken();
 
-        token.Should().Be("testToken");
+        token.ShouldBe("testToken");
     }
 
     [Fact]
@@ -126,7 +125,7 @@ public class AuthenticationExtensionTests
 
         var token = headers.GetBearerToken();
 
-        token.Should().BeNull();
+        token.ShouldBeNull();
     }
 
     [Fact]
@@ -137,7 +136,7 @@ public class AuthenticationExtensionTests
 
         var token = headers.GetBearerToken();
 
-        token.Should().Be("testToken");
+        token.ShouldBe("testToken");
     }
 
     [Fact]
@@ -147,8 +146,9 @@ public class AuthenticationExtensionTests
 
         headers.SetAuthToken("Bearer", "testToken");
 
-        headers.Should().ContainSingle(h =>
-            h.Key == AuthExtensions.AuthHeader && h.Value.Contains("Bearer testToken"));
+        headers.Count(h =>
+                h.Key == AuthExtensions.AuthHeader && h.Value.Contains("Bearer testToken"))
+            .ShouldBe(1);
     }
 
     [Fact]
@@ -159,8 +159,9 @@ public class AuthenticationExtensionTests
 
         headers.SetAuthToken("Bearer", "newToken");
 
-        headers.Should().ContainSingle(h =>
-            h.Key == AuthExtensions.AuthHeader && h.Value.Contains("Bearer newToken"));
+        headers.Count(h =>
+                h.Key == AuthExtensions.AuthHeader && h.Value.Contains("Bearer newToken"))
+            .ShouldBe(1);
     }
 
     [Fact]
@@ -170,8 +171,9 @@ public class AuthenticationExtensionTests
 
         headers.SetAuthToken("Bearer", "testToken");
 
-        headers.Should().ContainSingle(h =>
-            h.Key == AuthExtensions.AuthHeader && h.Value.Contains("Bearer testToken"));
+        headers.Count(h =>
+                h.Key == AuthExtensions.AuthHeader && h.Value.Contains("Bearer testToken"))
+            .ShouldBe(1);
     }
 
     [Fact]
@@ -182,8 +184,9 @@ public class AuthenticationExtensionTests
 
         headers.SetAuthToken("Bearer", "newToken");
 
-        headers.Should().ContainSingle(h =>
-            h.Key == AuthExtensions.AuthHeader && h.Value.Contains("Bearer newToken"));
+        headers.Count(h =>
+                h.Key == AuthExtensions.AuthHeader && h.Value.Contains("Bearer newToken"))
+            .ShouldBe(1);
     }
 
     [Fact]
@@ -193,9 +196,9 @@ public class AuthenticationExtensionTests
 
         headers.SetBasicToken("username", "password");
 
-        headers.Should()
-            .ContainSingle(h => h.Key == AuthExtensions.AuthHeader && h.Value[0]!.Contains("Basic "));
-        headers.GetBasicToken().Should().NotBeNullOrWhiteSpace();
+        headers.Count(h => h.Key == AuthExtensions.AuthHeader && h.Value[0]!.Contains("Basic "))
+            .ShouldBe(1);
+        headers.GetBasicToken().ShouldNotBeNullOrWhiteSpace();
     }
 
     [Fact]
@@ -205,9 +208,10 @@ public class AuthenticationExtensionTests
 
         headers.SetBasicToken("username", "password");
 
-        headers.Should().ContainSingle(h =>
-            h.Key == AuthExtensions.AuthHeader && h.Value.First().Contains("Basic "));
-        headers.GetBasicToken().Should().NotBeNullOrWhiteSpace();
+        headers.Count(h =>
+                h.Key == AuthExtensions.AuthHeader && h.Value.First().Contains("Basic "))
+            .ShouldBe(1);
+        headers.GetBasicToken().ShouldNotBeNullOrWhiteSpace();
     }
 
     [Fact]
@@ -217,8 +221,9 @@ public class AuthenticationExtensionTests
 
         headers.SetBearerToken("testToken");
 
-        headers.Should().ContainSingle(h =>
-            h.Key == AuthExtensions.AuthHeader && h.Value.Contains("Bearer testToken"));
+        headers.Count(h =>
+                h.Key == AuthExtensions.AuthHeader && h.Value.Contains("Bearer testToken"))
+            .ShouldBe(1);
     }
 
     [Fact]
@@ -228,7 +233,8 @@ public class AuthenticationExtensionTests
 
         headers.SetBearerToken("testToken");
 
-        headers.Should().ContainSingle(h =>
-            h.Key == AuthExtensions.AuthHeader && h.Value.Contains("Bearer testToken"));
+        headers.Count(h =>
+                h.Key == AuthExtensions.AuthHeader && h.Value.Contains("Bearer testToken"))
+            .ShouldBe(1);
     }
 }
