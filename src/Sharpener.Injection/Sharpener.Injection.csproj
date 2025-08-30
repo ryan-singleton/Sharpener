@@ -8,7 +8,7 @@
     <RootNamespace>Sharpener.Injection</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\README.MD">
+    <None Include="..\..\README.md">
       <Pack>true</Pack>
       <PackagePath>\</PackagePath>
       <Link>Docs\README.md</Link>
