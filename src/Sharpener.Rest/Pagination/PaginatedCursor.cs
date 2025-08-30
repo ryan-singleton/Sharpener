@@ -1,6 +1,6 @@
 ﻿// The Sharpener project licenses this file to you under the MIT license.
 
-using Sharpener.Options;
+using Sharpener.Results;
 
 namespace Sharpener.Rest.Pagination;
 
@@ -10,7 +10,7 @@ namespace Sharpener.Rest.Pagination;
 /// <typeparam name="T"></typeparam>
 public sealed class PaginatedCursor<T>
 {
-    private readonly Func<int, int, Task<Option<Paginated<T>, HttpResponseMessage>>> _func;
+    private readonly Func<int, int, Task<Outcome<Paginated<T>>>> _func;
     private readonly int _pageSize;
     private int _currentPage;
     private bool _hasMore;
@@ -26,7 +26,7 @@ public sealed class PaginatedCursor<T>
     ///     take place).
     /// </param>
     public PaginatedCursor(int? startPage, int? pageSize,
-        Func<int, int, Task<Option<Paginated<T>, HttpResponseMessage>>> func)
+        Func<int, int, Task<Outcome<Paginated<T>>>> func)
     {
         _hasMore = true;
         _currentPage = startPage ?? 1;
@@ -45,7 +45,7 @@ public sealed class PaginatedCursor<T>
     /// <summary>
     ///     The current element in the cursor.
     /// </summary>
-    public Option<Paginated<T>, HttpResponseMessage> Current { get; private set; }
+    public Outcome<Paginated<T>> Current { get; private set; }
 
     /// <summary>
     ///     Disposes the cursor.
@@ -68,7 +68,7 @@ public sealed class PaginatedCursor<T>
 
         var result = await _func(_currentPage, _pageSize).ConfigureAwait(false);
 
-        return result.Resolve(paginated =>
+        return result.Match(paginated =>
         {
             Current = paginated;
             _hasMore = paginated is not null;

@@ -3,6 +3,7 @@
 using System.Text;
 using Sharpener.Json.Extensions;
 using Sharpener.Options;
+using Sharpener.Results;
 
 namespace Sharpener.Rest.Extensions;
 
@@ -35,17 +36,17 @@ public static class JsonExtensions
     ///     A <see cref="Option{T,TAlt}" /> containing either the deserialized response, or the
     ///     <see cref="HttpResponseMessage" /> if it was a failure.
     /// </returns>
-    public static async Task<Option<T, HttpResponseMessage>> ReadJsonAs<T>(this Task<HttpResponseMessage> task,
+    public static async Task<Outcome<T?>> ReadJsonAs<T>(this Task<HttpResponseMessage> task,
         Func<HttpResponseMessage, Task<T?>>? readJson = null)
     {
         var response = await task.ConfigureAwait(false);
         if (!response.IsSuccessStatusCode)
         {
-            return response;
+            return new Error($"Status code {response.StatusCode}, {response.ReasonPhrase}");
         }
 
         readJson ??= message => message.ReadContentJsonAs<T>();
-        return (await readJson(response).ConfigureAwait(false), response);
+        return await readJson(response).ConfigureAwait(false);
     }
 
     /// <summary>
