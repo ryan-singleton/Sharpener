@@ -1,18 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="../../build/Global.props" />
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="AutoBogus"/>
     <PackageReference Include="benchmarkdotnet"/>
     <PackageReference Include="NSubstitute"/>
     <PackageReference Include="Shouldly" />
   </ItemGroup>
-
 </Project>
