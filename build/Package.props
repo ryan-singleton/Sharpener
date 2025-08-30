@@ -14,7 +14,7 @@
     <Version>$(SharedPackageVersion)</Version>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="docs\images\sharpener-logo-128.png">
+    <None Include="..\..\docs\images\sharpener-logo-128.png">
       <Pack>true</Pack>
       <PackagePath>\</PackagePath>
       <Link>Docs\sharpener-logo-128.png</Link>

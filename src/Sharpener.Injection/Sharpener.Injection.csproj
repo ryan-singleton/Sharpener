@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Sharpener.Injection</PackageId>
+    <Description>A package that supplies a minimal dependency injection tools, designed to have a small footprint.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>quality-of-life qol dependency injection inversion of control di ioc dotnet csharp</PackageTags>
+    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <RootNamespace>Sharpener.Injection</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\README.MD">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+      <Link>Docs\README.md</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Docs\"/>
+  </ItemGroup>
+</Project>

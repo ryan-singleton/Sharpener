@@ -72,10 +72,10 @@ public static class StringExtensions
     /// <param name="value">The value to be evaluated for null, empty, or whitespace</param>
     /// <param name="fallback">The value to provide when null, empty, or whitespace</param>
     /// <returns>A string that is not null and only empty or whitespace if specified</returns>
-    public static string OrFallback(this string? value, string? fallback = null)
+    public static string? OrFallback(this string? value, string? fallback = null)
     {
         fallback ??= SharpenerStringsSettings.DefaultFallback ??
                      throw new NullReferenceException("The fallback value was null and no default was set.");
-        return (string.IsNullOrWhiteSpace(value) ? fallback : value)!;
+        return string.IsNullOrWhiteSpace(value) ? fallback : value;
     }
 }

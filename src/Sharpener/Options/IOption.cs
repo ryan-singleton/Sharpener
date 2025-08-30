@@ -8,6 +8,8 @@ namespace Sharpener.Options;
 /// </summary>
 /// <typeparam name="T">The expected "success" result type.</typeparam>
 /// <typeparam name="TAlt">The alternate result type when unsuccessful or optional when successful.</typeparam>
+[Obsolete(
+    "This will be removed in favor of the Sharpener.Results.Outcome result type. Please adjust all usages of this to that instead.")]
 public interface IOption<out T, out TAlt>
 {
     /// <summary>

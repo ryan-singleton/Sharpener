@@ -7,7 +7,7 @@
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\README.md">
+    <None Include="..\..\README.MD">
       <Pack>true</Pack>
       <PackagePath>\</PackagePath>
       <Link>Docs\README.md</Link>
