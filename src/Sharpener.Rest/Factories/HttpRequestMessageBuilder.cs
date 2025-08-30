@@ -14,7 +14,7 @@ internal sealed class HttpRequestMessageBuilder
     /// </summary>
     internal HttpRequestMessageBuilder()
     {
-        Headers = Activator.CreateInstance(typeof(HttpRequestHeaders), nonPublic: true) as HttpRequestHeaders
+        Headers = Activator.CreateInstance(typeof(HttpRequestHeaders), true) as HttpRequestHeaders
                   ?? throw new InvalidOperationException();
     }
 

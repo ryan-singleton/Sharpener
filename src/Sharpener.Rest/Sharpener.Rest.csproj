@@ -14,10 +14,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Sharpener.Json\Sharpener.Json.csproj" />
+    <ProjectReference Include="..\Sharpener.Json\Sharpener.Json.csproj"/>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http" />
-    <PackageReference Include="Microsoft.Extensions.Http" />
+    <PackageReference Include="Microsoft.AspNetCore.Http"/>
+    <PackageReference Include="Microsoft.Extensions.Http"/>
   </ItemGroup>
 </Project>

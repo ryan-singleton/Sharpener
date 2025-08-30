@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../../build/Global.props" />
+  <Import Project="../../build/Global.props"/>
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <IsPackable>false</IsPackable>
@@ -8,6 +8,6 @@
     <PackageReference Include="AutoBogus"/>
     <PackageReference Include="benchmarkdotnet"/>
     <PackageReference Include="NSubstitute"/>
-    <PackageReference Include="Shouldly" />
+    <PackageReference Include="Shouldly"/>
   </ItemGroup>
 </Project>

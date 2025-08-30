@@ -62,9 +62,7 @@ public static class HttpContentExtensions
 
         content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data")
         {
-            Name = name,
-            FileName = filename,
-            FileNameStar = filename
+            Name = name, FileName = filename, FileNameStar = filename
         };
 
         content.Add(fileContent, name, Path.GetFileName(file));
@@ -79,7 +77,7 @@ public static class HttpContentExtensions
     /// <param name="mediaType"> The media type of the json. Defaults to application/json.</param>
     /// <exception cref="ArgumentException">name must not be empty</exception>
     public static void AddJson(this MultipartFormDataContent content, string name, object data,
-        string? mediaType = "application/json")
+        string mediaType = "application/json")
     {
         content.AddContent(name, new StringContent(data.WriteJson(), Encoding.UTF8, mediaType));
     }
@@ -93,7 +91,7 @@ public static class HttpContentExtensions
     /// <param name="mediaType"> The media type of the part. Defaults to text/plain.</param>
     /// <exception cref="ArgumentException">name must not be empty</exception>
     public static void AddString(this MultipartFormDataContent content, string name, string value,
-        string? mediaType = "text/plain")
+        string mediaType = "text/plain")
     {
         content.AddContent(name, new StringContent(value, Encoding.UTF8, mediaType));
     }
@@ -106,7 +104,7 @@ public static class HttpContentExtensions
     /// <param name="mediaType"> The media type of the parts. Defaults to text/plain.</param>
     /// <exception cref="ArgumentException">Data failed to convert to key value pairs.</exception>
     public static void AddStringParts(this MultipartFormDataContent content, object data,
-        string? mediaType = "text/plain")
+        string mediaType = "text/plain")
     {
         var parameters = data.ToParameters<string, string>();
         if (parameters is null || parameters.Count == 0)
@@ -130,7 +128,7 @@ public static class HttpContentExtensions
     /// <param name="mediaType"> The media type of the form. Defaults to application/x-www-form-urlencoded.</param>
     /// <exception cref="ArgumentException">name must not be empty</exception>
     public static void AddUrlEncoded(this MultipartFormDataContent content, string name, object data,
-        string? mediaType = "application/x-www-form-urlencoded")
+        string mediaType = "application/x-www-form-urlencoded")
     {
         content.AddContent(name,
             new StringContent(data.ToUrlEncodedString(), Encoding.UTF8, mediaType));

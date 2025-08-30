@@ -22,18 +22,11 @@ public class RestRequestTests
         var result = await restRequest
             .SetPaths("name", "value", "context")
             .SetBearerToken("testToken")
-            .AddQueries(new
-            {
-                id = "someId",
-                name
-            }).SetJsonContent(new
-            {
-                id = "also an id",
-                name
-            }).PostAsync()
+            .AddQueries(new { id = "someId", name }).SetJsonContent(new { id = "also an id", name }).PostAsync()
             .ReadJsonAs<string>();
 
-        restRequest.UriBuilder.Uri.AbsoluteUri.ShouldBe("https://google.com/api/sample/name/value/context?id=someId&name=someName");
+        restRequest.UriBuilder.Uri.AbsoluteUri.ShouldBe(
+            "https://google.com/api/sample/name/value/context?id=someId&name=someName");
         result.Value.ShouldBe(fake);
         restRequest.Request.Headers.Authorization?.Parameter.ShouldBe("testToken");
     }

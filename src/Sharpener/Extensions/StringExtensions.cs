@@ -50,10 +50,12 @@ public static class StringExtensions
     ///     variable is not found.
     /// </returns>
     public static string? GetEnvironmentVariable(this string environmentVariable,
-        EnvironmentVariableTarget? target = null) =>
-        target is not null
+        EnvironmentVariableTarget? target = null)
+    {
+        return target is not null
             ? Environment.GetEnvironmentVariable(environmentVariable, (EnvironmentVariableTarget)target)
             : Environment.GetEnvironmentVariable(environmentVariable);
+    }
 
     /// <summary>
     ///     Returns the provided string unchanged unless it is null, empty, or whitespace. In which case, the fallback is
@@ -72,7 +74,8 @@ public static class StringExtensions
     /// <returns>A string that is not null and only empty or whitespace if specified</returns>
     public static string OrFallback(this string? value, string? fallback = null)
     {
-        fallback ??= SharpenerStringsSettings.DefaultFallback ?? throw new NullReferenceException("The fallback value was null and no default was set.");
+        fallback ??= SharpenerStringsSettings.DefaultFallback ??
+                     throw new NullReferenceException("The fallback value was null and no default was set.");
         return (string.IsNullOrWhiteSpace(value) ? fallback : value)!;
     }
 }

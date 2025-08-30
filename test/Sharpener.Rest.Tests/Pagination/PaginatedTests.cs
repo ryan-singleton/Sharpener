@@ -34,11 +34,7 @@ public class PaginatedTests
     public void Paginated_NextPage_ReturnsNextPageNumber()
     {
         const int currentPage = 2;
-        var paginated = new Paginated<string>
-        {
-            CurrentPage = currentPage,
-            HasMore = true
-        };
+        var paginated = new Paginated<string> { CurrentPage = currentPage, HasMore = true };
         var nextPage = paginated.NextPage;
         nextPage.ShouldBe(currentPage + 1);
     }
@@ -47,11 +43,7 @@ public class PaginatedTests
     public void Paginated_NextPage_ReturnsNullForLastPage()
     {
         const int currentPage = 5;
-        var paginated = new Paginated<string>
-        {
-            CurrentPage = currentPage,
-            HasMore = false
-        };
+        var paginated = new Paginated<string> { CurrentPage = currentPage, HasMore = false };
         var nextPage = paginated.NextPage;
         nextPage.ShouldBeNull();
     }

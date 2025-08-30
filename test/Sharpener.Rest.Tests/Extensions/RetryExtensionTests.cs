@@ -22,12 +22,7 @@ public class RetryExtensionTests
     [Fact]
     public void RetryOptions_UpdateBackoff()
     {
-        var options = new RetryOptions
-        {
-            Delay = TimeSpan.FromSeconds(1),
-            UseBackoff = true,
-            BackoffFactor = 2
-        };
+        var options = new RetryOptions { Delay = TimeSpan.FromSeconds(1), UseBackoff = true, BackoffFactor = 2 };
 
         options.UpdateBackoff();
 

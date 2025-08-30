@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="../../build/Test.props" />
+  <Import Project="../../build/Test.props"/>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Sharpener.Json\Sharpener.Json.csproj"/>
     <ProjectReference Include="..\Sharpener.Tests.Common\Sharpener.Tests.Common.csproj"/>

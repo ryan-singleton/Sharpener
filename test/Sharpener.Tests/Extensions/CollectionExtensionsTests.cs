@@ -76,11 +76,7 @@ public class CollectionExtensionsTests
         var results = leftItems.LeftJoin(rightItems,
             left => left.Name,
             right => right?.Name,
-            (left, right) => new
-            {
-                Left = left,
-                Right = right
-            }).AsList();
+            (left, right) => new { Left = left, Right = right }).AsList();
 
         results.Any(x => x.Left.Name.Equals("Bob")).ShouldBeTrue();
         results.Any(x => x.Left.Name.Equals("Jane")).ShouldBeTrue();

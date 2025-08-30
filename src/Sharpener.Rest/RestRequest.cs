@@ -57,13 +57,13 @@ public sealed class RestRequest : IRestRequest
         Request = new HttpRequestMessageBuilder();
     }
 
-    /// <inheritdoc />
-    public Uri CurrentUri => UriBuilder.Uri;
-
     /// <summary>
     ///     The options for retrying the request.
     /// </summary>
     internal RetryOptions? RetryOptions { get; private set; }
+
+    /// <inheritdoc />
+    public Uri CurrentUri => UriBuilder.Uri;
 
     /// <inheritdoc />
     public IRestRequest AddQueries(object values)

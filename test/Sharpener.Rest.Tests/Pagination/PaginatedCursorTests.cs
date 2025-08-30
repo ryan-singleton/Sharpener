@@ -36,9 +36,7 @@ public class PaginatedCursorTests
         {
             var paginated = new Paginated<string>
             {
-                Items = ["Item1", "Item2", "Item3"],
-                CurrentPage = currentPage,
-                HasMore = true
+                Items = ["Item1", "Item2", "Item3"], CurrentPage = currentPage, HasMore = true
             };
             funcCalled = true;
             return Task.FromResult<Option<Paginated<string>, HttpResponseMessage>>(paginated);
@@ -86,9 +84,7 @@ public class PaginatedCursorTests
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             var paginated = new Paginated<string>
             {
-                Items = ["Item1", "Item2", "Item3"],
-                CurrentPage = currentPage,
-                HasMore = true
+                Items = ["Item1", "Item2", "Item3"], CurrentPage = currentPage, HasMore = true
             };
             funcCalled = true;
             return Task.FromResult(new Option<Paginated<string>, HttpResponseMessage>(paginated, response));
