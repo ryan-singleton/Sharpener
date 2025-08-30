@@ -105,7 +105,7 @@ public static class RestExtensions
     public static string ToUrlEncodedString(this object data)
     {
         var properties = from propertyInfo in data.GetType().GetProperties()
-            where propertyInfo.GetValue(data, null) is not null
+            where propertyInfo?.GetValue(data, null) != null
             select $"{propertyInfo.Name}={HttpUtility.UrlEncode(propertyInfo.GetValue(data, null).ToString())}";
 
         return string.Join("&", properties.ToArray());

@@ -166,12 +166,12 @@ public static class AuthExtensions
             }
         }
 
-        if (string.IsNullOrWhiteSpace(authHeader) || !authHeader.NoCase().Contains(scheme))
+        if (string.IsNullOrWhiteSpace(authHeader) || !authHeader!.NoCase().Contains(scheme))
         {
             return null;
         }
 
-        var token = authHeader.Replace($"{scheme} ", "");
+        var token = authHeader!.Replace($"{scheme} ", "");
         return token;
     }
 

@@ -2,8 +2,10 @@
 
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+#if NET5_0_OR_GREATER
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+#endif
 
 namespace Sharpener.Extensions;
 
@@ -159,7 +161,7 @@ public static class CollectionExtensions
         }
 #else
         var asSpan = enumerable.AsArray().AsSpan();
-        for (int i = 0; i < asSpan.Length; i++)
+        for (var i = 0; i < asSpan.Length; i++)
         {
             action(asSpan[i]);
         }
@@ -339,6 +341,7 @@ public static class CollectionExtensions
             {
                 continue;
             }
+
             newArray[writeIndex++] = array[i];
         }
 
