@@ -1,7 +1,6 @@
 ﻿// The Sharpener project licenses this file to you under the MIT license.
 
 using System.Net;
-using FluentAssertions;
 using Sharpener.Options;
 using Sharpener.Rest.Pagination;
 
@@ -24,8 +23,8 @@ public class PaginatedCursorTests
         var cursor = new PaginatedCursor<string>(1, 10, TestFunc);
         var result = cursor.MoveNext;
 
-        result.Should().BeFalse();
-        funcCalled.Should().BeTrue();
+        result.ShouldBeFalse();
+        funcCalled.ShouldBeTrue();
     }
 
     [Fact]
@@ -37,9 +36,7 @@ public class PaginatedCursorTests
         {
             var paginated = new Paginated<string>
             {
-                Items = new[] { "Item1", "Item2", "Item3" },
-                CurrentPage = currentPage,
-                HasMore = true
+                Items = ["Item1", "Item2", "Item3"], CurrentPage = currentPage, HasMore = true
             };
             funcCalled = true;
             return Task.FromResult<Option<Paginated<string>, HttpResponseMessage>>(paginated);
@@ -48,13 +45,14 @@ public class PaginatedCursorTests
         var cursor = new PaginatedCursor<string>(1, 10, TestFunc);
         var result = cursor.MoveNext;
 
-        result.Should().BeTrue();
-        funcCalled.Should().BeTrue();
-        cursor.Current.Should().NotBeNull();
-        cursor.Current.Value.Should().NotBeNull();
-        cursor.Current.Value?.Items.Should().Contain("Item1", "Item2", "Item3");
-        cursor.Current.Value!.CurrentPage.Should().Be(1);
-        cursor.Current.Value!.HasMore.Should().BeTrue();
+        result.ShouldBeTrue();
+        funcCalled.ShouldBeTrue();
+        cursor.Current.Value.ShouldNotBeNull();
+        cursor.Current.Value?.Items.ShouldContain("Item1");
+        cursor.Current.Value?.Items.ShouldContain("Item2");
+        cursor.Current.Value?.Items.ShouldContain("Item3");
+        cursor.Current.Value!.CurrentPage.ShouldBe(1);
+        cursor.Current.Value!.HasMore.ShouldBeTrue();
     }
 
     [Fact]
@@ -70,10 +68,10 @@ public class PaginatedCursorTests
         }
 
         var cursor = new PaginatedCursor<string>(1, 10, TestFunc);
-        var result = await cursor.MoveNextAsync().ConfigureAwait(false);
+        var result = await cursor.MoveNextAsync();
 
-        result.Should().BeFalse();
-        funcCalled.Should().BeTrue();
+        result.ShouldBeFalse();
+        funcCalled.ShouldBeTrue();
     }
 
     [Fact]
@@ -86,23 +84,22 @@ public class PaginatedCursorTests
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             var paginated = new Paginated<string>
             {
-                Items = new[] { "Item1", "Item2", "Item3" },
-                CurrentPage = currentPage,
-                HasMore = true
+                Items = ["Item1", "Item2", "Item3"], CurrentPage = currentPage, HasMore = true
             };
             funcCalled = true;
             return Task.FromResult(new Option<Paginated<string>, HttpResponseMessage>(paginated, response));
         }
 
         var cursor = new PaginatedCursor<string>(1, 10, TestFunc);
-        var result = await cursor.MoveNextAsync().ConfigureAwait(false);
+        var result = await cursor.MoveNextAsync();
 
-        result.Should().BeTrue();
-        funcCalled.Should().BeTrue();
-        cursor.Current.Should().NotBeNull();
-        cursor.Current.Value.Should().NotBeNull();
-        cursor.Current.Value?.Items.Should().Contain("Item1", "Item2", "Item3");
-        cursor.Current.Value!.CurrentPage.Should().Be(1);
-        cursor.Current.Value!.HasMore.Should().BeTrue();
+        result.ShouldBeTrue();
+        funcCalled.ShouldBeTrue();
+        cursor.Current.Value.ShouldNotBeNull();
+        cursor.Current.Value?.Items.ShouldContain("Item1");
+        cursor.Current.Value?.Items.ShouldContain("Item2");
+        cursor.Current.Value?.Items.ShouldContain("Item3");
+        cursor.Current.Value!.CurrentPage.ShouldBe(1);
+        cursor.Current.Value!.HasMore.ShouldBeTrue();
     }
 }

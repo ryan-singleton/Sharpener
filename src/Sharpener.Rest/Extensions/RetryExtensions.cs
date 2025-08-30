@@ -15,10 +15,10 @@ public static class RetryExtensions
     ///     The default retry status codes.
     /// </summary>
     public static readonly HttpStatusCode[] DefaultRetryStatusCodes =
-    {
+    [
         HttpStatusCode.RequestTimeout, (HttpStatusCode)425, (HttpStatusCode)429, HttpStatusCode.InternalServerError,
         HttpStatusCode.BadGateway, HttpStatusCode.ServiceUnavailable, HttpStatusCode.GatewayTimeout
-    };
+    ];
 
     /// <summary>
     ///     Determines if the response status code indicates that the request should be retried.

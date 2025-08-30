@@ -1,6 +1,6 @@
 ﻿// The Sharpener project licenses this file to you under the MIT license.
 
-using FluentAssertions;
+
 using Sharpener.Rest.Extensions;
 
 namespace Sharpener.Rest.Tests.Extensions;
@@ -13,7 +13,7 @@ public class HttpExtensionTests
         var httpClient = new HttpClient();
 
         var act = () => httpClient.SetBaseAddress(string.Empty);
-        act.Should().Throw<ArgumentNullException>();
+        act.ShouldThrow<ArgumentNullException>();
     }
 
     [Fact]
@@ -23,7 +23,7 @@ public class HttpExtensionTests
 
         var act = () => httpClient.SetBaseAddress("invalid-url");
 
-        act.Should().Throw<UriFormatException>();
+        act.ShouldThrow<UriFormatException>();
     }
 
     [Fact]
@@ -33,6 +33,6 @@ public class HttpExtensionTests
 
         httpClient.SetBaseAddress("https://api.example.com");
 
-        httpClient.BaseAddress.Should().Be(new Uri("https://api.example.com/"));
+        httpClient.BaseAddress.ShouldBe(new Uri("https://api.example.com/"));
     }
 }

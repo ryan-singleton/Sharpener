@@ -3,6 +3,8 @@
 namespace Sharpener.Options;
 
 /// <inheritdoc />
+[Obsolete(
+    "This will be removed in favor of the Sharpener.Results.Outcome result type. Please adjust all usages of this to that instead.")]
 public readonly struct Option<T, TAlt> : IOption<T, TAlt>
 {
     private readonly T? _value;

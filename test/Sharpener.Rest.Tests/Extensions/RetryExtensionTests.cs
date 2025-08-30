@@ -1,6 +1,6 @@
 ﻿// The Sharpener project licenses this file to you under the MIT license.
 
-using FluentAssertions;
+
 using Sharpener.Rest.Retry;
 
 namespace Sharpener.Rest.Tests.Extensions;
@@ -12,29 +12,24 @@ public class RetryExtensionTests
     {
         var options = new RetryOptions();
 
-        options.MaximumAttempts.Should().Be(3);
-        options.Delay.Should().Be(TimeSpan.FromSeconds(1));
-        options.UseBackoff.Should().BeTrue();
-        options.Acknowledgement.Should().BeNull();
-        options.BackoffFactor.Should().Be(2);
+        options.MaximumAttempts.ShouldBe(3);
+        options.Delay.ShouldBe(TimeSpan.FromSeconds(1));
+        options.UseBackoff.ShouldBeTrue();
+        options.Acknowledgement.ShouldBeNull();
+        options.BackoffFactor.ShouldBe(2);
     }
 
     [Fact]
     public void RetryOptions_UpdateBackoff()
     {
-        var options = new RetryOptions
-        {
-            Delay = TimeSpan.FromSeconds(1),
-            UseBackoff = true,
-            BackoffFactor = 2
-        };
+        var options = new RetryOptions { Delay = TimeSpan.FromSeconds(1), UseBackoff = true, BackoffFactor = 2 };
 
         options.UpdateBackoff();
 
-        options.Delay.Should().Be(TimeSpan.FromSeconds(2));
+        options.Delay.ShouldBe(TimeSpan.FromSeconds(2));
 
         options.UpdateBackoff();
 
-        options.Delay.Should().Be(TimeSpan.FromSeconds(4));
+        options.Delay.ShouldBe(TimeSpan.FromSeconds(4));
     }
 }
