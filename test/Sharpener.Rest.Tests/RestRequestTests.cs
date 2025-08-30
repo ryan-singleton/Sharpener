@@ -1,7 +1,6 @@
 ﻿// The Sharpener project licenses this file to you under the MIT license.
 
 using System.Net;
-using FluentAssertions;
 using Sharpener.Rest.Extensions;
 using Sharpener.Rest.Testing;
 
@@ -12,7 +11,7 @@ public class RestRequestTests
     private const string FakeBaseUrl = "https://google.com/api/sample/";
 
     [Fact]
-    public async void Get_Story_Success()
+    public async Task Get_Story_Success()
     {
         const string fake = "success";
         using var httpTest = new HttpTest(FakeBaseUrl);
@@ -32,13 +31,11 @@ public class RestRequestTests
                 id = "also an id",
                 name
             }).PostAsync()
-            .ReadJsonAs<string>()
-            .ConfigureAwait(false);
+            .ReadJsonAs<string>();
 
-        restRequest.UriBuilder.Uri.AbsoluteUri.Should()
-            .Be("https://google.com/api/sample/name/value/context?id=someId&name=someName");
-        result.Value.Should().Be(fake);
-        restRequest.Request.Headers.Authorization?.Parameter.Should().Be("testToken");
+        restRequest.UriBuilder.Uri.AbsoluteUri.ShouldBe("https://google.com/api/sample/name/value/context?id=someId&name=someName");
+        result.Value.ShouldBe(fake);
+        restRequest.Request.Headers.Authorization?.Parameter.ShouldBe("testToken");
     }
 
     [Fact]
@@ -51,9 +48,8 @@ public class RestRequestTests
 
         var response = await httpTest.Client.Rest(new Uri("http://localhost"))
             .UseRetry()
-            .GetAsync()
-            .ConfigureAwait(false);
+            .GetAsync();
 
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        response.StatusCode.ShouldBe(HttpStatusCode.OK);
     }
 }

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <LangVersion>11</LangVersion>
+    <LangVersion>latestMajor</LangVersion>
     <PackageId>Sharpener</PackageId>
     <Version>0.2.4</Version>
     <Authors>Ryan Singleton</Authors>
@@ -17,7 +17,7 @@
     <PackageTags>quality-of-life qol dotnet csharp</PackageTags>
     <PackageReleaseNotes>https://github.com/ryan-singleton/Sharpener/blob/main/docs/CHANGELOG.md</PackageReleaseNotes>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\docs\images\sharpener-logo-128.png">
@@ -39,7 +39,7 @@
       <_Parameter1>$(MSBuildProjectName).Benchmarks</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework.StartsWith(netstandard))' == 'true' Or '$(TargetFramework.StartsWith(netcoreapp))' == 'true'">
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.Memory" />
   </ItemGroup>
 </Project>

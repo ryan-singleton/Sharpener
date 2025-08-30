@@ -16,7 +16,7 @@ internal sealed class HttpTestMessageHandler : HttpMessageHandler
     /// <summary>
     ///     The response messages to return in order.
     /// </summary>
-    internal List<HttpResponseMessage> ResponseMessages { get; private set; } = new();
+    internal List<HttpResponseMessage> ResponseMessages { get; private set; } = [];
 
     /// <summary>
     ///     More or less the main feature of the <see cref="HttpTest" /> feature. Mocking this functionality is usually a lot

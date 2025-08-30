@@ -11,7 +11,7 @@ public sealed class Paginated<T>
     /// <summary>
     ///     The items on the current page.
     /// </summary>
-    public IEnumerable<T> Items { get; set; } = Array.Empty<T>();
+    public IEnumerable<T> Items { get; set; } = [];
 
     /// <summary>
     ///     The page that the loaded items belong to.

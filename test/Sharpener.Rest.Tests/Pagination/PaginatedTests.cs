@@ -1,6 +1,5 @@
 ﻿// The Sharpener project licenses this file to you under the MIT license.
 
-using FluentAssertions;
 using Sharpener.Rest.Pagination;
 
 namespace Sharpener.Rest.Tests.Pagination;
@@ -12,7 +11,7 @@ public class PaginatedTests
     {
         var paginated = new Paginated<string> { HasMore = false };
         var result = paginated.HasMore;
-        result.Should().BeFalse();
+        result.ShouldBeFalse();
     }
 
     [Fact]
@@ -20,7 +19,7 @@ public class PaginatedTests
     {
         var paginated = new Paginated<string> { HasMore = true };
         var result = paginated.HasMore;
-        result.Should().BeTrue();
+        result.ShouldBeTrue();
     }
 
     [Fact]
@@ -28,7 +27,7 @@ public class PaginatedTests
     {
         var paginated = new Paginated<string>();
         var items = paginated.Items;
-        items.Should().BeEmpty();
+        items.ShouldBeEmpty();
     }
 
     [Fact]
@@ -41,7 +40,7 @@ public class PaginatedTests
             HasMore = true
         };
         var nextPage = paginated.NextPage;
-        nextPage.Should().Be(currentPage + 1);
+        nextPage.ShouldBe(currentPage + 1);
     }
 
     [Fact]
@@ -54,7 +53,7 @@ public class PaginatedTests
             HasMore = false
         };
         var nextPage = paginated.NextPage;
-        nextPage.Should().BeNull();
+        nextPage.ShouldBeNull();
     }
 
     [Fact]
@@ -63,6 +62,6 @@ public class PaginatedTests
         const int currentPage = 3;
         var paginated = new Paginated<string> { CurrentPage = currentPage };
         var result = paginated.CurrentPage;
-        result.Should().Be(currentPage);
+        result.ShouldBe(currentPage);
     }
 }

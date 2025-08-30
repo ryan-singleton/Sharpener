@@ -6,12 +6,7 @@ namespace Sharpener.Tests.Extensions;
 
 public class CollectionExtensionsTests
 {
-    public CollectionExtensionsTests()
-    {
-        _items = new[] { new Item("Item", "FirstItem"), new Item("Item", "SecondItem") };
-    }
-
-    private readonly IEnumerable<Item> _items;
+    private readonly IEnumerable<Item> _items = [new("Item", "FirstItem"), new("Item", "SecondItem")];
 
     [Fact]
     public void Array_Add_Success()
@@ -19,7 +14,7 @@ public class CollectionExtensionsTests
         var names = new[] { "Sherry", "Sam", "Chris" };
         var count = names.Length;
         names = names.Add("Lisa");
-        names.Should().HaveCount(count + 1);
+        names.Length.ShouldBe(count + 1);
     }
 
     [Fact]
@@ -29,7 +24,7 @@ public class CollectionExtensionsTests
         var count = names.Length;
         var newNames = new[] { "Walter", "Teri", "Art" };
         names = names.AddRange(newNames);
-        names.Should().HaveCount(count + newNames.Length);
+        names.Length.ShouldBe(count + newNames.Length);
     }
 
     [Fact]
@@ -38,7 +33,7 @@ public class CollectionExtensionsTests
         var names = new[] { "Sherry", "Sam", "Chris" };
         var count = names.Length;
         names = names.Remove("Chris");
-        names.Should().HaveCount(count - 1);
+        names.Length.ShouldBe(count - 1);
     }
 
     [Fact]
@@ -47,7 +42,7 @@ public class CollectionExtensionsTests
         var names = new[] { "Sherry", "Chris", "Sam", "Chris" };
         var count = names.Length;
         names = names.RemoveAll(x => x.Equals("Chris"));
-        names.Should().HaveCount(count - 2);
+        names.Length.ShouldBe(count - 2);
     }
 
     [Fact]
@@ -55,7 +50,7 @@ public class CollectionExtensionsTests
     {
         const string newName = "AffectedItem";
         _items.ForAll(x => x.Name = newName);
-        _items.All(x => x.Name.Equals(newName)).Should().BeTrue();
+        _items.All(x => x.Name.Equals(newName)).ShouldBeTrue();
     }
 
     [Fact]
@@ -87,8 +82,8 @@ public class CollectionExtensionsTests
                 Right = right
             }).AsList();
 
-        results.Any(x => x.Left.Name.Equals("Bob")).Should().BeTrue();
-        results.Any(x => x.Left.Name.Equals("Jane")).Should().BeTrue();
-        results.Any(x => x.Right is null).Should().BeTrue();
+        results.Any(x => x.Left.Name.Equals("Bob")).ShouldBeTrue();
+        results.Any(x => x.Left.Name.Equals("Jane")).ShouldBeTrue();
+        results.Any(x => x.Right is null).ShouldBeTrue();
     }
 }
