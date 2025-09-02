@@ -18,7 +18,7 @@ public class JsonExtensionTests
             Content = new StringContent(item.WriteJson())
         };
 
-        (await httpResponseMessage.ReadContentJsonAs<Item>().ConfigureAwait(false))!.Name.ShouldBe(item.Name);
+        (await httpResponseMessage.ReadContentJsonAs<Item>())!.Name.ShouldBe(item.Name);
     }
 
     [Fact]
@@ -32,7 +32,7 @@ public class JsonExtensionTests
 
         var task = Task.FromResult(httpResponseMessage);
 
-        var result = await task.ReadJsonAs<Item>().ConfigureAwait(false);
+        var result = await task.ReadJsonAs<Item>();
         result.IsSuccess.ShouldBe(true);
         result.Value!.Name.ShouldBe(item.Name);
     }

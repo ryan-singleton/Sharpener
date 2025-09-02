@@ -19,7 +19,7 @@ public class StringExtensionsTests
             Task.Run(() => "value".NoCase().Invariant().Equals("Value")),
             Task.Run(() => "value".Case().Invariant().Equals("Value"))
         };
-        var results = await Task.WhenAll(tasks).ConfigureAwait(false);
+        var results = await Task.WhenAll(tasks);
         var expectedResults = new List<bool>
         {
             false,

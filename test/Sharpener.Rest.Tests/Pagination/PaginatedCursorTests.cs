@@ -63,7 +63,7 @@ public class PaginatedCursorTests
         var funcCalled = false;
 
         var cursor = new PaginatedCursor<string>(1, 10, TestFunc);
-        var result = await cursor.MoveNextAsync().ConfigureAwait(false);
+        var result = await cursor.MoveNextAsync();
 
         result.ShouldBeFalse();
         funcCalled.ShouldBeTrue();
@@ -82,7 +82,7 @@ public class PaginatedCursorTests
         var funcCalled = false;
 
         var cursor = new PaginatedCursor<string>(1, 10, TestFunc);
-        var result = await cursor.MoveNextAsync().ConfigureAwait(false);
+        var result = await cursor.MoveNextAsync();
 
         result.ShouldBeTrue();
         funcCalled.ShouldBeTrue();
