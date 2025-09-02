@@ -73,6 +73,14 @@ public interface IRestRequest
     Task<HttpResponseMessage> SendAsync(HttpMethod httpMethod);
 
     /// <summary>
+    ///     Adds a custom scheme and a token to the Authentication header.
+    /// </summary>
+    /// <param name="scheme">The authentication scheme.</param>
+    /// <param name="token">The token.</param>
+    /// <returns> The <see cref="IRestRequest" /> that is being configured.</returns>
+    IRestRequest SetAuthToken(string scheme, string token);
+
+    /// <summary>
     ///     Adds a basic token to the Authentication header.
     /// </summary>
     /// <param name="username">The username of the token.</param>

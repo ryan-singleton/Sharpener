@@ -145,6 +145,13 @@ public sealed class RestRequest : IRestRequest
     }
 
     /// <inheritdoc />
+    public IRestRequest SetAuthToken(string scheme, string token)
+    {
+        Request.Headers.SetAuthToken(scheme, token);
+        return this;
+    }
+
+    /// <inheritdoc />
     public IRestRequest SetBasicToken(string username, string password)
     {
         Request.Headers.SetBasicToken(username, password);
