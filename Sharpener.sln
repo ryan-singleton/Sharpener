@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpener.Injection", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpener.Injection.Tests", "test\Sharpener.Injection.Tests\Sharpener.Injection.Tests.csproj", "{E383640E-5937-4294-BFF3-F1B6F16A2BB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharpener.Revit", "src\Sharpener.Revit\Sharpener.Revit.csproj", "{76CABE20-FFB3-408B-BE5E-EF94BECB5957}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{E383640E-5937-4294-BFF3-F1B6F16A2BB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E383640E-5937-4294-BFF3-F1B6F16A2BB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E383640E-5937-4294-BFF3-F1B6F16A2BB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76CABE20-FFB3-408B-BE5E-EF94BECB5957}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76CABE20-FFB3-408B-BE5E-EF94BECB5957}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76CABE20-FFB3-408B-BE5E-EF94BECB5957}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76CABE20-FFB3-408B-BE5E-EF94BECB5957}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +99,7 @@ Global
 		{71CE5E37-0C47-4D13-ABA9-6779D013A9CD} = {8E145172-9460-4629-A2CC-D4268B660326}
 		{80AEF73E-6501-477E-B328-11036FCE11A0} = {5CE15304-7DE3-4364-8824-9B4FB6AC1B33}
 		{E383640E-5937-4294-BFF3-F1B6F16A2BB9} = {8E145172-9460-4629-A2CC-D4268B660326}
+		{76CABE20-FFB3-408B-BE5E-EF94BECB5957} = {5CE15304-7DE3-4364-8824-9B4FB6AC1B33}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6EC5EF6D-4680-43FD-A7AB-2216D5257DF6}

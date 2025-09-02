@@ -26,23 +26,23 @@ public static class OutcomeExtensions
     }
 
     /// <summary>
-    ///     Creates a failed <see cref="Outcome{T}"/> with the specified error message.
-    ///     This is useful when you want to produce an <see cref="Outcome{T}"/> representing an error,
-    ///     even in contexts where you might have a value of type <typeparamref name="T"/> available.
+    ///     Creates a failed <see cref="Outcome{T}" /> with the specified error message.
+    ///     This is useful when you want to produce an <see cref="Outcome{T}" /> representing an error,
+    ///     even in contexts where you might have a value of type <typeparamref name="T" /> available.
     /// </summary>
     /// <typeparam name="T">
-    ///     The type of the success value that the <see cref="Outcome{T}"/> would hold on success.
-    ///     In this case, the <see cref="Outcome{T}"/> will represent a failure instead.
+    ///     The type of the success value that the <see cref="Outcome{T}" /> would hold on success.
+    ///     In this case, the <see cref="Outcome{T}" /> will represent a failure instead.
     /// </typeparam>
     /// <param name="value">
     ///     The success value is ignored; it is only used to satisfy extension method syntax.
-    ///     The returned <see cref="Outcome{T}"/> will always be a failure.
+    ///     The returned <see cref="Outcome{T}" /> will always be a failure.
     /// </param>
     /// <param name="errorMessage">
-    ///     The error message that will be wrapped in an <see cref="Error"/> and returned as a failed outcome.
+    ///     The error message that will be wrapped in an <see cref="Error" /> and returned as a failed outcome.
     /// </param>
     /// <returns>
-    ///     An <see cref="Outcome{T}"/> representing a failure with the provided error message.
+    ///     An <see cref="Outcome{T}" /> representing a failure with the provided error message.
     /// </returns>
     public static Outcome<T> ToOutcomeError<T>(this T value, string errorMessage)
     {
