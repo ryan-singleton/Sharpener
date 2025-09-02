@@ -47,7 +47,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.STORE_PAT }}
       - name: Unzip store
-          run: unzip ./store/store.zip -d ./store
+        run: unzip ./store/store.zip -d ./store
       - name: Decrypt store DLLs
         run: |
           for file in ./store/*.gpg; do
