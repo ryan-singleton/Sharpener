@@ -40,6 +40,8 @@ private static void BuildRibbon(UIControlledApplication uiApplication)
 }
 ```
 
+---
+
 ### Revit Theme
 
 You can also sync your UI to the Revit theme
@@ -60,6 +62,7 @@ private static void ApplySynchronizedTheme(DependencyObject dependencyObject)
 }
 ```
 
+---
 
 ### Revit Panes
 
@@ -76,11 +79,60 @@ lifetime scope simplification).
 </panes:RevitPane>
 ```
 
-### Element Selection Filter
+---
 
-Instead of creating a new element selection filter of various types, there's a simple generic version available. Very
-reusable.
+### Element Type Selection Filter
+
+A generic selection filter that simplifies filtering by element type.
+Useful for avoiding redundant custom filters.
 
 ```csharp
-var familyInstanceSelectionFilter = new ElementTypeSelectionFilter<FamilyInstance>();
+var selectedRef = uiDoc.Selection.PickObject(ObjectType.Element, new ElementTypeSelectionFilter<FamilyInstance>(), "Select a family instance to register");
 ```
+
+---
+
+### Tryable External Command
+
+Simplifies error handling in external commands by wrapping execution in a try-catch pattern.
+Focus on the logic, not the boilerplate.
+
+```csharp
+/// <summary>
+///     Upserts a family to a hypothetical family manager service.
+/// </summary>
+[TryableCommand]
+[Transaction(TransactionMode.Manual)]
+public class RegisterFamily : TryableExternalCommand
+{
+    protected override UiResult TryExecute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    {
+        var uiApp = commandData.Application;
+
+        // This might fail, but the base class handles exceptions
+        var upsertResult = familyManagerService.PickAndUpsertContent(uiApp);
+        return familyManagerService.HandleResult(uiApp, registrationResult, out message);
+    }
+}
+```
+
+---
+
+### External Event Manager
+
+Simplifies the management of external events.
+Once registered (typically via dependency injection), you can raise events by handler type—no need for enums or manual mapping.
+
+```csharp
+// Register the event
+_externalEventManager.RegisterEvent(new FooEventHandler());
+
+// Raise the event elsewhere
+_externalEventManager.RaiseEvent<FooEventHandler>();
+
+// Or bind to a WPF ICommand
+ICommand FooCommand = new RelayCommand(() =>
+    _externalEventManager.RaiseEvent<FooEventHandler>());
+```
+
+> This approach reduces boilerplate and enables clean `ICommand` bindings in WPF view models.
