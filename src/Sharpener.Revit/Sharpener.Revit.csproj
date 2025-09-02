@@ -8,7 +8,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <UseWPF>true</UseWPF>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
-    <PackageVersion>1.0.1</PackageVersion>
+    <SharedPackageVersion>1.0.2</SharedPackageVersion>
     <AssemblyVersion>$(SharedPackageVersion)</AssemblyVersion>
     <FileVersion>$(SharedPackageVersion)</FileVersion>
     <InformationalVersion>$(SharedPackageVersion)+$(GitCommitId)</InformationalVersion>
