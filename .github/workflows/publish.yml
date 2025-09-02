@@ -51,7 +51,7 @@ jobs:
       - name: Decrypt store DLLs
         run: |
           for file in ./store/*.gpg; do
-            out="./lib/$(basename "$file" .gpg)"
+            out="./store/$(basename "$file" .gpg)"
             echo "${{ secrets.STORE_GPG_KEY }}" | \
               gpg --batch --yes --passphrase-fd 0 \
                   --output "$out" --decrypt "$file"
