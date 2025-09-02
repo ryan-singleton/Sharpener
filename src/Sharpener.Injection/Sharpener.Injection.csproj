@@ -5,7 +5,11 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>quality-of-life qol dependency injection inversion of control di ioc dotnet csharp</PackageTags>
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
-    <RootNamespace>Sharpener.Injection</RootNamespace>
+    <PackageVersion>1.0.0</PackageVersion>
+    <AssemblyVersion>$(SharedPackageVersion)</AssemblyVersion>
+    <FileVersion>$(SharedPackageVersion)</FileVersion>
+    <InformationalVersion>$(SharedPackageVersion)+$(GitCommitId)</InformationalVersion>
+    <Version>$(SharedPackageVersion)</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\README.md">

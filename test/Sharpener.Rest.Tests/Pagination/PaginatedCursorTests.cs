@@ -2,7 +2,6 @@
 
 using System.Net;
 using Sharpener.Extensions;
-using Sharpener.Options;
 using Sharpener.Rest.Pagination;
 using Sharpener.Results;
 

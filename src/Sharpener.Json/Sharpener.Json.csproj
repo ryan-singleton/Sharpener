@@ -5,6 +5,11 @@
     <PackageReadmeFile>JSON.md</PackageReadmeFile>
     <PackageTags>quality-of-life qol json serialization dotnet csharp</PackageTags>
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
+    <PackageVersion>1.0.0</PackageVersion>
+    <AssemblyVersion>$(SharedPackageVersion)</AssemblyVersion>
+    <FileVersion>$(SharedPackageVersion)</FileVersion>
+    <InformationalVersion>$(SharedPackageVersion)+$(GitCommitId)</InformationalVersion>
+    <Version>$(SharedPackageVersion)</Version>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\docs\JSON.md">
