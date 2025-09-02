@@ -1,4 +1,4 @@
-﻿// The Sharpener project licenses this file to you under the MIT license.
+// The Sharpener project licenses this file to you under the MIT license.
 
 #define INTERNAL_NULLABLE_ATTRIBUTES
 #if NETSTANDARD2_0

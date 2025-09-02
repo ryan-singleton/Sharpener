@@ -1,4 +1,4 @@
-﻿// The Sharpener project licenses this file to you under the MIT license.
+// The Sharpener project licenses this file to you under the MIT license.
 
 using System.Net;
 using Sharpener.Rest.Extensions;
@@ -23,7 +23,7 @@ public class RestRequestTests
             .SetPaths("name", "value", "context")
             .SetBearerToken("testToken")
             .AddQueries(new { id = "someId", name }).SetJsonContent(new { id = "also an id", name }).PostAsync()
-            .ReadJsonAs<string>();
+            .ReadJsonAs<string>().ConfigureAwait(false);
 
         restRequest.UriBuilder.Uri.AbsoluteUri.ShouldBe(
             "https://google.com/api/sample/name/value/context?id=someId&name=someName");
@@ -41,7 +41,7 @@ public class RestRequestTests
 
         var response = await httpTest.Client.Rest(new Uri("http://localhost"))
             .UseRetry()
-            .GetAsync();
+            .GetAsync().ConfigureAwait(false);
 
         response.StatusCode.ShouldBe(HttpStatusCode.OK);
     }

@@ -1,4 +1,6 @@
-﻿using System.Collections;
+// The Sharpener project licenses this file to you under the MIT license.
+
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Reflection;
 

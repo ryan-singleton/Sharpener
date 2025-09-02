@@ -1,5 +1,4 @@
-// This file is the copyright of Keystone Integrations LLC.
-
+// The Sharpener project licenses this file to you under the MIT license.
 
 using Autodesk.Revit.UI;
 

@@ -121,7 +121,8 @@ public class RegisterFamily : TryableExternalCommand
 ### External Event Manager
 
 Simplifies the management of external events.
-Once registered (typically via dependency injection), you can raise events by handler type—no need for enums or manual mapping.
+Once registered (typically via dependency injection), you can raise events by handler type—no need for enums or manual
+mapping.
 
 ```csharp
 // Register the event

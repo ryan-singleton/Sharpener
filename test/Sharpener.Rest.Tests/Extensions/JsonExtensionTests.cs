@@ -1,4 +1,4 @@
-﻿// The Sharpener project licenses this file to you under the MIT license.
+// The Sharpener project licenses this file to you under the MIT license.
 
 using System.Net;
 using Sharpener.Json.Extensions;
@@ -18,7 +18,7 @@ public class JsonExtensionTests
             Content = new StringContent(item.WriteJson())
         };
 
-        (await httpResponseMessage.ReadContentJsonAs<Item>())!.Name.ShouldBe(item.Name);
+        (await httpResponseMessage.ReadContentJsonAs<Item>().ConfigureAwait(false))!.Name.ShouldBe(item.Name);
     }
 
     [Fact]
@@ -32,7 +32,7 @@ public class JsonExtensionTests
 
         var task = Task.FromResult(httpResponseMessage);
 
-        var result = await task.ReadJsonAs<Item>();
+        var result = await task.ReadJsonAs<Item>().ConfigureAwait(false);
         result.IsSuccess.ShouldBe(true);
         result.Value!.Name.ShouldBe(item.Name);
     }
