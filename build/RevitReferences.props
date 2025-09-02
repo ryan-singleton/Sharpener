@@ -1,6 +1,8 @@
 <Project>
   <PropertyGroup>
     <RevitApiPath>C:\Program Files\Autodesk\Revit 2026</RevitApiPath>
+    <LocalRevitApiPath>$(MSBuildThisFileDirectory)..\store</LocalRevitApiPath>
+    <RevitApiPath Condition="Exists('$(LocalRevitApiPath)\RevitAPI.dll')">$(LocalRevitApiPath)</RevitApiPath>
   </PropertyGroup>
 
   <ItemGroup>
