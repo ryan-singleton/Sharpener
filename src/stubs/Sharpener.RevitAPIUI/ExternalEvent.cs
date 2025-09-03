@@ -6,7 +6,6 @@ public class ExternalEvent : IDisposable
 {
     public void Dispose()
     {
-        throw new NotImplementedException();
     }
 
     public static ExternalEvent Create(object handler)

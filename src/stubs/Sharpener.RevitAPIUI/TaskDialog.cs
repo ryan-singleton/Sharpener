@@ -6,6 +6,5 @@ public class TaskDialog
 {
     public static void Show(string title, string message)
     {
-        throw new NotImplementedException();
     }
 }
