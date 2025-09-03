@@ -17,7 +17,16 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(UseLocalProject)' == 'true'">
-    <ProjectReference Include="..\stubs\Sharpener.RevitAPI\Sharpener.RevitAPI.csproj" Private="true" />
-    <ProjectReference Include="..\stubs\Sharpener.RevitAPIUI\Sharpener.RevitAPIUI.csproj" Private="true" />
+    <ProjectReference Include="..\stubs\Sharpener.RevitAPI\Sharpener.RevitAPI.csproj">
+      <Private>true</Private>
+      <IncludeAssets>compile</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\stubs\Sharpener.RevitAPIUI\Sharpener.RevitAPIUI.csproj">
+      <Private>true</Private>
+      <IncludeAssets>compile</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </ProjectReference>
   </ItemGroup>
+
 </Project>
