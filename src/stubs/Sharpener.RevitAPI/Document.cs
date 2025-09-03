@@ -6,5 +6,8 @@ namespace Autodesk.Revit;
 
 public class Document
 {
-    public Element GetElement(object id) => new();
+    public Element GetElement(object id)
+    {
+        return new Element();
+    }
 }

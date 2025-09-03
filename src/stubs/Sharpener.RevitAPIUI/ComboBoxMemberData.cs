@@ -7,6 +7,5 @@ public class ComboBoxMemberData
     public ComboBoxMemberData(string name, string text)
 
     {
-
     }
 }

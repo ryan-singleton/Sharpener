@@ -4,5 +4,4 @@ namespace Autodesk.Revit.DB;
 
 public class Element
 {
-
 }

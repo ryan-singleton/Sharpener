@@ -6,6 +6,5 @@ public class TextBoxData
 {
     public TextBoxData(string name)
     {
-
     }
 }

@@ -4,6 +4,8 @@ namespace Autodesk.Revit.UI;
 
 public class UIControlledApplication
 {
+    public delegate void ThemeChangedEventHandler(object sender, ThemeChangedEventArgs args);
+
     public RibbonPanel CreateRibbonPanel(string name, string panelName)
     {
         return new RibbonPanel();
@@ -11,11 +13,7 @@ public class UIControlledApplication
 
     public void CreateRibbonTab(string tabName)
     {
-
     }
 
-    public delegate void ThemeChangedEventHandler(object sender, ThemeChangedEventArgs args);
-
     public event ThemeChangedEventHandler ThemeChanged;
-
 }

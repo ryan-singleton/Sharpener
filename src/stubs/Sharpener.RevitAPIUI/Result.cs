@@ -5,5 +5,5 @@ namespace Autodesk.Revit.UI;
 public enum Result
 {
     Cancelled,
-    Failed,
+    Failed
 }

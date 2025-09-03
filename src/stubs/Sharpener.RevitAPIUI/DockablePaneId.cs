@@ -6,6 +6,5 @@ public class DockablePaneId
 {
     public DockablePaneId(Guid guid)
     {
-
     }
 }

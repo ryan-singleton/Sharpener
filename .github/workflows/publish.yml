@@ -38,24 +38,6 @@ jobs:
               --password ${{ secrets.NUGET_PUBLISH_API_KEY }}
           fi
         shell: bash
-      - name: Download assets
-        run: |
-          gh release download v1.0.0 \
-            --repo ryan-singleton/sharpener-assets \
-            --pattern "store.zip" \
-            --dir ./store
-        env:
-          GITHUB_TOKEN: ${{ secrets.STORE_PAT }}
-      - name: Unzip store
-        run: unzip ./store/store.zip -d ./store
-      - name: Decrypt store DLLs
-        run: |
-          for file in ./store/*.gpg; do
-            out="./store/$(basename "$file" .gpg)"
-            echo "${{ secrets.STORE_GPG_KEY }}" | \
-              gpg --batch --yes --passphrase-fd 0 \
-                  --output "$out" --decrypt "$file"
-          done
       - name: Build and package
         run: |
           dotnet build --configuration Release --no-restore --source https://api.nuget.org/v3/index.json --verbosity minimal

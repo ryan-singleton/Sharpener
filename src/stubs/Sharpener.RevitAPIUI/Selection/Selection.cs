@@ -4,7 +4,13 @@ namespace Autodesk.Revit.UI.Selection;
 
 public class Selection
 {
-    public IEnumerable<object> GetElementIds() => [];
+    public IEnumerable<object> GetElementIds()
+    {
+        return [];
+    }
 
-    public SelectedRef PickObjects(object objectType, ISelectionFilter filter, string? prompt) => new();
+    public SelectedRef PickObjects(object objectType, ISelectionFilter filter, string? prompt)
+    {
+        return new SelectedRef();
+    }
 }

@@ -6,6 +6,5 @@ public class ComboBoxData
 {
     public ComboBoxData(string name)
     {
-
     }
 }

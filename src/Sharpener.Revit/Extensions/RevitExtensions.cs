@@ -3,7 +3,6 @@
 using System.Windows;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 using Sharpener.Extensions;
 using Sharpener.Revit.Selection;
 using Sharpener.Revit.Ui;

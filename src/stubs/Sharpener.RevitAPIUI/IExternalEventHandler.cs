@@ -4,5 +4,4 @@ namespace Autodesk.Revit.UI;
 
 public interface IExternalEventHandler
 {
-    
 }

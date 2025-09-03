@@ -4,5 +4,5 @@ namespace Autodesk.Revit.UI;
 
 public class ThemeChangedEventArgs
 {
-public ThemeType ThemeChangedType { get; }
+    public ThemeType ThemeChangedType { get; }
 }

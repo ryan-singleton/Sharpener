@@ -6,6 +6,5 @@ public class SplitButtonData
 {
     public SplitButtonData(string name, string text)
     {
-
     }
 }

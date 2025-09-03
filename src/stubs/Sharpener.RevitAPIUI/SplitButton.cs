@@ -5,5 +5,6 @@ namespace Autodesk.Revit.UI;
 public class SplitButton
 {
     public void AddPushButton(object pushButtonBuilder)
-    {}
+    {
+    }
 }
