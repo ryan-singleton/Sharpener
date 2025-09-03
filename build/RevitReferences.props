@@ -17,7 +17,6 @@
     </ProjectReference>
   </ItemGroup>
 
-
   <ItemGroup Condition="'$(UseLocalProject)' != 'true'">
     <Reference Include="RevitAPI">
       <HintPath>$(RevitApiPath)\RevitAPI.dll</HintPath>
