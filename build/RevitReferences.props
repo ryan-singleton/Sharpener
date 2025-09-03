@@ -4,18 +4,6 @@
     <UseLocalProject Condition="!Exists('$(RevitApiPath)\RevitAPI.dll')">true</UseLocalProject>
   </PropertyGroup>
 
-
-  <ItemGroup Condition="'$(UseLocalProject)' != 'true'">
-    <Reference Include="RevitAPI">
-      <HintPath>$(RevitApiPath)\RevitAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>$(RevitApiPath)\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
-
   <ItemGroup Condition="'$(UseLocalProject)' == 'true'">
     <ProjectReference Include="..\stubs\Sharpener.RevitAPI\Sharpener.RevitAPI.csproj">
       <Private>true</Private>
@@ -29,4 +17,15 @@
     </ProjectReference>
   </ItemGroup>
 
+
+  <ItemGroup Condition="'$(UseLocalProject)' != 'true'">
+    <Reference Include="RevitAPI">
+      <HintPath>$(RevitApiPath)\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>$(RevitApiPath)\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
 </Project>
