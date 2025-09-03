@@ -2,6 +2,7 @@
 
 namespace Autodesk.Revit.UI;
 
+// ReSharper disable once InconsistentNaming
 public class UIControlledApplication
 {
     public delegate void ThemeChangedEventHandler(object sender, ThemeChangedEventArgs args);
@@ -15,5 +16,10 @@ public class UIControlledApplication
     {
     }
 
-    public event ThemeChangedEventHandler ThemeChanged;
+    public event ThemeChangedEventHandler? ThemeChanged;
+
+    protected virtual void OnThemeChanged(ThemeChangedEventArgs args)
+    {
+        ThemeChanged?.Invoke(this, args);
+    }
 }

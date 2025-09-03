@@ -4,5 +4,5 @@ namespace Autodesk.Revit.UI;
 
 public class TextBox
 {
-    public string PromptText { get; set; }
+    public string PromptText { get; set; } = null!;
 }

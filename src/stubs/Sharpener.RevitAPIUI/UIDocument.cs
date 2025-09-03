@@ -2,8 +2,9 @@
 
 namespace Autodesk.Revit.UI;
 
+// ReSharper disable once InconsistentNaming
 public class UIDocument
 {
-    public Selection.Selection Selection { get; set; }
-    public Document Document { get; set; }
+    public Selection.Selection Selection { get; set; } = null!;
+    public Document Document { get; set; } = null!;
 }

@@ -4,6 +4,6 @@ namespace Autodesk.Revit.UI;
 
 public class DockablePaneProviderData
 {
-    public object FrameworkElement { get; set; }
-    public object InitialState { get; set; }
+    public object FrameworkElement { get; set; } = null!;
+    public object InitialState { get; set; } = null!;
 }
