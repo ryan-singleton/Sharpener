@@ -5,7 +5,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>quality-of-life qol dotnet csharp</PackageTags>
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
-    <SharedPackageVersion>1.0.1</SharedPackageVersion>
+    <SharedPackageVersion>1.0.3</SharedPackageVersion>
     <AssemblyVersion>$(SharedPackageVersion)</AssemblyVersion>
     <FileVersion>$(SharedPackageVersion)</FileVersion>
     <InformationalVersion>$(SharedPackageVersion)+$(GitCommitId)</InformationalVersion>
