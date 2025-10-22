@@ -14,6 +14,10 @@ public static class RestExtensions
     /// <summary>
     ///     Creates an <see cref="HttpClient" /> that is named by the class type that it serves for later factory calls.
     /// </summary>
+    /// <remarks>
+    ///     To avoid problems with <see cref="HttpClient" /> state, the base URL will not be applied if the base address is
+    ///     already set.
+    /// </remarks>
     /// <param name="httpClientFactory">The factory that will create the client.</param>
     /// <param name="baseUrl">The base url that will be assigned to the <see cref="HttpClient.BaseAddress" />.</param>
     /// <typeparam name="T"></typeparam>
@@ -21,23 +25,33 @@ public static class RestExtensions
     public static HttpClient CreateTypeClient<T>(this IHttpClientFactory httpClientFactory, string? baseUrl = null)
     {
         var client = httpClientFactory.CreateClient(typeof(T).Name);
-        if (!string.IsNullOrWhiteSpace(baseUrl))
+        if (string.IsNullOrWhiteSpace(baseUrl) || client.BaseAddress is not null)
         {
-            client.BaseAddress = new Uri(baseUrl);
+            return client;
         }
 
+        client.BaseAddress = new Uri(baseUrl);
         return client;
     }
 
     /// <summary>
     ///     Creates an <see cref="HttpClient" /> that is named by the url that is also the assigned base address.
     /// </summary>
+    /// <remarks>
+    ///     To avoid problems with <see cref="HttpClient" /> state, the base URL will not be applied if the base address is
+    ///     already set.
+    /// </remarks>
     /// <param name="factory"> The factory that will create the client.</param>
     /// <param name="baseUrl"> The base url that will be assigned to the <see cref="HttpClient.BaseAddress" />.</param>
     /// <returns> The <see cref="HttpClient" /> with a base address and an associated class name for which it serves.</returns>
     public static HttpClient CreateUrlClient(this IHttpClientFactory factory, string baseUrl)
     {
         var client = factory.CreateClient(baseUrl.GetHashCode().ToString(CultureInfo.CurrentCulture));
+        if (client.BaseAddress is not null)
+        {
+            return client;
+        }
+
         client.SetBaseAddress(baseUrl);
         return client;
     }
