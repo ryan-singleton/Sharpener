@@ -8,6 +8,6 @@ namespace System.Runtime.CompilerServices;
 ///     This just allows us to have records in our libraries while still being on .net standard 2.0. It does nothing but
 ///     shut the compiler up.
 /// </summary>
-public static class IsExternalInit
+internal static class IsExternalInit
 {
 }
