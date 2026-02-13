@@ -63,7 +63,7 @@ public readonly struct Option<T, TAlt> : IOption<T, TAlt>
     }
 
     /// <summary>
-    ///     Initializes a new <see cref="Option{T,TAlt}" /> when a alternate is provided and the
+    ///     Initializes a new <see cref="Option{T,TAlt}" /> when an alternate is provided and the
     ///     requirement of a <see cref="Option{T,TAlt}" /> is implied.
     /// </summary>
     /// <param name="alternate">The alternate to generate a <see cref="Option{T,TAlt}" /> from.</param>

@@ -29,7 +29,7 @@ public static class StringExtensions
     }
 
     /// <inheritdoc cref="IStringComparer.NoCase" />
-    public static IStringComparer NoCase(this string source)
+    public static IStringComparer IgnoreCase(this string source)
     {
         return new CaseStringComparer(source, true);
     }

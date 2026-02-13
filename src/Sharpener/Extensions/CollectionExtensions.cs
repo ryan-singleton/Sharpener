@@ -1,5 +1,6 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -58,6 +59,62 @@ public static class CollectionExtensions
         return array.Concat(elements).ToArray();
 #endif
     }
+
+    /// <summary>
+    ///     Compares two enumerable values to establish if the members of each also occur in the other. Order and
+    ///     implementation are disregarded.
+    /// </summary>
+    /// <param name="first">The first enumerable to compare.</param>
+    /// <param name="second">The second enumerable to compare.</param>
+    /// <param name="comparer">The comparer, uses a default equality comparer.</param>
+    /// <typeparam name="T">The type of the members from the enumerable values.</typeparam>
+    /// <returns>Whether they are equivalent.</returns>
+    public static bool AreEquivalent<T>(this IEnumerable<T> first, IEnumerable<T> second,
+        IEqualityComparer<T>? comparer = null) where T : notnull
+    {
+        comparer ??= EqualityComparer<T>.Default;
+
+        var counts = new Dictionary<T, int>(comparer);
+
+        foreach (var item in first)
+        {
+            counts.TryGetValue(item, out var count);
+            counts[item] = count + 1;
+        }
+
+        foreach (var item in second)
+        {
+            if (!counts.TryGetValue(item, out var count))
+            {
+                return false;
+            }
+
+            if (count == 1)
+            {
+                counts.Remove(item);
+            }
+            else
+            {
+                counts[item] = count - 1;
+            }
+        }
+
+        return counts.Count == 0;
+    }
+
+    /// <summary>
+    ///     Converts an <see cref="IEnumerable{T}" /> to an <see cref="ObservableCollection{T}" /> if it is not already one.
+    /// </summary>
+    /// <remarks>
+    ///     This method provides an <see cref="ObservableCollection{T}" /> containing the elements of the provided enumerable.
+    /// </remarks>
+    /// <param name="enumerable">The source enumerable to convert if necessary.</param>
+    /// <typeparam name="T">The type of elements in the enumerable.</typeparam>
+    /// <returns>A new <see cref="ObservableCollection{T}" /> containing the elements of the source enumerable.</returns>
+    public static ObservableCollection<T> AsObservable<T>(this IEnumerable<T> enumerable) =>
+        enumerable.GetType() == typeof(ObservableCollection<T>)
+            ? (ObservableCollection<T>)enumerable
+            : new ObservableCollection<T>(enumerable);
 
     /// <summary>
     ///     Creates an array from the enumerable only if it is not already an array. Otherwise, simply returns it casted as an

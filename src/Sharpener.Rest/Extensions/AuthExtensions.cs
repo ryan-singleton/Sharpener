@@ -166,7 +166,7 @@ public static class AuthExtensions
             }
         }
 
-        if (string.IsNullOrWhiteSpace(authHeader) || authHeader.NoCase().Contains(scheme) != true)
+        if (string.IsNullOrWhiteSpace(authHeader) || authHeader.IgnoreCase().Contains(scheme) != true)
         {
             return null;
         }

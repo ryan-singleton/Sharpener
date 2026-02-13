@@ -40,13 +40,13 @@ public class StringExtensionsTests
     [Benchmark(Description = "string.NoCase().Equals(string)")]
     public void NoCase()
     {
-        Source.NoCase().Equals(Compare);
+        Source.IgnoreCase().Equals(Compare);
     }
 
     [Benchmark(Description = "string.NoCase().Current().Equals(string)")]
     public void NoCase_Current()
     {
-        Source.NoCase().Current().Equals(Compare);
+        Source.IgnoreCase().Current().Equals(Compare);
     }
 
     [Benchmark(Description = "string.Equals(string, StringComparison.CurrentCultureIgnoreCase)")]
