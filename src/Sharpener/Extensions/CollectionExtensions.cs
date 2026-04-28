@@ -372,20 +372,19 @@ public static class CollectionExtensions
         }
     }
 
-#if NET6_0_OR_GREATER
-#else
+#if !NET6_0_OR_GREATER
     /// <summary>
     ///     Returns distinct elements from a sequence according to a specified key selector function.
     /// </summary>
     /// <remarks>
-    ///     This isa version of this extension for projects in a version prior to .NET 6.
+    ///     This is a version of the DistinctBy extension for projects in a version prior to .NET 6.
     /// </remarks>
     /// <param name="source">The sequence to remove duplicate elements from.</param>
     /// <param name="keySelector">A function to extract the key for each element.</param>
     /// <typeparam name="T">The type of the elements of the source.</typeparam>
     /// <typeparam name="TKey">The type of key to distinguish elements by.</typeparam>
     /// <returns>An <see cref="IEnumerable{T}" /> that contains distinct elements from the source sequence.</returns>
-    public static IEnumerable<T> DistinctBy<T, TKey>(this IEnumerable<T> source, Func<T, TKey> keySelector)
+    public static IEnumerable<T> UniqueBy<T, TKey>(this IEnumerable<T> source, Func<T, TKey> keySelector)
     {
         var seenKeys = new HashSet<TKey>();
 
