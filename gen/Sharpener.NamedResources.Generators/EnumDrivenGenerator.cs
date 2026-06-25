@@ -74,26 +74,36 @@ internal class EnumDrivenGenerator : IIncrementalGenerator
         var attrCtor = semanticModel.GetSymbolInfo(attr, cancellationToken).Symbol as IMethodSymbol;
 
         var interfaceName = string.Empty;
+        var interfaceNamespace = string.Empty;
         if (attr.ArgumentList!.Arguments[0].Expression is TypeOfExpressionSyntax typeofExpr)
         {
-            interfaceName = typeofExpr.Type.ToString();
+
+            var typeInfo = semanticModel.GetTypeInfo(typeofExpr.Type, cancellationToken);
+
+            if (typeInfo.Type is INamedTypeSymbol typeSymbol)
+            {
+                interfaceName = typeSymbol.Name;
+                interfaceNamespace = typeSymbol.ContainingNamespace.ToDisplayString();
+            }
+
         }
 
         // Derive the default constants class name from the interface name the same way
         // the attribute constructor does at runtime: strip trailing "Name", then leading "I"
-        var defaultConstantsClassName = interfaceName
-            .TrimEnd("Name".ToCharArray());
+        var defaultConstantsClassName = interfaceName.EndsWith("Name", StringComparison.Ordinal)
+            ? interfaceName.Substring(0, interfaceName.Length - "Name".Length)
+            : interfaceName;
+
         defaultConstantsClassName = $"{defaultConstantsClassName}s";
+
 
         if (StartsWithTwoUpper(defaultConstantsClassName))
         {
             defaultConstantsClassName = defaultConstantsClassName.Substring(1);
         }
 
-
         var constantsClassName = GetStringArg(semanticModel, args, attrCtor, "constantsClassName", cancellationToken)
                                  ?? defaultConstantsClassName;
-
 
         var namedResourceNamespace =
             GetStringArg(semanticModel, args, attrCtor, "namedResourceNamespace", cancellationToken)
@@ -111,7 +121,7 @@ internal class EnumDrivenGenerator : IIncrementalGenerator
 
         // ReSharper disable once UseCollectionExpression
         return new EnumData(enumNamespace, enumSymbol.Name, new List<EnumMemberData>(members).ToImmutableArray(),
-            interfaceName, constantsClassName, namedResourceNamespace, constantsClassNamespace, constantsClassSummary);
+            interfaceName, constantsClassName, namedResourceNamespace, constantsClassNamespace, constantsClassSummary, interfaceNamespace);
     }
 
     private static string? GetStringArg(
@@ -250,6 +260,7 @@ internal class EnumDrivenGenerator : IIncrementalGenerator
         builder.AppendLine();
         builder.AppendLine("using System.CodeDom.Compiler;");
         builder.AppendLine($"using {enumData.Namespace};");
+        builder.AppendLine($"using {enumData.InterfaceNamespace};");
         builder.AppendLine("using Sharpener.Extensions;");
         builder.AppendLine();
         builder.AppendLine($"namespace {enumData.NamedResourceNamespace};");
@@ -417,7 +428,8 @@ internal sealed class EnumData(
     string constantsClassName,
     string namedResourceNamespace,
     string constantsClassNamespace,
-    string constantsClassSummary)
+    string constantsClassSummary,
+    string interfaceNamespace)
 {
     public string Namespace { get; } = ns;
     public string EnumName { get; } = enumName;
@@ -427,6 +439,7 @@ internal sealed class EnumData(
     public string NamedResourceNamespace { get; } = namedResourceNamespace;
     public string ConstantsClassNamespace { get; } = constantsClassNamespace;
     public string ConstantsClassSummary { get; } = constantsClassSummary;
+    public string InterfaceNamespace { get; } = interfaceNamespace;
 }
 
 internal sealed class EnumMemberData(string name, string description, string summary)
