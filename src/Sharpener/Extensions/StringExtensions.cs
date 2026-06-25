@@ -1,5 +1,7 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
+using System.Globalization;
+using System.Text;
 using Sharpener.Types.Strings;
 using Sharpener.Types.Strings.Interfaces;
 
@@ -78,4 +80,65 @@ public static class StringExtensions
                      throw new NullReferenceException("The fallback value was null and no default was set.");
         return string.IsNullOrWhiteSpace(value) ? fallback : value;
     }
+
+    /// <summary>
+    ///     Returns whether the string contains any of the values provided.
+    /// </summary>
+    /// <param name="values">The values to check for in the string.</param>
+    /// <param name="value">The string to act upon.</param>
+    /// <returns>True or false.</returns>
+    public static bool ContainsAny(this string value, params string[] values) => values.Any(value.Contains);
+
+    /// <summary>
+    ///     Returns whether the string contains any of the values provided. Case insensitive.
+    /// </summary>
+    /// <param name="values">The values to check for in the string.</param>
+    /// <param name="value">The string to act upon.</param>
+    /// <returns>True or false.</returns>
+    public static bool NoCaseContainsAny(this string value, params string[] values) =>
+        values.Any(val => value.Contains(val, StringComparison.OrdinalIgnoreCase));
+
+    /// <summary>
+    ///     Returns whether the string contains all the values provided.
+    /// </summary>
+    /// <param name="values">The values to check for in the string.</param>
+    /// <param name="value">The string to act upon.</param>
+    /// <returns>True or false.</returns>
+    public static bool ContainsAll(this string value, params string[] values) => values.All(value.Contains);
+
+    /// <summary>
+    ///     Returns whether the string contains all the values provided. Case insensitive.
+    /// </summary>
+    /// <param name="values">The values to check for in the string.</param>
+    /// <param name="value">The string to act upon.</param>
+    /// <returns>True or false.</returns>
+    public static bool NoCaseContainsAll(this string value, params string[] values) =>
+        values.All(val => value.Contains(val, StringComparison.OrdinalIgnoreCase));
+
+    /// <inheritdoc cref="StringBuilder.AppendLine()" />
+    /// <remarks>
+    ///     This and similar methods are part of a suite of helper methods that automatically account for .NET SDK style
+    ///     libraries that must accomodate early methods and newer methods that must provide a format provider, defaulting to
+    ///     <see cref="CultureInfo.CurrentCulture" /> where possible.
+    /// </remarks>
+    public static StringBuilder AppendWith(this StringBuilder stringBuilder) => stringBuilder.AppendLine();
+
+    /// <inheritdoc cref="StringBuilder.AppendLine(string)" />
+    /// <remarks>
+    ///     This and similar methods are part of a suite of helper methods that automatically account for .NET SDK style
+    ///     libraries that must accomodate early methods and newer methods that must provide a format provider, defaulting to
+    ///     <see cref="CultureInfo.CurrentCulture" /> where possible.
+    /// </remarks>
+    public static StringBuilder AppendWith(this StringBuilder stringBuilder, string? value) =>
+        stringBuilder.AppendLine(value);
+
+    /// <inheritdoc cref="StringBuilder.AppendLine(string)" />
+    /// <remarks>
+    ///     This and similar methods are part of a suite of helper methods that automatically account for .NET SDK style
+    ///     libraries that must accomodate early methods and newer methods that must provide a format provider, defaulting to
+    ///     <see cref="CultureInfo.CurrentCulture" /> where possible.
+    /// </remarks>
+    public static StringBuilder AppendWith(this StringBuilder stringBuilder, FormattableString formattable,
+        CultureInfo? culture = null) =>
+        stringBuilder.AppendLine(formattable.ToString(culture ?? CultureInfo.CurrentCulture));
 }

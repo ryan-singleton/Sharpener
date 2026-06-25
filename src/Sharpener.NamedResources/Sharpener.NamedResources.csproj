@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>Sharpener.Json</PackageId>
-    <Description>Quality of life tools for C# JSON with syntactical extensions and configurability.</Description>
+    <PackageId>Sharpener.NamedResources</PackageId>
+    <Description>Enum driven population of strongly typed named resources and their corresponding constants.</Description>
     <PackageReadmeFile>JSON.md</PackageReadmeFile>
-    <PackageTags>quality-of-life qol json serialization dotnet csharp</PackageTags>
+    <PackageTags>quality-of-life enum strong typing dotnet csharp</PackageTags>
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
     <SharedPackageVersion>1.0.8</SharedPackageVersion>
     <AssemblyVersion>$(SharedPackageVersion)</AssemblyVersion>
@@ -22,6 +22,7 @@
     <Folder Include="Docs\"/>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\gen\Sharpener.NamedResources.Generators\Sharpener.NamedResources.Generators.csproj" />
     <ProjectReference Include="..\Sharpener\Sharpener.csproj"/>
   </ItemGroup>
 </Project>
