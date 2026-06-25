@@ -60,6 +60,7 @@ public static class Dimensions
     public const string TopExtension = "Top Extension"
 }
 ```
+
 So I can write
 
 ```csharp

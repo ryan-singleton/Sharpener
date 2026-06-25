@@ -17,9 +17,9 @@
     <Folder Include="Docs\"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\gen\Sharpener.NamedResources.Generators\Sharpener.NamedResources.Generators.csproj" 
-    ReferenceOutputAssembly="false"
-    PrivateAssets="all"/>
+    <ProjectReference Include="..\..\gen\Sharpener.NamedResources.Generators\Sharpener.NamedResources.Generators.csproj"
+                      ReferenceOutputAssembly="false"
+                      PrivateAssets="all"/>
     <ProjectReference Include="..\Sharpener\Sharpener.csproj"/>
   </ItemGroup>
 

@@ -3,11 +3,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\gen\Sharpener.NamedResources.Generators\Sharpener.NamedResources.Generators.csproj"
                       OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
-    <ProjectReference Include="..\..\src\Sharpener.NamedResources\Sharpener.NamedResources.csproj" />
+    <ProjectReference Include="..\..\src\Sharpener.NamedResources\Sharpener.NamedResources.csproj"/>
     <ProjectReference Include="..\Sharpener.Tests.Common\Sharpener.Tests.Common.csproj"/>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="18.0.0" />
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="18.0.0"/>
     <PackageReference Update="xunit.runner.visualstudio" Version="3.1.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

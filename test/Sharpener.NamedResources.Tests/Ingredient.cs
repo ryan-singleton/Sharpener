@@ -8,9 +8,7 @@ namespace Sharpener.NamedResources.Tests;
 public enum Ingredient
 {
     /// <summary>A tart green apple variety.</summary>
-    [Description("Granny Smith Apple")]
-    GrannySmith,
+    [Description("Granny Smith Apple")] GrannySmith,
 
-    [Description("Unsalted Butter")]
-    Butter,
+    [Description("Unsalted Butter")] Butter
 }

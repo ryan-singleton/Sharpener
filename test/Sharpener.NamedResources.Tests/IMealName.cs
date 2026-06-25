@@ -4,5 +4,4 @@ namespace Sharpener.NamedResources.Tests;
 
 public interface IMealName
 {
-
 }

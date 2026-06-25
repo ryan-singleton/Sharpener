@@ -5,19 +5,18 @@ using System.ComponentModel;
 namespace Sharpener.NamedResources.Tests;
 
 /// <summary>
-/// Types of meals.
+///     Types of meals.
 /// </summary>
 [NamedResource(typeof(IMealName), "Food", "Foo.Bar", "Fizz.Buzz")]
 public enum Meal
 {
     /// <summary>
-    /// A bown of cereal.
+    ///     A bown of cereal.
     /// </summary>
-    [Description("Cereal Bowl")]
-    CerealBowl,
+    [Description("Cereal Bowl")] CerealBowl,
+
     /// <summary>
-    /// A cut of ribeye steak.
+    ///     A cut of ribeye steak.
     /// </summary>
-    [Description("Ribeye Steak")]
-    RibeyeSteak,
+    [Description("Ribeye Steak")] RibeyeSteak
 }

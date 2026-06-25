@@ -3,10 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -68,7 +66,7 @@ internal class EnumDrivenGenerator : IIncrementalGenerator
 
         var attr = enumDeclaration.AttributeLists
             .SelectMany(al => al.Attributes)
-            .First(a => a.Name.ToString() is Strings.Domain or  Strings.DomainAttribute);
+            .First(a => a.Name.ToString() is Strings.Domain or Strings.DomainAttribute);
 
         // All four named args are optional — read them if present, otherwise fall back to defaults
         var args = attr.ArgumentList?.Arguments ?? default;
@@ -97,8 +95,9 @@ internal class EnumDrivenGenerator : IIncrementalGenerator
                                  ?? defaultConstantsClassName;
 
 
-        var namedResourceNamespace = GetStringArg(semanticModel, args, attrCtor, "namedResourceNamespace", cancellationToken)
-                                     ?? Strings.DefaultNamedResourcesNamespace;
+        var namedResourceNamespace =
+            GetStringArg(semanticModel, args, attrCtor, "namedResourceNamespace", cancellationToken)
+            ?? Strings.DefaultNamedResourcesNamespace;
 
         var constantsClassNamespace =
             GetStringArg(semanticModel, args, attrCtor, "constantsClassNamespace", cancellationToken)
@@ -106,104 +105,107 @@ internal class EnumDrivenGenerator : IIncrementalGenerator
 
         var constantsClassSummary =
             GetStringArg(semanticModel, args, attrCtor, "constantsClassSummary", cancellationToken)
-            ?? $"An automatically generated class with constant string values that correlate to the values found in the <see cref=\"{enumNamespace}.{enumSymbol.Name}\"/> enum.";
+            ??
+            $"An automatically generated class with constant string values that correlate to the values found in the <see cref=\"{enumNamespace}.{enumSymbol.Name}\"/> enum.";
 
 
-            // ReSharper disable once UseCollectionExpression
-        return new EnumData( enumNamespace, enumSymbol.Name, new List<EnumMemberData>(members).ToImmutableArray(), interfaceName, constantsClassName, namedResourceNamespace, constantsClassNamespace, constantsClassSummary);
+        // ReSharper disable once UseCollectionExpression
+        return new EnumData(enumNamespace, enumSymbol.Name, new List<EnumMemberData>(members).ToImmutableArray(),
+            interfaceName, constantsClassName, namedResourceNamespace, constantsClassNamespace, constantsClassSummary);
     }
 
-   private static string? GetStringArg(
-    SemanticModel semanticModel,
-    SeparatedSyntaxList<AttributeArgumentSyntax> args,
-    IMethodSymbol? attributeConstructor,
-    string paramName,
-    CancellationToken cancellationToken)
-{
-    // Handles constructor named arguments:
-    // [Domain(typeof(IFooName), constantsClassName: "FooNames")]
-    foreach (var arg in args)
+    private static string? GetStringArg(
+        SemanticModel semanticModel,
+        SeparatedSyntaxList<AttributeArgumentSyntax> args,
+        IMethodSymbol? attributeConstructor,
+        string paramName,
+        CancellationToken cancellationToken)
     {
-        if (arg.NameColon?.Name.Identifier.ValueText != paramName)
+        // Handles constructor named arguments:
+        // [Domain(typeof(IFooName), constantsClassName: "FooNames")]
+        foreach (var arg in args)
         {
-            continue;
-        }
+            if (arg.NameColon?.Name.Identifier.ValueText != paramName)
+            {
+                continue;
+            }
 
-        return GetConstantStringValue(semanticModel, arg, cancellationToken);
-    }
-
-    // Handles attribute property / field assignments:
-    // [Domain(typeof(IFooName), ConstantsClassName = "FooNames")]
-    //
-    // You may not need this today, but it costs almost nothing and prevents
-    // confusion if you later move options to settable attribute properties.
-    foreach (var arg in args)
-    {
-        if (arg.NameEquals?.Name.Identifier.ValueText != paramName)
-        {
-            continue;
-        }
-
-        return GetConstantStringValue(semanticModel, arg, cancellationToken);
-    }
-
-    // Handles positional constructor arguments:
-    // [Domain(typeof(IFooName), "FooNames")]
-    if (attributeConstructor is null)
-    {
-        return null;
-    }
-
-    var parameterIndex = -1;
-
-    for (var i = 0; i < attributeConstructor.Parameters.Length; i++)
-    {
-        if (attributeConstructor.Parameters[i].Name == paramName)
-        {
-            parameterIndex = i;
-            break;
-        }
-    }
-
-    if (parameterIndex < 0)
-    {
-        return null;
-    }
-
-    var positionalIndex = 0;
-
-    foreach (var arg in args)
-    {
-        // Not positional.
-        if (arg.NameColon is not null || arg.NameEquals is not null)
-        {
-            continue;
-        }
-
-        if (positionalIndex == parameterIndex)
-        {
             return GetConstantStringValue(semanticModel, arg, cancellationToken);
         }
 
-        positionalIndex++;
+        // Handles attribute property / field assignments:
+        // [Domain(typeof(IFooName), ConstantsClassName = "FooNames")]
+        //
+        // You may not need this today, but it costs almost nothing and prevents
+        // confusion if you later move options to settable attribute properties.
+        foreach (var arg in args)
+        {
+            if (arg.NameEquals?.Name.Identifier.ValueText != paramName)
+            {
+                continue;
+            }
+
+            return GetConstantStringValue(semanticModel, arg, cancellationToken);
+        }
+
+        // Handles positional constructor arguments:
+        // [Domain(typeof(IFooName), "FooNames")]
+        if (attributeConstructor is null)
+        {
+            return null;
+        }
+
+        var parameterIndex = -1;
+
+        for (var i = 0; i < attributeConstructor.Parameters.Length; i++)
+        {
+            if (attributeConstructor.Parameters[i].Name == paramName)
+            {
+                parameterIndex = i;
+                break;
+            }
+        }
+
+        if (parameterIndex < 0)
+        {
+            return null;
+        }
+
+        var positionalIndex = 0;
+
+        foreach (var arg in args)
+        {
+            // Not positional.
+            if (arg.NameColon is not null || arg.NameEquals is not null)
+            {
+                continue;
+            }
+
+            if (positionalIndex == parameterIndex)
+            {
+                return GetConstantStringValue(semanticModel, arg, cancellationToken);
+            }
+
+            positionalIndex++;
+        }
+
+        return null;
     }
 
-    return null;
-}
+    private static string? GetConstantStringValue(
+        SemanticModel semanticModel,
+        AttributeArgumentSyntax argument,
+        CancellationToken cancellationToken)
+    {
+        var constantValue = semanticModel.GetConstantValue(argument.Expression, cancellationToken);
 
-private static string? GetConstantStringValue(
-    SemanticModel semanticModel,
-    AttributeArgumentSyntax argument,
-    CancellationToken cancellationToken)
-{
-    var constantValue = semanticModel.GetConstantValue(argument.Expression, cancellationToken);
+        return constantValue is { HasValue: true, Value: string value }
+            ? value
+            : null;
+    }
 
-    return constantValue is { HasValue: true, Value: string value }
-        ? value
-        : null;
-}
-
-    private static string GetDescriptionValue( SemanticModel semanticModel, EnumMemberDeclarationSyntax memberDeclaration, string fallbackValue, CancellationToken cancellationToken)
+    private static string GetDescriptionValue(SemanticModel semanticModel,
+        EnumMemberDeclarationSyntax memberDeclaration, string fallbackValue, CancellationToken cancellationToken)
     {
         foreach (var attributeList in memberDeclaration.AttributeLists)
         {
@@ -338,7 +340,7 @@ private static string? GetConstantStringValue(
 
             var triviaText = trivia.ToFullString();
 
-                    // ReSharper disable once ReplaceSubstringWithRangeIndexer
+            // ReSharper disable once ReplaceSubstringWithRangeIndexer
             var lines = triviaText
                 .Split(["\r\n", "\n"], StringSplitOptions.None)
                 .Select(line => line.Trim())
@@ -391,13 +393,17 @@ private static string? GetConstantStringValue(
             return member.Summary;
         }
 
-        return !string.IsNullOrWhiteSpace(member.Description) ? $"Represents the {member.Description} named resource." : "Represents a named resource.";
+        return !string.IsNullOrWhiteSpace(member.Description)
+            ? $"Represents the {member.Description} named resource."
+            : "Represents a named resource.";
     }
 
     public static bool StartsWithTwoUpper(string input)
     {
         if (string.IsNullOrEmpty(input) || input.Length < 2)
+        {
             return false;
+        }
 
         return char.IsUpper(input[0]) && char.IsUpper(input[1]);
     }

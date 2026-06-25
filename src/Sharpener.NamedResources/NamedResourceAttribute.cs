@@ -12,7 +12,10 @@ namespace Sharpener.NamedResources;
 [AttributeUsage(AttributeTargets.Enum)]
 public sealed class NamedResourceAttribute : Attribute
 {
-    /// <param name="namedResourceType">The type from which the generated resource types will derive. This must implement <see cref="INamedResource"/>.</param>
+    /// <param name="namedResourceType">
+    ///     The type from which the generated resource types will derive. This must implement
+    ///     <see cref="INamedResource" />.
+    /// </param>
     /// <param name="constantsClassName">
     ///     Name of the generated static class holding string constants. Optional. Will be generated if not provided, derived
     ///     from <paramref name="namedResourceType" />.
@@ -29,7 +32,8 @@ public sealed class NamedResourceAttribute : Attribute
     ///     The summary for intellisense regarding the constants class. Optional. Will be
     ///     generated if not provided, derived from <paramref name="namedResourceType" />.
     /// </param>
-    public NamedResourceAttribute(Type namedResourceType, string? constantsClassName = null, string? namedResourceNamespace = null,
+    public NamedResourceAttribute(Type namedResourceType, string? constantsClassName = null,
+        string? namedResourceNamespace = null,
         string? constantsClassNamespace = null, string? constantsClassSummary = null)
     {
     }
