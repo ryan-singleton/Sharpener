@@ -7,7 +7,7 @@ namespace Sharpener.NamedResources;
 /// <summary>
 ///     Marks an enum as a named resource source. The source generator will emit
 ///     one <c>readonly struct</c> per member implementing the named resource type,
-///     and a static class of string constants.
+///     and a static class of string constants for each member.
 /// </summary>
 [AttributeUsage(AttributeTargets.Enum)]
 public sealed class NamedResourceAttribute : Attribute
