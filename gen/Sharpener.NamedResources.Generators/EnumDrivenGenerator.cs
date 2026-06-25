@@ -352,7 +352,7 @@ internal sealed class EnumDrivenGenerator : IIncrementalGenerator
     private static string GenerateNamedResourceStruct(EnumData enumData, EnumMemberData member)
     {
         return $$"""
-{{FormatXmlSummary(CreateSummaryText(member))}}
+                 {{FormatXmlSummary(CreateSummaryText(member))}}
                  [GeneratedCode("Sharpener.NamedResources.Generators", "{{Strings.Version}}")]
                  public readonly struct {{member.Name}}() : {{enumData.InterfaceFullName}}
                  {
@@ -390,7 +390,7 @@ internal sealed class EnumDrivenGenerator : IIncrementalGenerator
     private static string GenerateConstantString(EnumData enumData, EnumMemberData member)
     {
         return $"""
-{FormatXmlSummary(CreateSummaryText(member), "    ")}
+                    {FormatXmlSummary(CreateSummaryText(member), "    ")}
                     public static readonly string {member.Name} = {enumData.EnumFullName}.{member.Name}.ToDescriptionValue()!;
 
                 """;
