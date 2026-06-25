@@ -1,5 +1,15 @@
 # Changelog
 
+## Sharpener, Sharpener.NamedResources v1.0.8 June 25 2026
+
+Added PolyFill as a singular dependency. It just opens up a lot of options for better code and eliminates some of our own.
+Added some `AppendWith` extensions for string builders to handle .NET warnings about culture more elegantly.
+Added a new package for named resource types. More info in the docs.
+
+Added fluent HTTP request syntax in a new Rest package
+Added simple HttpClient response mocking
+Many new collection extensions
+
 ## Sharpener, Sharpener.Json, Sharpener.Rest v0.1.9 September 19 2023
 
 Added fluent HTTP request syntax in a new Rest package

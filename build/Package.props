@@ -7,6 +7,11 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/ryan-singleton/Sharpener</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/ryan-singleton/Sharpener/blob/main/docs/CHANGELOG.md</PackageReleaseNotes>
+    <SharedPackageVersion>1.0.8</SharedPackageVersion>
+    <Version>$(SharedPackageVersion)</Version>
+    <AssemblyVersion>$(SharedPackageVersion)</AssemblyVersion>
+    <FileVersion>$(SharedPackageVersion)</FileVersion>
+    <InformationVersion>$(SharedPackageVersion)</InformationVersion>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\docs\images\sharpener-logo-128.png">
