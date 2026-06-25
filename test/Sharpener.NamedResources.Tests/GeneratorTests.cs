@@ -1,5 +1,8 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
+using Fizz.Buzz;
+using Foo.Bar;
+using NamedResources;
 using Shouldly;
 using Xunit;
 
@@ -31,7 +34,17 @@ public class GeneratorTests
         Ingredients.Butter.ShouldBe("Unsalted Butter");
         new Butter().Name.ShouldBe("Unsalted Butter");
 
-        Food.RibeyeSteak.ShouldBe("Ribeye Steaks");
-        new RibeyeSteak().Name.ShouldBe("Ribeye Steaks");
+        Food.RibeyeSteak.ShouldBe("Ribeye Steak");
+        new RibeyeSteak().Name.ShouldBe("Ribeye Steak");
+    }
+
+    [Fact]
+    public void NamespacesAreCorrect()
+    {
+        typeof(Butter).Namespace.ShouldBe("NamedResources");
+        typeof(RibeyeSteak).Namespace.ShouldBe("Foo.Bar");
+
+        typeof(Ingredients).Namespace.ShouldBe("NamedResources");
+        typeof(Food).Namespace.ShouldBe("Fizz.Buzz");
     }
 }

@@ -7,7 +7,7 @@ namespace Sharpener.NamedResources.Tests;
 /// <summary>
 /// Types of meals.
 /// </summary>
-[NamedResource(typeof(IMealName), "Food")]
+[NamedResource(typeof(IMealName), "Food", "Foo.Bar", "Fizz.Buzz")]
 public enum Meal
 {
     /// <summary>

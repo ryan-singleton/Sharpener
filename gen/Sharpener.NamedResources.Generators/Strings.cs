@@ -6,5 +6,6 @@ internal static class Strings
 {
     internal const string Domain = "NamedResource";
     internal const string DomainAttribute = $"{Domain}Attribute";
-    internal const string DefaultNamedResourcesNamespace = "Sharpener.NamedResources";
+    internal const string DefaultNamedResourcesNamespace = "NamedResources";
+    internal const string Version = "1.0.0";
 }
