@@ -1,8 +1,9 @@
 // The Sharpener project licenses this file to you under the MIT license.
 
 using System.ComponentModel;
+using Sharpener.NamedResources.Tests.Composition;
 
-namespace Sharpener.NamedResources.Tests;
+namespace Sharpener.NamedResources.Tests.Enums;
 
 [NamedResource(typeof(IIngredientName))]
 public enum Ingredient

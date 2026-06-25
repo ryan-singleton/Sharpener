@@ -11,117 +11,168 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
+// ReSharper disable ReplaceSubstringWithRangeIndexer
+// ReSharper disable ForeachCanBePartlyConvertedToQueryUsingAnotherGetEnumerator
+// ReSharper disable UseCollectionExpression
+
 namespace Sharpener.NamedResources.Generators;
 
 [Generator(LanguageNames.CSharp)]
-internal class EnumDrivenGenerator : IIncrementalGenerator
+internal sealed class EnumDrivenGenerator : IIncrementalGenerator
 {
+    private static readonly SymbolDisplayFormat FullyQualifiedFormat =
+        SymbolDisplayFormat.FullyQualifiedFormat;
+
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         var enumProvider = context.SyntaxProvider
             .CreateSyntaxProvider(
-                (node, _) => node is EnumDeclarationSyntax e
-                             && e.AttributeLists
-                                 .SelectMany(al => al.Attributes)
-                                 .Any(a => a.Name.ToString() is Strings.Domain or Strings.DomainAttribute),
+                static (node, _) => node is EnumDeclarationSyntax enumDeclaration
+                                    && HasNamedResourceAttribute(enumDeclaration),
                 static (context, cancellationToken) => GetEnumData(context, cancellationToken))
             .Where(static data => data is not null);
 
         context.RegisterSourceOutput(
             enumProvider,
-            (ctx, enumData) =>
+            static (context, enumData) =>
             {
                 if (enumData is not null)
                 {
-                    WriteFileContent(ctx, enumData);
+                    WriteFileContent(context, enumData);
                 }
             });
     }
 
-    private static EnumData? GetEnumData(GeneratorSyntaxContext context, CancellationToken cancellationToken)
+    private static bool HasNamedResourceAttribute(EnumDeclarationSyntax enumDeclaration)
+    {
+        return enumDeclaration.AttributeLists
+            .SelectMany(attributeList => attributeList.Attributes)
+            .Any(IsNamedResourceAttribute);
+    }
+
+    private static bool IsNamedResourceAttribute(AttributeSyntax attribute)
+    {
+        return attribute.Name.ToString() is Strings.Domain or Strings.DomainAttribute;
+    }
+
+    private static EnumData? GetEnumData(
+        GeneratorSyntaxContext context,
+        CancellationToken cancellationToken)
     {
         var enumDeclaration = (EnumDeclarationSyntax)context.Node;
         var semanticModel = context.SemanticModel;
 
-        var enumSymbol = ModelExtensions.GetDeclaredSymbol(semanticModel, enumDeclaration, cancellationToken);
+        var enumSymbol = semanticModel.GetDeclaredSymbol(enumDeclaration, cancellationToken);
 
         if (enumSymbol is null)
         {
             return null;
         }
 
-        var enumNamespace = enumSymbol.ContainingNamespace.IsGlobalNamespace
-            ? string.Empty
-            : enumSymbol.ContainingNamespace.ToDisplayString();
+        var attribute = enumDeclaration.AttributeLists
+            .SelectMany(attributeList => attributeList.Attributes)
+            .FirstOrDefault(IsNamedResourceAttribute);
 
-        var members = new List<EnumMemberData>();
-
-        foreach (var memberDeclaration in enumDeclaration.Members)
+        if (attribute is null)
         {
-            var memberName = memberDeclaration.Identifier.ValueText;
-            var descriptionValue = GetDescriptionValue(semanticModel, memberDeclaration, memberName, cancellationToken);
-            var summary = GetSummaryText(memberDeclaration);
-            members.Add(new EnumMemberData(memberName, descriptionValue, summary));
+            return null;
         }
 
-        var attr = enumDeclaration.AttributeLists
-            .SelectMany(al => al.Attributes)
-            .First(a => a.Name.ToString() is Strings.Domain or Strings.DomainAttribute);
+        var interfaceSymbol = GetInterfaceSymbol(semanticModel, attribute, cancellationToken);
 
-        // All four named args are optional — read them if present, otherwise fall back to defaults
-        var args = attr.ArgumentList?.Arguments ?? default;
-
-        var attrCtor = semanticModel.GetSymbolInfo(attr, cancellationToken).Symbol as IMethodSymbol;
-
-        var interfaceName = string.Empty;
-        var interfaceNamespace = string.Empty;
-        if (attr.ArgumentList!.Arguments[0].Expression is TypeOfExpressionSyntax typeofExpr)
+        if (interfaceSymbol is null)
         {
-
-            var typeInfo = semanticModel.GetTypeInfo(typeofExpr.Type, cancellationToken);
-
-            if (typeInfo.Type is INamedTypeSymbol typeSymbol)
-            {
-                interfaceName = typeSymbol.Name;
-                interfaceNamespace = typeSymbol.ContainingNamespace.ToDisplayString();
-            }
-
+            return null;
         }
 
-        // Derive the default constants class name from the interface name the same way
-        // the attribute constructor does at runtime: strip trailing "Name", then leading "I"
-        var defaultConstantsClassName = interfaceName.EndsWith("Name", StringComparison.Ordinal)
+        var attributeOptions = GetAttributeOptions(
+            semanticModel,
+            attribute,
+            interfaceSymbol,
+            enumSymbol,
+            cancellationToken);
+
+        var members = enumDeclaration.Members
+            .Select(memberDeclaration => GetEnumMemberData(
+                semanticModel,
+                memberDeclaration,
+                cancellationToken))
+            .ToImmutableArray();
+
+        return new EnumData(
+            enumSymbol.ContainingNamespace.IsGlobalNamespace
+                ? string.Empty
+                : enumSymbol.ContainingNamespace.ToDisplayString(),
+            enumSymbol.Name,
+            enumSymbol.ToDisplayString(FullyQualifiedFormat),
+            interfaceSymbol.Name,
+            interfaceSymbol.ToDisplayString(FullyQualifiedFormat),
+            attributeOptions.ConstantsClassName,
+            attributeOptions.NamedResourceNamespace,
+            attributeOptions.ConstantsClassNamespace,
+            attributeOptions.ConstantsClassSummary,
+            members);
+    }
+
+    private static INamedTypeSymbol? GetInterfaceSymbol(
+        SemanticModel semanticModel,
+        AttributeSyntax attribute,
+        CancellationToken cancellationToken)
+    {
+        var typeofExpression = attribute.ArgumentList?.Arguments
+            .Select(argument => argument.Expression)
+            .OfType<TypeOfExpressionSyntax>()
+            .FirstOrDefault();
+
+        if (typeofExpression is null)
+        {
+            return null;
+        }
+
+        return semanticModel.GetTypeInfo(typeofExpression.Type, cancellationToken).Type as INamedTypeSymbol;
+    }
+
+    private static AttributeOptions GetAttributeOptions(
+        SemanticModel semanticModel,
+        AttributeSyntax attribute,
+        INamedTypeSymbol interfaceSymbol,
+        INamedTypeSymbol enumSymbol,
+        CancellationToken cancellationToken)
+    {
+        var args = attribute.ArgumentList?.Arguments ?? default;
+        var attributeConstructor = semanticModel.GetSymbolInfo(attribute, cancellationToken).Symbol as IMethodSymbol;
+
+        var defaultConstantsClassName = GetDefaultConstantsClassName(interfaceSymbol.Name);
+        var defaultConstantsClassSummary =
+            $"An automatically generated class with constant string values that correlate to the values found in the <see cref=\"{GetXmlDocTypeName(enumSymbol)}\"/> enum.";
+
+        return new AttributeOptions(
+            GetStringArg(semanticModel, args, attributeConstructor, "constantsClassName", cancellationToken)
+            ?? defaultConstantsClassName,
+            GetStringArg(semanticModel, args, attributeConstructor, "namedResourceNamespace", cancellationToken)
+            ?? Strings.DefaultNamedResourcesNamespace,
+            GetStringArg(semanticModel, args, attributeConstructor, "constantsClassNamespace", cancellationToken)
+            ?? Strings.DefaultNamedResourcesNamespace,
+            GetStringArg(semanticModel, args, attributeConstructor, "constantsClassSummary", cancellationToken)
+            ?? defaultConstantsClassSummary);
+    }
+
+    private static string GetDefaultConstantsClassName(string interfaceName)
+    {
+        var className = interfaceName.EndsWith("Name", StringComparison.Ordinal)
             ? interfaceName.Substring(0, interfaceName.Length - "Name".Length)
             : interfaceName;
 
-        defaultConstantsClassName = $"{defaultConstantsClassName}s";
+        className = $"{className}s";
 
+        return StartsWithTwoUpper(className)
+            ? className.Substring(1)
+            : className;
+    }
 
-        if (StartsWithTwoUpper(defaultConstantsClassName))
-        {
-            defaultConstantsClassName = defaultConstantsClassName.Substring(1);
-        }
-
-        var constantsClassName = GetStringArg(semanticModel, args, attrCtor, "constantsClassName", cancellationToken)
-                                 ?? defaultConstantsClassName;
-
-        var namedResourceNamespace =
-            GetStringArg(semanticModel, args, attrCtor, "namedResourceNamespace", cancellationToken)
-            ?? Strings.DefaultNamedResourcesNamespace;
-
-        var constantsClassNamespace =
-            GetStringArg(semanticModel, args, attrCtor, "constantsClassNamespace", cancellationToken)
-            ?? Strings.DefaultNamedResourcesNamespace;
-
-        var constantsClassSummary =
-            GetStringArg(semanticModel, args, attrCtor, "constantsClassSummary", cancellationToken)
-            ??
-            $"An automatically generated class with constant string values that correlate to the values found in the <see cref=\"{enumNamespace}.{enumSymbol.Name}\"/> enum.";
-
-
-        // ReSharper disable once UseCollectionExpression
-        return new EnumData(enumNamespace, enumSymbol.Name, new List<EnumMemberData>(members).ToImmutableArray(),
-            interfaceName, constantsClassName, namedResourceNamespace, constantsClassNamespace, constantsClassSummary, interfaceNamespace);
+    private static string GetXmlDocTypeName(INamedTypeSymbol typeSymbol)
+    {
+        return typeSymbol.ToDisplayString(FullyQualifiedFormat).Replace("global::", string.Empty);
     }
 
     private static string? GetStringArg(
@@ -131,50 +182,28 @@ internal class EnumDrivenGenerator : IIncrementalGenerator
         string paramName,
         CancellationToken cancellationToken)
     {
-        // Handles constructor named arguments:
-        // [Domain(typeof(IFooName), constantsClassName: "FooNames")]
         foreach (var arg in args)
         {
-            if (arg.NameColon?.Name.Identifier.ValueText != paramName)
+            if (arg.NameColon?.Name.Identifier.ValueText == paramName)
             {
-                continue;
+                return GetConstantStringValue(semanticModel, arg, cancellationToken);
             }
-
-            return GetConstantStringValue(semanticModel, arg, cancellationToken);
         }
 
-        // Handles attribute property / field assignments:
-        // [Domain(typeof(IFooName), ConstantsClassName = "FooNames")]
-        //
-        // You may not need this today, but it costs almost nothing and prevents
-        // confusion if you later move options to settable attribute properties.
         foreach (var arg in args)
         {
-            if (arg.NameEquals?.Name.Identifier.ValueText != paramName)
+            if (arg.NameEquals?.Name.Identifier.ValueText == paramName)
             {
-                continue;
+                return GetConstantStringValue(semanticModel, arg, cancellationToken);
             }
-
-            return GetConstantStringValue(semanticModel, arg, cancellationToken);
         }
 
-        // Handles positional constructor arguments:
-        // [Domain(typeof(IFooName), "FooNames")]
         if (attributeConstructor is null)
         {
             return null;
         }
 
-        var parameterIndex = -1;
-
-        for (var i = 0; i < attributeConstructor.Parameters.Length; i++)
-        {
-            if (attributeConstructor.Parameters[i].Name == paramName)
-            {
-                parameterIndex = i;
-                break;
-            }
-        }
+        var parameterIndex = GetParameterIndex(attributeConstructor, paramName);
 
         if (parameterIndex < 0)
         {
@@ -185,7 +214,6 @@ internal class EnumDrivenGenerator : IIncrementalGenerator
 
         foreach (var arg in args)
         {
-            // Not positional.
             if (arg.NameColon is not null || arg.NameEquals is not null)
             {
                 continue;
@@ -202,6 +230,19 @@ internal class EnumDrivenGenerator : IIncrementalGenerator
         return null;
     }
 
+    private static int GetParameterIndex(IMethodSymbol attributeConstructor, string paramName)
+    {
+        for (var i = 0; i < attributeConstructor.Parameters.Length; i++)
+        {
+            if (attributeConstructor.Parameters[i].Name == paramName)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     private static string? GetConstantStringValue(
         SemanticModel semanticModel,
         AttributeArgumentSyntax argument,
@@ -214,32 +255,48 @@ internal class EnumDrivenGenerator : IIncrementalGenerator
             : null;
     }
 
-    private static string GetDescriptionValue(SemanticModel semanticModel,
-        EnumMemberDeclarationSyntax memberDeclaration, string fallbackValue, CancellationToken cancellationToken)
+    private static EnumMemberData GetEnumMemberData(
+        SemanticModel semanticModel,
+        EnumMemberDeclarationSyntax memberDeclaration,
+        CancellationToken cancellationToken)
     {
-        foreach (var attributeList in memberDeclaration.AttributeLists)
+        var memberName = memberDeclaration.Identifier.ValueText;
+
+        return new EnumMemberData(
+            memberName,
+            GetDescriptionValue(semanticModel, memberDeclaration, memberName, cancellationToken),
+            GetSummaryText(memberDeclaration));
+    }
+
+    private static string GetDescriptionValue(
+        SemanticModel semanticModel,
+        EnumMemberDeclarationSyntax memberDeclaration,
+        string fallbackValue,
+        CancellationToken cancellationToken)
+    {
+        foreach (var attribute in
+                 memberDeclaration.AttributeLists.SelectMany(attributeList => attributeList.Attributes))
         {
-            foreach (var attribute in attributeList.Attributes)
+            var attributeName = attribute.Name.ToString();
+
+            if (!attributeName.EndsWith("Description", StringComparison.Ordinal)
+                && !attributeName.EndsWith("DescriptionAttribute", StringComparison.Ordinal))
             {
-                var attributeName = attribute.Name.ToString();
-
-                if (!attributeName.EndsWith("Description", StringComparison.Ordinal) &&
-                    !attributeName.EndsWith("DescriptionAttribute", StringComparison.Ordinal))
-                {
-                    continue;
-                }
-
-                var argument = attribute.ArgumentList?.Arguments.FirstOrDefault();
-
-                if (argument is null)
-                {
-                    return fallbackValue;
-                }
-
-                var constantValue = semanticModel.GetConstantValue(argument.Expression, cancellationToken);
-
-                return constantValue is { HasValue: true, Value: string description } ? description : fallbackValue;
+                continue;
             }
+
+            var argument = attribute.ArgumentList?.Arguments.FirstOrDefault();
+
+            if (argument is null)
+            {
+                return fallbackValue;
+            }
+
+            var constantValue = semanticModel.GetConstantValue(argument.Expression, cancellationToken);
+
+            return constantValue is { HasValue: true, Value: string description }
+                ? description
+                : fallbackValue;
         }
 
         return fallbackValue;
@@ -247,154 +304,213 @@ internal class EnumDrivenGenerator : IIncrementalGenerator
 
     private static void WriteFileContent(SourceProductionContext context, EnumData enumData)
     {
-        EmitNamedResourceStructs(context, enumData);
-        EmitConstantStrings(context, enumData);
+        WriteSource(
+            context,
+            GetHintName(enumData, $"{enumData.InterfaceName}s"),
+            GenerateNamedResourceStructs(enumData));
+
+        WriteSource(
+            context,
+            GetHintName(enumData, enumData.ConstantsClassName),
+            GenerateConstantStrings(enumData));
     }
 
-    private static void EmitNamedResourceStructs(SourceProductionContext context, EnumData enumData)
+    private static void WriteSource(
+        SourceProductionContext context,
+        string hintName,
+        string source)
+    {
+        context.AddSource(hintName, SourceText.From(source, Encoding.UTF8));
+    }
+
+    private static string GetHintName(EnumData enumData, string generatedTypeName)
+    {
+        var prefix = string.IsNullOrWhiteSpace(enumData.EnumNamespace)
+            ? enumData.EnumName
+            : $"{enumData.EnumNamespace}.{enumData.EnumName}";
+
+        return $"{prefix}.{generatedTypeName}.g.cs";
+    }
+
+    private static string GenerateNamedResourceStructs(EnumData enumData)
+    {
+        var members = string.Concat(enumData.Members.Select(member => GenerateNamedResourceStruct(enumData, member)));
+
+        return $"""
+                // <auto-generated />
+                #nullable enable
+
+                using System.CodeDom.Compiler;
+                using Sharpener.Extensions;
+
+                namespace {enumData.NamedResourceNamespace};
+
+                {members}
+                """;
+    }
+
+    private static string GenerateNamedResourceStruct(EnumData enumData, EnumMemberData member)
+    {
+        return $$"""
+{{FormatXmlSummary(CreateSummaryText(member))}}
+                 [GeneratedCode("Sharpener.NamedResources.Generators", "{{Strings.Version}}")]
+                 public readonly struct {{member.Name}}() : {{enumData.InterfaceFullName}}
+                 {
+                     /// <inheritdoc />
+                     public string Name { get; } = {{enumData.EnumFullName}}.{{member.Name}}.ToDescriptionValue()!;
+                 }
+
+                 """;
+    }
+
+    private static string GenerateConstantStrings(EnumData enumData)
+    {
+        var members = string.Concat(enumData.Members.Select(member => GenerateConstantString(enumData, member)));
+
+        return $$"""
+                 // <auto-generated />
+                 #nullable enable
+
+                 using System.CodeDom.Compiler;
+                 using Sharpener.Extensions;
+
+                 namespace {{enumData.ConstantsClassNamespace}};
+
+                 /// <summary>
+                 /// {{enumData.ConstantsClassSummary}}
+                 /// </summary>
+                 [GeneratedCode("Sharpener.NamedResources.Generators", "{{Strings.Version}}")]
+                 public static class {{enumData.ConstantsClassName}}
+                 {
+                 {{members}}}
+
+                 """;
+    }
+
+    private static string GenerateConstantString(EnumData enumData, EnumMemberData member)
+    {
+        return $"""
+{FormatXmlSummary(CreateSummaryText(member), "    ")}
+                    public static readonly string {member.Name} = {enumData.EnumFullName}.{member.Name}.ToDescriptionValue()!;
+
+                """;
+    }
+
+    private static string FormatXmlSummary(string text, string indent = "")
     {
         var builder = new StringBuilder();
 
-        builder.AppendLine("// <auto-generated />");
-        builder.AppendLine("#nullable enable");
-        builder.AppendLine();
-        builder.AppendLine("using System.CodeDom.Compiler;");
-        builder.AppendLine($"using {enumData.Namespace};");
-        builder.AppendLine($"using {enumData.InterfaceNamespace};");
-        builder.AppendLine("using Sharpener.Extensions;");
-        builder.AppendLine();
-        builder.AppendLine($"namespace {enumData.NamedResourceNamespace};");
-        builder.AppendLine();
-
-        foreach (var member in enumData.Members)
-        {
-            var summaryText = CreateSummaryText(member);
-            builder.AppendLine("/// <summary>");
-            foreach (var line in summaryText.Split(["\r\n", "\n"], StringSplitOptions.None))
-            {
-                builder.Append("///     ");
-                builder.AppendLine(line);
-            }
-
-            builder.AppendLine("/// </summary>");
-            builder.AppendLine($"[GeneratedCode(\"Sharpener.NamedResources.Generators\", \"{Strings.Version}\")]");
-            builder.Append("public readonly struct ");
-            builder.Append(member.Name);
-            builder.AppendLine($"() : {enumData.InterfaceName}");
-            builder.AppendLine("{");
-            builder.AppendLine("    /// <inheritdoc />");
-            builder.Append("    public string Name { get; } = ");
-            builder.Append(enumData.EnumName);
-            builder.Append('.');
-            builder.Append(member.Name);
-            builder.AppendLine(".ToDescriptionValue()!;");
-            builder.AppendLine("}");
-            builder.AppendLine();
-        }
-
-        var csharpFileName = $"{enumData.InterfaceName}s.g.cs";
-        context.AddSource(csharpFileName, SourceText.From(builder.ToString(), Encoding.UTF8));
-    }
-
-    private static void EmitConstantStrings(SourceProductionContext context, EnumData enumData)
-    {
-        var builder = new StringBuilder();
-
-        builder.AppendLine("// <auto-generated />");
-        builder.AppendLine("#nullable enable");
-        builder.AppendLine();
-        builder.AppendLine("using System.CodeDom.Compiler;");
-        builder.AppendLine($"using {enumData.Namespace};");
-        builder.AppendLine("using Sharpener.Extensions;");
-        builder.AppendLine();
-        builder.AppendLine($"namespace {enumData.ConstantsClassNamespace};");
-        builder.AppendLine();
+        builder.Append(indent);
         builder.AppendLine("/// <summary>");
-        builder.AppendLine($"/// {enumData.ConstantsClassSummary}");
-        builder.AppendLine("/// </summary>");
-        builder.AppendLine($"[GeneratedCode(\"Sharpener.NamedResources.Generators\", \"{Strings.Version}\")]");
-        builder.AppendLine($"public static class {enumData.ConstantsClassName}");
-        builder.AppendLine("{");
 
-        foreach (var member in enumData.Members)
+        foreach (var line in SplitLines(text))
         {
-            var summaryText = CreateSummaryText(member);
-            builder.AppendLine("    /// <summary>");
-            foreach (var line in summaryText.Split(["\r\n", "\n"], StringSplitOptions.None))
-            {
-                builder.Append("    ///     ");
-                builder.AppendLine(line);
-            }
-
-            builder.AppendLine("    /// </summary>");
-            builder.AppendLine(
-                $"    public static readonly string {member.Name} = {enumData.EnumName}.{member.Name}.ToDescriptionValue()!;");
-            builder.AppendLine();
+            builder.Append(indent);
+            builder.Append("///     ");
+            builder.AppendLine(line);
         }
 
-        builder.AppendLine("}");
+        builder.Append(indent);
+        builder.Append("/// </summary>");
 
-        var csharpFileName = $"{enumData.ConstantsClassName}.g.cs";
-        context.AddSource(csharpFileName, SourceText.From(builder.ToString(), Encoding.UTF8));
+        return builder.ToString();
+    }
+
+    private static IEnumerable<string> SplitLines(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            yield return string.Empty;
+            yield break;
+        }
+
+        foreach (var line in text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None))
+        {
+            yield return line;
+        }
     }
 
     private static string GetSummaryText(EnumMemberDeclarationSyntax memberDeclaration)
     {
-        var triviaList = memberDeclaration.GetLeadingTrivia();
-
-        foreach (var trivia in triviaList)
+        foreach (var trivia in memberDeclaration.GetLeadingTrivia())
         {
             if (!trivia.IsKind(SyntaxKind.SingleLineDocumentationCommentTrivia))
             {
                 continue;
             }
 
-            var triviaText = trivia.ToFullString();
-
-            // ReSharper disable once ReplaceSubstringWithRangeIndexer
-            var lines = triviaText
-                .Split(["\r\n", "\n"], StringSplitOptions.None)
-                .Select(line => line.Trim())
-                .Select(line => line.StartsWith("///", StringComparison.Ordinal)
-                    ? line.Substring(3).Trim()
-                    : line)
-                .ToArray();
-
-            var summaryLines = new List<string>();
-            var insideSummary = false;
-
-            foreach (var line in lines)
-            {
-                if (line.StartsWith("<summary>", StringComparison.Ordinal))
-                {
-                    insideSummary = true;
-
-                    // ReSharper disable once ReplaceSubstringWithRangeIndexer
-                    var remaining = line.Substring("<summary>".Length).Trim();
-
-                    if (!string.IsNullOrWhiteSpace(remaining))
-                    {
-                        summaryLines.Add(remaining);
-                    }
-
-                    continue;
-                }
-
-                if (line.StartsWith("</summary>", StringComparison.Ordinal))
-                {
-                    break;
-                }
-
-                if (insideSummary)
-                {
-                    summaryLines.Add(line);
-                }
-            }
-
-            return string.Join(@"\r\n", summaryLines.Where(line => !string.IsNullOrWhiteSpace(line)));
+            return ExtractSummaryText(trivia.ToFullString());
         }
 
         return string.Empty;
+    }
+
+    private static string ExtractSummaryText(string triviaText)
+    {
+        var lines = triviaText
+            .Split(new[] { "\r\n", "\n" }, StringSplitOptions.None)
+            .Select(line => line.Trim())
+            .Select(line => line.StartsWith("///", StringComparison.Ordinal)
+                ? line.Substring(3).Trim()
+                : line)
+            .ToArray();
+
+        var builder = new StringBuilder();
+        var insideSummary = false;
+
+        foreach (var line in lines)
+        {
+            if (!insideSummary)
+            {
+                var startIndex = line.IndexOf("<summary>", StringComparison.Ordinal);
+                if (startIndex < 0)
+                {
+                    continue;
+                }
+
+                insideSummary = true;
+
+                var content = line.Substring(startIndex + "<summary>".Length);
+
+                var endIndex = content.IndexOf("</summary>", StringComparison.Ordinal);
+                if (endIndex >= 0)
+                {
+                    var inline = content.Substring(0, endIndex).Trim();
+                    if (!string.IsNullOrWhiteSpace(inline))
+                    {
+                        builder.AppendLine(inline);
+                    }
+
+                    break;
+                }
+
+                if (!string.IsNullOrWhiteSpace(content))
+                {
+                    builder.AppendLine(content.Trim());
+                }
+            }
+            else
+            {
+                var endIndex = line.IndexOf("</summary>", StringComparison.Ordinal);
+                if (endIndex >= 0)
+                {
+                    var content = line.Substring(0, endIndex).Trim();
+                    if (!string.IsNullOrWhiteSpace(content))
+                    {
+                        builder.AppendLine(content);
+                    }
+
+                    break;
+                }
+
+                if (!string.IsNullOrWhiteSpace(line))
+                {
+                    builder.AppendLine(line);
+                }
+            }
+        }
+
+        return builder.ToString().TrimEnd();
     }
 
     private static string CreateSummaryText(EnumMemberData member)
@@ -409,42 +525,33 @@ internal class EnumDrivenGenerator : IIncrementalGenerator
             : "Represents a named resource.";
     }
 
-    public static bool StartsWithTwoUpper(string input)
+    private static bool StartsWithTwoUpper(string input)
     {
-        if (string.IsNullOrEmpty(input) || input.Length < 2)
-        {
-            return false;
-        }
-
-        return char.IsUpper(input[0]) && char.IsUpper(input[1]);
+        return input.Length >= 2
+               && char.IsUpper(input[0])
+               && char.IsUpper(input[1]);
     }
-}
 
-internal sealed class EnumData(
-    string ns,
-    string enumName,
-    ImmutableArray<EnumMemberData> members,
-    string interfaceName,
-    string constantsClassName,
-    string namedResourceNamespace,
-    string constantsClassNamespace,
-    string constantsClassSummary,
-    string interfaceNamespace)
-{
-    public string Namespace { get; } = ns;
-    public string EnumName { get; } = enumName;
-    public ImmutableArray<EnumMemberData> Members { get; } = members;
-    public string InterfaceName { get; } = interfaceName;
-    public string ConstantsClassName { get; } = constantsClassName;
-    public string NamedResourceNamespace { get; } = namedResourceNamespace;
-    public string ConstantsClassNamespace { get; } = constantsClassNamespace;
-    public string ConstantsClassSummary { get; } = constantsClassSummary;
-    public string InterfaceNamespace { get; } = interfaceNamespace;
-}
+    private sealed record AttributeOptions(
+        string ConstantsClassName,
+        string NamedResourceNamespace,
+        string ConstantsClassNamespace,
+        string ConstantsClassSummary);
 
-internal sealed class EnumMemberData(string name, string description, string summary)
-{
-    public string Name { get; } = name;
-    public string Description { get; } = description;
-    public string Summary { get; } = summary;
+    private sealed record EnumData(
+        string EnumNamespace,
+        string EnumName,
+        string EnumFullName,
+        string InterfaceName,
+        string InterfaceFullName,
+        string ConstantsClassName,
+        string NamedResourceNamespace,
+        string ConstantsClassNamespace,
+        string ConstantsClassSummary,
+        ImmutableArray<EnumMemberData> Members);
+
+    private sealed record EnumMemberData(
+        string Name,
+        string Description,
+        string Summary);
 }
