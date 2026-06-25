@@ -17,7 +17,17 @@
     <Folder Include="Docs\"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\gen\Sharpener.NamedResources.Generators\Sharpener.NamedResources.Generators.csproj" />
+    <ProjectReference Include="..\..\gen\Sharpener.NamedResources.Generators\Sharpener.NamedResources.Generators.csproj" 
+    ReferenceOutputAssembly="false"
+    PrivateAssets="all"/>
     <ProjectReference Include="..\Sharpener\Sharpener.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Pack the generator dll as an analyzer -->
+    <None Include="..\..\gen\Sharpener.NamedResources.Generators\bin\$(Configuration)\netstandard2.0\Sharpener.NamedResources.Generators.dll"
+          Pack="true"
+          PackagePath="analyzers/dotnet/cs"
+          Visible="false"/>
   </ItemGroup>
 </Project>
