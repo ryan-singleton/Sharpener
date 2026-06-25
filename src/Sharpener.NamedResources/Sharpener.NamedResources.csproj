@@ -2,7 +2,7 @@
   <PropertyGroup>
     <PackageId>Sharpener.NamedResources</PackageId>
     <Description>Enum driven population of strongly typed named resources and their corresponding constants.</Description>
-    <PackageReadmeFile>JSON.md</PackageReadmeFile>
+    <PackageReadmeFile>NAMED_RESOURCES.md</PackageReadmeFile>
     <PackageTags>quality-of-life enum strong typing dotnet csharp</PackageTags>
     <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
