@@ -120,7 +120,7 @@ public static class RestExtensions
     {
         var properties = from propertyInfo in data.GetType().GetProperties()
             where propertyInfo?.GetValue(data, null) != null
-            select $"{propertyInfo.Name}={HttpUtility.UrlEncode(propertyInfo.GetValue(data, null).ToString())}";
+            select $"{propertyInfo.Name}={HttpUtility.UrlEncode(propertyInfo.GetValue(data, null)!.ToString())}";
 
         return string.Join("&", properties.ToArray());
     }

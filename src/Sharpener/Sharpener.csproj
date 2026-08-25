@@ -13,4 +13,7 @@
       <Link>Docs\README.md</Link>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Polyfill" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+  </ItemGroup>
 </Project>

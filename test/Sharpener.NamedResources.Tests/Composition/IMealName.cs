@@ -2,6 +2,6 @@
 
 namespace Sharpener.NamedResources.Tests.Composition;
 
-public interface IMealName
+public interface IMealName : INamedResource
 {
 }
